@@ -1,0 +1,26 @@
+2017-03-24 17:44:29,032 29464 INFO ? openerp: OpenERP version 8.0
+2017-03-24 17:44:29,032 29464 INFO ? openerp: addons paths: [u'C:\\Users\\sys05\\AppData\\Local\\OpenERP S.A.\\Odoo\\addons\\8.0', u'D:\\dzz\\mtlcs_odoo\\odoo\\openerp\\addons', u'D:\\dzz\\mtlcs_odoo\\odoo\\addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\community_addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\mtlcs_addons']
+2017-03-24 17:44:29,032 29464 INFO ? openerp: database hostname: 192.168.10.156
+2017-03-24 17:44:29,032 29464 INFO ? openerp: database port: 5432
+2017-03-24 17:44:29,032 29464 INFO ? openerp: database user: openerp
+2017-03-24 17:44:29,211 29464 INFO ? openerp.service.server: HTTP service (werkzeug) running on 0.0.0.0:8669
+2017-03-24 17:44:41,405 29464 INFO ? openerp.addons.bus.bus: Bus.loop listen imbus on db postgres
+2017-03-24 17:44:41,993 29464 INFO ? openerp.addons.report.models.report: Will use the Wkhtmltopdf binary at C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe
+2017-03-24 17:44:42,224 29464 WARNING ? openerp.osv.fields: view_load attribute is deprecated on ir.fields. Args: {'domain': "[('type', '=', 'payable')]", 'help': 'This account will be used instead of the default one as the prepayment payable account for the current partner', 'required': True, 'view_load': True, 'relation': 'account.account', 'type': 'many2one', 'string': 'Account Payable (Prepayment)'}
+2017-03-24 17:44:42,224 29464 WARNING ? openerp.osv.fields: view_load attribute is deprecated on ir.fields. Args: {'domain': "[('type', '=', 'receivable')]", 'help': 'This account will be used instead of the default one as the prepayment receivable account for the current partner', 'required': True, 'view_load': True, 'relation': 'account.account', 'type': 'many2one', 'string': 'Account Receivable (Prepayment)'}
+2017-03-24 17:44:42,423 29464 INFO ? openerp.http: HTTP Configuring static files
+2017-03-24 17:44:42,476 29464 INFO DB03 openerp.modules.loading: loading 1 modules...
+2017-03-24 17:44:42,484 29464 INFO DB03 openerp.modules.loading: 1 modules loaded in 0.01s, 0 queries
+2017-03-24 17:44:42,615 29464 INFO DB03 openerp.modules.loading: loading 118 modules...
+2017-03-24 17:44:43,186 29464 INFO DB03 openerp.modules.loading: 118 modules loaded in 0.57s, 0 queries
+2017-03-24 17:44:43,914 29464 WARNING DB03 openerp.fields: Field account.voucher.payment_term with unknown comodel_name 'payment.term'
+2017-03-24 17:44:44,200 29464 WARNING DB03 openerp.fields: Field receive.order.sol_id with unknown comodel_name None
+2017-03-24 17:44:44,240 29464 WARNING DB03 openerp.fields: Field pcb.remind.partner_id with unknown comodel_name 'res.partners'
+2017-03-24 17:44:44,426 29464 INFO DB03 openerp.modules.loading: Modules loaded.
+2017-03-24 17:44:44,430 29464 INFO DB03 openerp.addons.base.ir.ir_http: Generating routing map
+2017-03-24 17:44:56,247 23604 INFO ? openerp: OpenERP version 8.0
+2017-03-24 17:44:56,249 23604 INFO ? openerp: addons paths: [u'C:\\Users\\sys05\\AppData\\Local\\OpenERP S.A.\\Odoo\\addons\\8.0', u'D:\\dzz\\mtlcs_odoo\\odoo\\openerp\\addons', u'D:\\dzz\\mtlcs_odoo\\odoo\\addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\community_addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\mtlcs_addons']
+2017-03-24 17:44:56,249 23604 INFO ? openerp: database hostname: 192.168.10.156
+2017-03-24 17:44:56,249 23604 INFO ? openerp: database port: 5432
+2017-03-24 17:44:56,249 23604 INFO ? openerp: database user: openerp
+2017-03-24 17:44:56,431 23604 INFO ? openerp.service.server: HTTP service (werkzeug) running on 0.0.0.0:8669
