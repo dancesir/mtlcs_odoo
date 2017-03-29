@@ -1,0 +1,29 @@
+"id","btype","type","layer_count","eval_code"
+"__export__.pcb_fee_base_flex_001","刚柔结合板","基板费",1,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.56"
+"__export__.pcb_fee_base_flex_002","刚柔结合板","基板费",2,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.56"
+"__export__.pcb_fee_base_flex_003","刚柔结合板","基板费",3,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.56"
+"__export__.pcb_fee_base_flex_004","刚柔结合板","基板费",4,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.56"
+"__export__.pcb_fee_base_flex_005","刚柔结合板","基板费",5,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.9"
+"__export__.pcb_fee_base_flex_006","刚柔结合板","基板费",6,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 0.9"
+"__export__.pcb_fee_base_flex_007","刚柔结合板","基板费",7,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 1.2"
+"__export__.pcb_fee_base_flex_008","刚柔结合板","基板费",8,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 1.2"
+"__export__.pcb_fee_base_flex_009","刚柔结合板","基板费",9,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 2"
+"__export__.pcb_fee_base_flex_010","刚柔结合板","基板费",10,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 2"
+"__export__.pcb_fee_base_flex_011","刚柔结合板","基板费",11,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 2.4"
+"__export__.pcb_fee_base_flex_012","刚柔结合板","基板费",12,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 2.4"
+"__export__.pcb_fee_base_flex_013","刚柔结合板","基板费",13,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 3"
+"__export__.pcb_fee_base_flex_014","刚柔结合板","基板费",14,"def  fn(x):
+    return x.material_price * x.info_id.panel_area  / x.info_id.board_usage_rate /0.8*1.3 + 3"

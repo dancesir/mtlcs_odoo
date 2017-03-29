@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_sale_order_document">
+            <div>
+                <!--表头-->
+                <div class="header">
+                    <t t-set="data" t-value="sale_order_data(o)"/>
+                    <div align="center">
+                        <table style="width:1500px;">
+                            <tr>
+                                <td style="width:20%;"></td>
+                                <td  style="width:60%;" align="center">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h3><span t-esc="o.user_id.company_id.name"/></h3>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <h3 >
+                                                    <b>
+                                                        产品加工合同
+                                                    </b>
+                                                </h3>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width:20%;">
+                                    <table class="table-bordered" style="width:100%;">
+                                        <tr>
+                                            <td>
+                                                合同编号：
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                订单日期：
+                                                <span t-esc="str(o.date_order)[0:10]"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                签订地点：
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                客户订单号：
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!--正文-->
+                <div class="page"  align="center">
+                    <!--<t t-set="data" t-value="sale_order_data(o)"/>-->
+                    <br></br>
+                    <br></br>
+                    <table style="width:1500px;body:0px;align:left">
+                        <tr>
+                            <td colspan="3" style="width:50%;">
+                                卖方(承揽方)：
+                                <span t-esc="o.user_id.company_id.name"/>
+                            </td>
+                            <td colspan="3" style="width:50%;">
+                                买方(定作方)：
+                                <span t-esc="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" >
+                                地址：
+                                <span t-esc="o.user_id.company_id.street"/>
+                            </td>
+                            <td colspan="3" >
+                                地址：
+                                <span t-esc="o.partner_id.street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                电话：
+                                <span t-esc="o.user_id.company_id.phone"/>
+                            </td>
+                            <td>
+                                传真：
+                                <span t-esc="o.user_id.company_id.fax"/>
+                            </td>
+                            <td>
+                                联系人：
+                                <span t-esc="o.user_id.name"/>
+                            </td>
+                            <td colspan="3" >
+                                收货地址：
+                                <span t-esc="o.partner_shipping_id.street"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                开户行：
+                            </td>
+                            <td  colspan="2">
+                                账号：
+                            </td>
+                            <td>
+                                电话：
+                                <span t-esc="o.partner_id.phone"/>
+                            </td>
+                            <td>
+                                传真：
+                                <span t-esc="o.partner_id.fax"/>
+                            </td>
+                            <td>
+                                联系人：
+                            </td>
+                        </tr>
+                    </table>
+                    <br></br>
+
+                    <table style="width:1500px;" class="table-bordered">
+                    <!--<table style="width:1500px;" class="table-hover">-->
+                        <tr>
+                            <td colspan="15" style="border:0px solid #000000;">
+                                <h4>一、产品名称、规格、数量及交货期</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>序号</td>
+                            <td>产品名称</td>
+                            <td>板厚mm</td>
+                            <td>尺寸cm</td>
+                            <td>层数</td>
+                            <td>数量</td>
+                            <td>单元</td>
+                            <td>单价</td>
+                            <td>准备费</td>
+                            <td>光绘费</td>
+                            <td>测试费</td>
+                            <td>其他费用</td>
+                            <td>合计金额</td>
+                            <td>发货日期</td>
+                            <td>回签发货</td>
+                        </tr>
+                        <t t-set="index" t-value="1"/>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <!--序号-->
+                            <td style="height:30px; vertical-align:middle;">
+                                <span t-esc="index"/>
+                            </td>
+                            <!--产品名称-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.product_id.name"/>
+                            </td>
+                            <!--板厚-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.finish_thick"/>
+                                (+<span t-esc="line.price_id.info_id.finish_thick_tolu"/>-<span t-esc="line.price_id.info_id.finish_thick_told"/>)
+                            </td>
+                            <!--尺寸-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.length"/>*<span t-field="line.price_id.info_id.width"/>
+                            </td>
+                            <!--层数-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.layer_count"/>
+                            </td>
+                            <!--数量-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.product_uom_qty"/>
+                            </td>
+                            <!--单元-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.qty"/>
+                            </td>
+                            <!--价格-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <!--准备费-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--光绘费-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.amount_plot_"/>
+                            </td>
+                            <!--测试费-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.amount_test"/>
+                            </td>
+                            <!--其他费用-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.amount_other"/>
+                            </td>
+                            <!--合计金额-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_subtotal"/>
+                            </td>
+                            <!--发货日期-->
+                            <td style="vertical-align:middle;">
+                                <!--<span t-field="line.price_id.delivery_date"/>-->
+                                <span t-esc="data['delivery_date_all'][index-1]"/>
+                            </td>
+                            <!--回签发货-->
+                            <td style="vertical-align:middle;"></td>
+                            <t t-set="index" t-value="index + 1"/>
+                        </tr>
+                    </table>
+                    <br></br>
+
+                    <table style="width:1500px;" class="table-bordered">
+                        <tr>
+                            <td colspan="17" style="border:0px solid #000000;">
+                                <h4>二、产品制作要求</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>序号</td>
+                            <td>批次号</td>
+                            <td>档案号</td>
+                            <td>物料编号</td>
+                            <td>制板类型</td>
+                            <td>板材</td>
+                            <td>工艺要求</td>
+                            <td>外铜箔厚</td>
+                            <td>内铜箔厚</td>
+                            <td>过孔</td>
+                            <td>阻焊颜色</td>
+                            <td>字符颜色</td>
+                            <td>测试类型</td>
+                            <td>牧泰莱标记</td>
+                            <td>来源形式</td>
+                            <td>图纸</td>
+                            <td>特殊要求</td>
+                        </tr>
+                        <t t-set="index" t-value="1"/>
+                        <tr t-foreach="o.order_line" t-as="line">
+                            <!--序号-->
+                            <td style="height:30px;vertical-align:middle;">
+                                <span t-esc="index"/>
+                            </td>
+                            <!--批次号-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--档案号-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.product_id.name"/>
+                            </td>
+                            <!--物料编码-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.product_id.default_code"/>
+                            </td>
+                            <!--制板类型-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.type"/>
+                            </td>
+                            <!--板材-->
+                            <td style="vertical-align:middle;">
+                                <span t-esc="data['board_format_ids'][index-1]"/>
+                            </td>
+                            <!--工艺要求-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.surface_coating.name"/>
+                            </td>
+                            <!--外铜箔厚-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.max_cu_thick"/>
+                            </td>
+                            <!--内铜箔厚-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--过孔-->
+                            <td style="vertical-align:middle;">
+                                <span t-esc="data['via_solder_all'][index-1]"/>
+                            </td>
+                            <!--阻焊颜色-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.solder_color.name"/>
+                            </td>
+                            <!--字符颜色-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.legend_color.name"/>
+                            </td>
+                            <!--测试类型-->
+                            <td style="vertical-align:middle;">
+                                <span t-field="line.price_id.info_id.test_id.name"/>
+                            </td>
+                            <!--牧泰莱标记-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--来源形式-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--图纸-->
+                            <td style="vertical-align:middle;"></td>
+                            <!--特殊要求-->
+                            <td style="vertical-align:middle;">
+                                <span t-esc="data['special_tech_ids'][index-1]"/>
+                            </td>
+
+                            <t t-set="index" t-value="index + 1"/>
+                        </tr>
+                    </table>
+
+                    <table style="width:1500px;" class="table-bordered">
+                        <tr>
+                            <td style="width:5%;">
+                                <h4>
+                                    <b>
+                                        合计：
+                                    </b>
+                                </h4>
+                            </td>
+                            <td style="width:35%;">
+                                <h4>
+                                    <b>
+                                        ¥<span t-esc="o.amount_total"/>元
+                                    </b>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                    <b>
+                                        大写人民币：<span t-esc="data['amount_total']"/>
+                                    </b>
+                                </h4>
+                            </td>
+                        </tr>
+                    </table>
+                    <br></br>
+
+                    <table style="width:1500px;border:0px">
+                        <tr>
+                            <td>
+                                <h5>三、交货地点：</h5>
+                            </td>
+                            <td colspan="2">
+                                <h5>交货方式：</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>四、运费及运保费由：</h5>
+                            </td>
+                            <td colspan="2">
+                                <h5>
+                                    包装方式：
+                                    <span t-esc="data['packing_all']"/>
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>
+                                    五、验收标准：
+                                    <span t-esc="data['acceptance_standard_id']"/>
+                                </h5>
+                            </td>
+                            <td colspan="2">
+                                <h5>
+                                    验收期限：请在______天内以书面形式通知卖方，否则视为接收。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>
+                                    六、票据形式：
+                                </h5>
+                            </td>
+                            <td>
+                                <h5>
+                                    结算方式：
+                                </h5>
+                            </td>
+                            <td>
+                                <h5>
+                                    付款方式：<span t-esc="o.payment_term.name"/>
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    七、交货时间的天数以卖方收到合同回签开始计算。
+                                </h5>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    八、在卖方投料后买方提出更改设计资料或停止加工，应承担卖方因此受到的材料损失。在不造成报废的前提下，卖方尽量满足买方的更改要求，并相应顺延交货期。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    九、保密要求：卖方对买方提供之资料负有保密义务，长期合作关系的客户可以按照双方签订的保密协议执行。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    十、遇不可抗力因素造成卖方未能按期交货。卖方应及时通知买方，否则责任由卖方承担。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    十一、因卖方产品质量原因造成买方的产品报废，按照行业惯例，卖方的赔偿可不超过电路板自身价值为最高额度。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    十二、在履行合同过程中，若发生争议，由双方友好协商解决，协商未果，双方同意以法律手段解决。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    十三、双方业务中所发传真等同原件具有同等法律效力，其他相关协议、手册等文件、资料和本合同有冲突的，以本合同为准。
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3">
+                                <h5>
+                                    十四、特殊说明：
+                                    <span t-esc="data['special_note_all']"/>
+                                </h5>
+                            </td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <table style="width:1500px;body:0px">
+                        <tr>
+                            <td>
+                                <h5>
+                                    卖方：
+                                    <span t-esc="o.user_id.company_id.name"/>
+                                    (盖章)
+                                </h5>
+                            </td>
+                            <td>
+                                <h5>
+                                    买方：
+                                    <span t-esc="o.partner_id.name"/>
+                                    (盖章)
+                                </h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5>
+                                    代表签字：
+                                </h5>
+                            </td>
+                            <td>
+                                <h5>
+                                    代表签字：
+                                </h5>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="footer">
+                    <div align="right">
+                        <p style="float:right">MTL-SR-001</p>
+                    </div>
+                </div>
+            </div>
+
+        </template>
+
+        <template id="report_sale_order">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_sale.report_sale_order_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

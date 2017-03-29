@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="acceptance_standard_tree_view">
+            <field name="name">acceptance.standard.tree</field>
+            <field name="model">acceptance.standard</field>
+            <field name="arch" type="xml">
+                <tree string="验收标准">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="acceptance_standard_from_view">
+            <field name="name">acceptance.standard.form</field>
+            <field name="model">acceptance.standard</field>
+            <field name="arch" type="xml">
+                <form string="验收标准">
+                    <group>
+                        <group colspan="1">
+                            <field name="name"/>
+                        </group>
+                        <group colspan="1">
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_acceptance_standard">
+            <field name="name">验收标准</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">acceptance.standard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_acceptance_standard" action="action_acceptance_standard" name="验收标准"
+                  parent="quality_control.qc_menu_config" sequence="1"/>
+
+
+    </data>
+</openerp>
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Properties -->
+
+        <record id="inherit_ir_property_view" model="ir.ui.view">
+            <field name="name">inherit.ir.property.form</field>
+            <field name="model">ir.property</field>
+            <field name="inherit_id" ref="base.ir_property_view"/>
+            <field name="arch" type="xml">
+                  <sheet position="before">
+                    <header>
+                        <button name="set_multi" string="多公司支付条款更新" type="object" class="oe_highlight"
+                                groups="base.group_system"/>
+                    </header>
+                </sheet>
+            </field>
+        </record>
+
+    </data>
+</openerp>

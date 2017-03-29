@@ -1,0 +1,50 @@
+/*==========1214*/
+.oe_font_red
+{
+    color: rgba(203, 0, 0, 0.95);
+}
+
+/*.oe_tree_column_width_mtl [data-id="product_id"]*/
+/*{*/
+    /*color: rgba(72, 129, 73, 0.95);*/
+    /*width: 300px;*/
+    /*max-width: 300px !important;*/
+    /*word-wrap: break-word !important;*/
+    /*word-break: break-all !important;*/
+/*}*/
+
+.oe_tree_column_width_mtl2 th[data-id="product_tmpl_id"]
+{
+    color: rgba(203, 0, 0, 0.95);
+    width: 200px;
+    max-width: 200px !important;
+    white-space: pre-line;
+    word-wrap: break-word !important;
+    word-break: normal !important;
+}
+
+school_principals{
+    color: rgba(203, 0, 0, 0.95);
+    width: 100px;
+    max-width: 150px; !important;
+    white-space: pre-line;
+    word-wrap: break-word !important;
+    word-break: normal !important;
+}
+
+
+.openerp .oe_list_content > tbody > tr > td.th[data-id='product_tmpl_id'] {
+    width: 400px;
+    max-width: 400px !important;
+    padding: 3px 6px;
+    white-space: pre-line;
+  /*white-space: normal;  !*Update by Charles on 2015-10-15*!*/
+}
+
+/*.openerp .oe_list_content > tbody > tr > td.oe_list_field_cell {*/
+    /*width: 10%;*/
+    /*max-width: 15% !important;*/
+    /*padding: 3px 6px;*/
+    /*white-space: pre-line;*/
+  /*!*white-space: normal;  !*Update by Charles on 2015-10-15*!*!*/
+/*}*/

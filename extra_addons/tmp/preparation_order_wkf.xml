@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="preparation_order" model="workflow">
+            <field name="name">Preparation Order Workflow</field>
+            <field name="osv">preparation.order</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+        <record id="act_w_general_manager" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">w_general_manager</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'w_production_chief_inspector'})</field>
+        </record>
+        <record id="act_w_account" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">w_account</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'w_account'})</field>
+        </record>
+        <record id="act_w_chairman" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">w_chairman</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'w_chairman'})</field>
+        </record>
+        <record id="act_w_purchase" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">w_purchase</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'w_purchase'})</field>
+        </record>
+        <record id="act_done" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">done</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_done()</field>
+        </record>
+        <record id="act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'cancel'})</field>
+        </record>
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="preparation_order"/>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'draft'})</field>
+        </record>
+
+        <!-- Trans -->
+        <record id="trans_draft2w_general_manager" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_w_general_manager"/>
+            <field name="signal">confirm</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_general_manager2w_purchase" model="workflow.transition">
+            <field name="act_from" ref="act_w_general_manager"/>
+            <field name="act_to" ref="act_w_purchase"/>
+            <field name="signal">general_manager_approve</field>
+            <field name="condition">not check_unconventional()</field>
+        </record>
+        <record id="trans_w_purchase2done" model="workflow.transition">
+            <field name="act_from" ref="act_w_purchase"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">purchase_approve</field>
+            <field name="condition">True</field>
+        </record>
+
+        <record id="trans_w_general_manager2w_account" model="workflow.transition">
+            <field name="act_from" ref="act_w_general_manager"/>
+            <field name="act_to" ref="act_w_account"/>
+            <field name="signal">general_manager_approve</field>
+            <field name="condition">check_unconventional()</field>
+        </record>
+        <record id="trans_w_account2w_chairman" model="workflow.transition">
+            <field name="act_from" ref="act_w_account"/>
+            <field name="act_to" ref="act_w_chairman"/>
+            <field name="signal">account_approve</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_chairman2w_purchase" model="workflow.transition">
+            <field name="act_from" ref="act_w_chairman"/>
+            <field name="act_to" ref="act_w_purchase"/>
+            <field name="signal">chairman_approve</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_general_manager2cancel" model="workflow.transition">
+            <field name="act_from" ref="act_w_general_manager"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">to_cancel</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_purchase2cancel" model="workflow.transition">
+            <field name="act_from" ref="act_w_purchase"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">to_cancel</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_chairman2cancel" model="workflow.transition">
+            <field name="act_from" ref="act_w_chairman"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">to_cancel</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_w_account2cancel" model="workflow.transition">
+            <field name="act_from" ref="act_w_account"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">to_cancel</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_cancel2draft" model="workflow.transition">
+            <field name="act_from" ref="act_cancel"/>
+            <field name="act_to" ref="act_draft"/>
+            <field name="signal">to_draft</field>
+            <field name="condition">True</field>
+        </record>
+
+    </data>
+</openerp>
+
+
+
+
+        <!--
+                ('draft', u'草稿'), ('w_general_manager',u'待总经理'),('w_account', u'待财务'), ('w_chairman', u'待董事长'),
+                                                   ('w_purchase', u'待采购'), ('done', u'完成'), ('cancel', u'取消')]
+        -->

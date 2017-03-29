@@ -1,0 +1,25 @@
+"id","btype","type","value","layer_count","min_cu_thick","max_cu_thick","min_order_area","max_order_area","eval_code"
+"__export__.pcb_fee_base_ptfe_001","PTFE板","基板费",0,0,0,1,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_base_ptfe_002","PTFE板","基板费",0,0,0,1,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_base_ptfe_003","PTFE板","基板费",0,0,0,1,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_base_ptfe_004","PTFE板","基板费",0,0,1,2,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_base_ptfe_005","PTFE板","基板费",0,0,1,2,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_base_ptfe_006","PTFE板","基板费",0,0,1,2,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_base_ptfe_007","PTFE板","基板费",0,0,2,3,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.19"
+"__export__.pcb_fee_base_ptfe_008","PTFE板","基板费",0,0,2,3,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.19"
+"__export__.pcb_fee_base_ptfe_009","PTFE板","基板费",0,0,2,3,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.19"
+"__export__.pcb_fee_base_ptfe_010","PTFE板","基板费",0,0,3,4,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.26"
+"__export__.pcb_fee_base_ptfe_011","PTFE板","基板费",0,0,3,4,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.26"
+"__export__.pcb_fee_base_ptfe_012","PTFE板","基板费",0,0,3,4,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.26"

@@ -1,0 +1,4 @@
+"id","type","eval_code"
+"__export__.pcb_fee_eng_panel_001","工程套版费","def fn(pprice, fee_dic):
+    fee_eng = fee_dic.get('fee_eng')
+    return  pprice.suite_qty > 1 and  fee_eng / 2 * (pprice.suite_qty-1)  or  0.0"

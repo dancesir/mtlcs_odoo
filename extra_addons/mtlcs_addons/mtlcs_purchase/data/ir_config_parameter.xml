@@ -1,0 +1,10 @@
+<openerp>
+    <data noupdate="1">
+
+        <record id="unconventional_purchase_limit" model="ir.config_parameter">
+            <field name="key">unconventional_purchase_limit</field>
+            <field name="value">2000</field>
+        </record>
+
+    </data>
+</openerp>

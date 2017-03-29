@@ -1,0 +1,34 @@
+id,type,value,surface_id/id,max_au_thick,min_au_thick,max_ni_thick,min_ni_thick,eval_code
+__export__.pcb_fee_surface_1,表面处理费,0,mtlcs_all.technic_attribute_013,0,0,0,0,"def fn(pprice):
+    return pprice.m2_area > 1 and  0 or 80"
+__export__.pcb_fee_surface_2,表面处理费,0,mtlcs_all.technic_attribute_020,0,0,0,0,"def fn(pprice):
+    return pprice.m2_area > 1 and ( pprice.area * 0.005 < 80  and 80 /  pprice.area or 0.005 ) or 80"
+__export__.pcb_fee_surface_3,表面处理费,0,mtlcs_all.technic_attribute_021,0,0,0,0,"def fn(pprice):
+    return pprice.m2_area > 1 and  0 or 80"
+__export__.pcb_fee_surface_4,表面处理费,0,mtlcs_all.technic_attribute_009,0,0,0,0,"def fn(pprice):
+    return pprice.m2_area > 1 and ( pprice.area * 0.01 < 80   and 80 /  pprice.area or 0.01 ) or 80"
+__export__.pcb_fee_surface_5,表面处理费,0,mtlcs_all.technic_attribute_008,0,0,0,0,"def fn(pprice):
+    return pprice.m2_area > 1 and ( pprice.area * 0.01 < 80   and 80 /  pprice.area or 0.01 ) or 80"
+__export__.pcb_fee_surface_6,表面处理费,0,mtlcs_all.technic_attribute_017,1.5,0,0,0,"def fn(pprice):
+    return pprice.info_id.surface_percent >= 20 and  ( pprice.info_id.surface_percent / 20 - 1 ) * 0.02 + 0.02 or  0.02 "
+__export__.pcb_fee_surface_7,表面处理费,0,mtlcs_all.technic_attribute_017,3,1.5,0,0,"def fn(pprice):
+    return pprice.info_id.surface_percent >= 20 and   ( pprice.info_id.surface_percent / 20 - 1 ) * 0.02 + 0.02  or  0.02"
+__export__.pcb_fee_surface_8,表面处理费,0,mtlcs_all.technic_attribute_017,4,3,0,0,"def fn(pprice):
+    return pprice.info_id.surface_percent >= 20 and ( pprice.info_id.surface_percent /20 - 1 ) * 0.025 + 0.025   or  0.025"
+__export__.pcb_fee_surface_9,表面处理费,0,mtlcs_all.technic_attribute_017,5,4,0,0,"def fn(pprice):
+     return pprice.info_id.surface_percent >= 20  and  ( pprice.info_id.surface_percent / 20 - 1 ) * 0.03 + 0.03  or  0.03"
+__export__.pcb_fee_surface_10,表面处理费,0,mtlcs_all.technic_attribute_017,6,5,0,0,"def fn(pprice):
+      return pprice.info_id.surface_percent >= 20 and  ( pprice.info_id.surface_percent /20 - 1 ) * 0.04 + 0.04  or  0.04"
+__export__.pcb_fee_surface_11,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,150,0,def fn(pprice):return  0.0
+__export__.pcb_fee_surface_12,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,200,150,"def fn(pprice,feedic):
+    return feedic['fee_base'] * 0.1 "
+__export__.pcb_fee_surface_13,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,250,200,"def fn(pprice,feedic):
+    return feedic['fee_base'] * 0.2"
+__export__.pcb_fee_surface_14,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,300,250,"def fn(pprice,feedic):
+    return feedic['fee_base'] * 0.3"
+__export__.pcb_fee_surface_15,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,350,300,"def fn(pprice,feedic):
+    return feedic['fee_base'] * 0.4"
+__export__.pcb_fee_surface_16,表面处理费,0,mtlcs_all.technic_attribute_017,0,0,400,350,"def fn(pprice,feedic):
+    return feedic['fee_base'] * 0.5"
+__export__.pcb_fee_surface_17,表面处理费,0,mtlcs_all.technic_attribute_128,0,0,0,0,"def fn(pprice,feedic):
+    return pprice.m2_area > 1 and ( pprice.area * feedic['fee_base'] * 1.3   < 80  and 80 /  pprice.area or feedic['fee_base'] * 1.3 ) or 80"

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- PCB Sale Order
+        <record id="pcb_sale_order_tree_view" model="ir.ui.view">
+            <field name="name">pcb.sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <tree string="PCB销售合同">
+                    <field name="name"/>
+                    <field name="message_unread" invisible="1"/>
+                    <field name="date_order"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="amount_total" sum="Total Tax Included"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        -->
+
+        <!--
+        <record id="pcb_sale_order_form_view" model="ir.ui.view">
+            <field name="name">pcb.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <form string="PCB销售合同">
+                    <header>
+                        <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice" groups="base.group_system"/>
+                        <button name="invoice_corrected" states="invoice_except" string="Ignore Exception" groups="base.group_system"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight"
+                                groups="base.group_system"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" states="sent,progress,manual"
+                                groups="base.group_system"/>
+                        <button name="print_quotation" string="Print" type="object" states="draft" class="oe_highlight"
+                                groups="base.group_system"/>
+                        <button name="print_quotation" string="Print" type="object" states="sent,progress,manual" groups="base.group_system"/>
+                        <button name="action_button_confirm" states="draft" string="Confirm Sale" type="object" groups="base.group_system"/>
+                        <button name="action_button_confirm" states="sent" string="Confirm Sale" class="oe_highlight" type="object"
+                                groups="base.group_system"/>
+                        <button name="action_view_invoice" string="View Invoice" type="object" class="oe_highlight"
+                                attrs="{'invisible': [('invoice_exists', '=', False)]}" groups="base.group_system"/>
+                        <button name="cancel" states="draft,sent" string="Cancel Quotation" groups="base.group_user"/>
+                        <button name="action_cancel" states="manual,progress" string="Cancel Order" type="object" groups="base.group_user"/>
+                        <button name="invoice_cancel" states="invoice_except" string="Cancel Order" groups="base.group_system"/>
+
+
+
+                        <button name="to_director" string="审批（订单员）" states="draft"/>
+                        <button name="director_approve" string="审批（订单主管）" states="w_director"/>
+                        <button name="inspector_approve" string="审批（营销总监）" states="w_inspector"/>
+                        <button name="action_button_confirm" states="sent" string="客户回签" class="oe_highlight" type="object"
+                                    groups="base.group_user"/>
+
+
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,w_director,w_inspector,sent,progress,done"/>
+                    </header>
+
+                    <sheet>
+                        <h1>
+                            <label string="Quotation " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
+                            <label string="Sales Order " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]"
+                                       context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}"/>
+                                <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address"
+                                       context="{'default_type':'invoice'}"/>
+                                <field name="partner_shipping_id"
+                                       on_change="onchange_delivery_id(company_id, partner_id, partner_shipping_id, fiscal_position)"
+                                       groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}"/>
+                                <field name="project_id"
+                                       context="{'partner_id':partner_invoice_id, 'manager_id': user_id, 'default_pricelist_id':pricelist_id, 'default_name':name, 'default_type': 'contract'}"
+                                       groups="sale.group_analytic_accounting" domain="[('type','in',['view','normal','contract'])]"/>
+                            </group>
+                            <group>
+                                <field name="date_order"/>
+                                <field name="client_order_ref"/>
+                                <field domain="[('type','=','sale')]" name="pricelist_id" groups="product.group_sale_pricelist"
+                                       on_change="onchange_pricelist_id(pricelist_id,order_line)"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines">
+                                <field name="order_line">
+                                    <form string="Sales Order Lines">
+                                        <header groups="base.group_user">
+                                            <button name="430" states="confirmed" string="Invoice" type="action" icon="terp-document-new"/>
+                                            <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"
+                                                   statusbar_colors="{&quot;exception&quot;:&quot;red&quot;,&quot;cancel&quot;:&quot;red&quot;}"/>
+                                        </header>
+                                        <group>
+                                            <group>
+                                                <field name="product_id"
+                                                       context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                                       groups="base.group_user"
+                                                       on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, False, product_uos_qty, False, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"/>
+                                                <label for="product_uom_qty"/>
+                                                <div>
+                                                    <field context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                                           name="product_uom_qty" class="oe_inline"
+                                                           on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)"/>
+                                                    <field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button"
+                                                           context="{'company_id': parent.company_id}"
+                                                           on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, context)"/>
+                                                </div>
+                                                <label for="product_uos_qty" groups="product.group_uos"/>
+                                                <div groups="product.group_uos">
+                                                    <field name="product_uos_qty" class="oe_inline"/>
+                                                    <field name="product_uos" options="{&quot;no_open&quot;: True}" class="oe_inline"/>
+                                                </div>
+                                                <field name="price_unit"/>
+                                                <label for="discount" groups="sale.group_discount_per_so_line"/>
+                                                <div name="discount" groups="sale.group_discount_per_so_line">
+                                                    <field name="discount" class="oe_inline"/>
+                                                    %
+                                                </div>
+                                            </group>
+                                            <group>
+                                                <field name="tax_id" widget="many2many_tags"
+                                                       domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                                <field name="th_weight"/>
+                                                <field name="address_allotment_id"/>
+                                            </group>
+                                        </group>
+                                        <label for="name"/>
+                                        <field name="name"/>
+                                        <div groups="base.group_no_one">
+                                            <label for="invoice_lines"/>
+                                            <field name="invoice_lines"/>
+                                        </div>
+                                    </form>
+                                    <tree string="Sales Order Lines" editable="bottom">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="th_weight" invisible="1"/>
+                                        <field name="product_id"
+                                               context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                               groups="base.group_user"
+                                               on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, False, product_uos_qty, False, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"/>
+
+
+
+                                        <field name="price_id" readonly="1"/>
+
+
+                                        <field name="fee_eng" readonly="1"/>
+                                        <field name="fee_plot" readonly="1"/>
+                                        <field name="fee_test" readonly="1"/>
+                                        <field name="fee_other" readonly="1"/>
+                                        <field name="fee_pcs" readonly="1"/>
+                                        <field name="fee_base" readonly="1"/>
+                                        <field name="fee_pack" readonly="1"/>
+                                        <field name="fee_jig" readonly="1"/>
+                                        <field name="fee_change" readonly="1"/>
+                                        <field name="fee_urgent" readonly="1"/>
+                                        <field name="fee_finger" readonly="1"/>
+
+
+
+                                        <field name="name" invisible="1"/>
+                                        <field name="product_uom_qty"
+                                               context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                               on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)"/>
+                                        <field name="product_uom" context="{'company_id': parent.company_id}"
+                                               on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)"
+                                               groups="product.group_uom" options="{&quot;no_open&quot;: True}"/>
+                                        <field name="product_uos_qty" groups="product.group_uos" invisible="1"/>
+                                        <field name="product_uos" string="UoS" groups="product.group_uos" invisible="1"/>
+                                        <field name="price_unit"/>
+                                        <field name="tax_id" widget="many2many_tags"
+                                               domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                        <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="amount_total"/>
+                                        <button name="button_dummy" states="draft,sent" string="(update)" type="object"
+                                                class="oe_edit_only oe_link"/>
+                                    </div>
+                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                                <field name="note" class="oe_inline" placeholder="Terms and conditions..."/>
+                            </page>
+                            <page string="Other Information" groups="base.group_user">
+                                <group>
+                                    <group name="sales_person" groups="base.group_user">
+                                        <field name="user_id"
+                                               context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'account.group_account_invoice', 'base.group_sale_salesman_all_leads']}"/>
+                                        <field name="section_id" options="{'no_create': True}" groups="base.group_multi_salesteams"/>
+                                        <field groups="base.group_no_one" name="origin"/>
+                                    </group>
+                                    <group name="sale_pay">
+                                        <field name="payment_term" options="{'no_create': True}"/>
+                                        <field name="fiscal_position" options="{'no_create': True}"
+                                               on_change="onchange_fiscal_position(fiscal_position, order_line, context)"/>
+                                        <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                                    </group>
+                                    <group>
+                                        <field name="invoiced"/>
+                                        <field name="invoice_exists" invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        -->
+
+
+
+        <record model="ir.actions.act_window" id="action_pcb_sale_order">
+            <field name="name">PCB销售合同</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--
+        <record model="ir.actions.act_window.view" id="action_pcb_sale_order_view_tree">
+            <field name="act_window_id" ref="action_pcb_sale_order"/>
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="pcb_sale_order_tree_view"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_pcb_sale_order_view_form">
+            <field name="act_window_id" ref="action_pcb_sale_order"/>
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pcb_sale_order_form_view"/>
+        </record>
+        -->
+        <menuitem name="销售合同" action="action_pcb_sale_order" id="menu_pcb_sale_order" parent="mtlcs_base.sub_menu_order_center" sequence="4"
+                  groups="base.group_sale_salesman"/>
+        
+        <!--SOL view -->
+        <record id="inherit_view_sales_order_line_filte" model="ir.ui.view">
+            <field name="name">inherit.sale.order.line.search</field>
+            <field name="model">sale.order.line</field>
+            <field name='inherit_id' ref='sale.view_sales_order_line_filter'/>
+            <field name="arch" type="xml">
+                <filter string="Confirmed" position="after">
+                    <filter string="待投产" domain="[('qty_no_production', '>', 0)]" name="w_spbatch"/>
+                </filter>
+            </field>
+        </record>
+
+        <record id="inherit_view_order_line_tree" model="ir.ui.view">
+            <field name="name">inherit.sale.order.line.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name='inherit_id' ref='sale.view_order_line_tree'/>
+            <field name="arch" type="xml">
+                <field name="order_id" position="before">
+                    <field name="price_id"/>
+                    <field name="qty_no_production"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="inherit_view_order_line_form2" model="ir.ui.view">
+            <field name="name">inherit.sale.order.line.from</field>
+            <field name="model">sale.order.line</field>
+            <field name='inherit_id' ref='sale.view_order_line_form2'/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="sp_batch_ids"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sale_order_line">
+            <field name="name">合同投产</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_w_spbatch':1,}</field>
+            <field name="search_view_id" ref="sale.view_sales_order_line_filter"/>
+        </record>
+
+        <menuitem id="menu_sale_order_line" name="合同投产" sequence="5"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_sale_order_line"/>
+
+        <!-- Sale Production Batch -->
+        <record model="ir.ui.view" id="sale_production_batch_tree_view">
+            <field name="name">sale.production.batch.tree</field>
+            <field name="model">sale.production.batch</field>
+            <field name="arch" type="xml">
+                <tree string="合同投产批次">
+                    <field name="name"/>
+                    <field name="qty"/>
+                    <field name="sol_id"/>
+                    <field name="order_id"/>
+                    <field name="price_id"/>
+                    <field name="info_id"/>
+                    <field name="product_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_production_batch_form_view">
+            <field name="name">sale.production.batch.form</field>
+            <field name="model">sale.production.batch</field>
+            <field name="arch" type="xml">
+                <form string="合同投产批次">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="qty"/>
+                        </group>
+                        <group>
+                            <field name="sol_id"/>
+                            <field name="order_id"/>
+                            <field name="price_id"/>
+                            <field name="info_id"/>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sale_production_batch">
+            <field name="name">合同投产批次</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.production.batch</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_sale_production_batch" name="合同投产批次" sequence="6"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_sale_production_batch"/>
+
+
+
+
+
+    </data>
+</openerp>
+
+
+
+

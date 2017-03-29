@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_pcb_info_document">
+            <div style="width:800px;">
+                <div class="header">
+                    <div align="center">
+                        <br></br>
+                        <table style="width:100%;">
+                            <tr>
+                                <td>
+                                    <h3 align="center"><span t-esc="o.create_uid.company_id.name"/></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h3  align="center">用 户 单</h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td   align="right">
+                                    <h6>序号：_____________</h6>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="page" align="center" style="width:100%; border:1px solid #000000;margin:0 auto;">
+
+                    <t t-set="data" t-value="multi_selection_data(o)"/>
+
+                    <table >
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:9%;height:28px">用户名称：</td>
+                                <td style="width:21%">
+                                    <span t-esc="o.partner_id.name"/>
+                                </td>
+                                <td style="width:8%">合同号：</td>
+                                <td style="width:19%"></td>
+                                <td style="width:7%">联络人：</td>
+                                <td style="width:13%"></td>
+                                <td style="width:6%">电话：</td>
+                                <td style="width:17%">
+                                    <span t-esc="o.partner_id.phone"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height:28px">档案号：</td>
+                                <td>
+                                    <span t-esc="o.product_id.name"/>
+                                </td>
+                                <td>零件号：</td>
+                                <td>
+                                    <span t-esc="o.ref"/>
+                                </td>
+                                <td>业务员：</td>
+                                <td>
+                                    <span t-esc="o.create_uid.name"/>
+                                </td>
+                                <td>邮箱：</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; border-top:1px solid #000000;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">1.基板材料：</td>
+                                <td style="width:13%">板材型号：</td>
+                                <td style="width:37%">
+                                    <span t-esc="data['board_format_ids']"/>
+                                </td>
+                                <td style="width:10%">（）混压</td>
+                                <td style="width:10%">厂家：</td>
+                                <td style="width:12%"></td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%"></td>
+                                <td style="width:25%">基板厚度(双面板需指定厚度)：</td>
+                                <td style="width:58%">
+                                    <span t-esc="o.base_board_thick"/>mm
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%"></td>
+                                <td style="width:15%">外层铜箔厚度：</td>
+                                <td style="width:15%">OZ</td>
+                                <td style="width:15%">内层铜箔厚度：</td>
+                                <td style="width:37%">OZ</td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">2.成品：</td>
+                                <td style="width:9%">层数：</td>
+                                <td style="width:9%">
+                                    <span t-esc="o.layer_count"/>
+                                </td>
+                                <td style="width:9%">厚度：</td>
+                                <td style="width:9%">
+                                    <span t-esc="o.finish_thick"/>mm
+                                </td>
+                                <td style="width:9%">公差：</td>
+                                <td style="width:37%">
+                                    +<span t-esc="o.finish_thick_tolu"/>mm/-<span t-esc="o.finish_thick_told"/>mm
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%"></td>
+                                <td colspan="2">成品铜厚(外)：</td>
+                                <td colspan="2"><span t-esc="o.max_cu_thick"/>OZ</td>
+                                <td>(内)：</td>
+                                <td >
+                                    <span t-esc="data['cu_thick_inside']"/>OZ
+                                </td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">技</td>
+                                <td style="width:15%">3.表面涂覆：</td>
+                                <td style="width:28%"><span t-esc="o.surface_coating.name"/></td>
+                                <td style="width:15%">涂层厚度及要求：</td>
+                                <td style="width:39%">
+                                    <span t-esc="data['surface_coating_add']"/><span t-esc="o.coating_request"/>
+                                </td>
+                            </tr>
+                        </table>
+                         <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%"></td>
+                                <td style="width:15%">金手指条数：</td>
+                                <td style="width:8%">
+                                    <span t-esc="o.finger_qty"/>
+                                </td>
+                                <td style="width:15%">金手指斜边：</td>
+                                <td style="width:8%">
+                                    <span t-esc="o.finger_angle"/>度
+                                </td>
+                                <td style="width:15%">金手指斜描述：</td>
+                                <td style="width:36%">
+                                    <span t-esc="o.finger_note"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">4.特种工艺：</td>
+                                <td style="width:82%">
+                                    <span t-esc="data['special_tech_ids']"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">术</td>
+                                <td style="width:15%">5.阻焊类型：</td>
+                                <td style="width:15%">阻焊颜色：</td>
+                                <td style="width:15%">
+                                    <span t-esc="o.solder_color.name"/>
+                                </td>
+                                <td style="width:8%">型号：</td>
+                                <td style="width:15%">
+                                    <span t-esc="o.solder_format.name"/>
+                                </td>
+                                <td style="width:10%">阻焊类型：</td>
+                                <td style="width:23%">
+                                    <span t-esc="o.solder_type.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td ></td>
+                                <td>过线孔阻焊：</td>
+                                <td colspan="5">
+                                    <span t-esc="data['via_solder_pad']"/> <span t-esc="data['via_solder_hole']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td>6.字符类型：</td>
+                                <td>字符颜色：</td>
+                                <td>
+                                    <span t-esc="o.legend_color.name"/>
+                                </td>
+                                <td>型号：</td>
+                                <td>
+                                    <span t-esc="o.legend_format.name"/>
+                                </td>
+                                <td>字符类型：</td>
+                                <td>
+                                    <span t-esc="o.legend_type.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">标</td>
+                                <td></td>
+                                <td>字符上SMD：</td>
+                                <td colspan="5"></td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">7.外形加工：</td>
+                                <td style="width:30%">
+                                    <span t-esc="o.shape_id.code"/>
+                                </td>
+                                <td style="width:13%">V-CUT度数：</td>
+                                <td style="width:39%">
+                                    <span t-esc="o.vcut_angle.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">8.通断测试：</td>
+                                <td style="width:82%">
+                                    <span t-esc="o.test_id.name"/> <span t-esc="data['test_et']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">准</td>
+                                <td style="width:15%">9.验收标准：</td>
+                                <td style="width:82%">
+                                    <span t-esc="o.acceptance_standard_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">10.标记要求：</td>
+                                <td style="width:82%">
+                                    <span t-esc="data['mark_ids']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">11.包装要求：</td>
+                                <td style="width:82%">
+                                    <span t-esc="data['packing_re']"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">12.附货要求：</td>
+                                <td style="width:82%">
+                                    <span t-esc="data['misc_ids']"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%; border-top:1px solid #000000;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">难</td>
+                                <td style="width:14%">1.最小线宽：</td>
+                                <td style="width:10%">
+                                    <span t-esc="o.min_line_width"/>mil
+                                </td>
+                                <td style="width:14%">最小间距：</td>
+                                <td style="width:10%">
+                                    <span t-esc="o.min_line_space"/>mil
+                                </td>
+                                <td style="width:14%">最小孔到线：</td>
+                                <td style="width:10%">
+                                    <span t-esc="o.min_hole2line"/>mil
+                                </td>
+                                <td style="width:14%">最小孔径：</td>
+                                <td style="width:11%">
+                                    <span t-esc="o.min_finish_hole"/>mm
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">度</td>
+                                <td>2.开槽数：</td>
+                                <td>
+                                    <span t-esc="o.slot_count"/>
+                                </td>
+                                <td>其他孔数：</td>
+                                <td>
+                                    <span t-esc="o.hole_count_small"/>
+                                </td>
+                                <td>光板数：</td>
+                                <td colspan="3">
+                                    <span t-esc="o.fill_pp_count"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;border-top:1px solid #000000;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">制</td>
+                                <td style="width:15%">1.制作基准：</td>
+                                <td style="width:11%">原文件名：</td>
+                                <td style="width:28%">
+                                    <span t-esc="o.file_name"/>
+                                </td>
+                                <td style="width:15%">使用软件及版本：</td>
+                                <td style="width:28%">
+                                    <span t-esc="o.soft_version_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">作</td>
+                                <td style="width:13%"></td>
+                                <td style="width:11%">是档案号：</td>
+                                <td style="width:28%"></td>
+                                <td colspan="2" style="width:45%">的更新版本</td>
+                            </tr>
+                        </table>
+                        <table  style="width:100%;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">规</td>
+                                <td style="width:15%">2.外形尺寸按：</td>
+                                <td style="width:11%">按文件：</td>
+                                <td style="width:18%"></td>
+                                <td style="width:8%">单件长：</td>
+                                <td style="width:8%">
+                                    <span t-esc="o.unit_length"/>cm ×
+                                </td>
+                                <td style="width:8%">单件宽：</td>
+                                <td style="width:29%">
+                                    <span t-esc="o.unit_width"/>cm
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">范</td>
+                                <td>3.拼版方式按：</td>
+                                <td>按文件：</td>
+                                <td></td>
+                                <td>拼版长：</td>
+                                <td>
+                                    <span t-esc="o.length"/>cm ×
+                                </td>
+                                <td>拼版宽：</td>
+                                <td>
+                                    <span t-esc="o.width"/>cm
+                                </td>
+                            </tr>
+                        </table>
+                         <table  style="width:100%;">
+                            <tr>
+                                <td style="width:3%;height:28px;border-right:1px solid #000000;"></td>
+                                <td style="width:15%">4.交货方式：</td>
+                                <td style="width:13%">
+                                    UNIT/PCS
+                                </td>
+                                <td style="width:15%">拼版交货允许报废:</td>
+                                <td style="width:13%">
+                                    <span t-esc="o.allow_scrap_count"/>UNIT/PCS
+                                </td>
+                                <td style="width:17%">批次允许报废百分比:</td>
+                                <td style="width:24%">
+                                    <span t-esc="o.allow_scrap_percent"/>%
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;border-top:1px solid #000000;">
+                            <tr>
+                                <td align="center" style="width:3%;height:180px;border-right:1px solid #000000;">特殊说明</td>
+                                <td style="height:180px;width:97%">
+                                    <span t-esc="o.special_note_quality"/>
+                                    <span t-esc="o.special_note_package"/>
+                                    <span t-esc="o.special_note_technical"/>
+                                </td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">殊</td>-->
+                                <!--<td></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">说</td>-->
+                                <!--<td></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">明</td>-->
+                                <!--<td></td>-->
+                            <!--</tr>-->
+                        </table>
+                        <table style="width:100%; border-top:1px solid #000000;">
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">审</td>
+                                <td style="width:38%">订单中心资料审核：</td>
+                                <td style="width:13%">（）合格</td>
+                                <td style="width:13%">（）不合格</td>
+                                <td style="width:25%">日期：</td>
+                                <td style="width:11%"></td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="width:3%;height:28px;border-right:1px solid #000000;">核</td>
+                                <td >工程部门资料审核：</td>
+                                <td>（）合格</td>
+                                <td>（）不合格</td>
+                                <td>日期：</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </table>
+                </div>
+
+                <div class="footer" style="width:100%;">
+                    <div align="right">
+                        <p style="float:right">MTL-SR-006</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_pcb_info">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_sale.report_pcb_info_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

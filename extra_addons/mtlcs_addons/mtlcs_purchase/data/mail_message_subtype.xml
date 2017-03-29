@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--请购单 -->
+        <record id="preparation_order_draft" model="mail.message.subtype">
+            <field name="name">preparation_order_draft</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">申购单新建</field>
+        </record>
+
+        <record id="preparation_order_w_production_chief_inspector" model="mail.message.subtype">
+            <field name="name">preparation_order_w_production_chief_inspector</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">待制造总监</field>
+        </record>
+        <record id="preparation_order_w_account" model="mail.message.subtype">
+            <field name="name">preparation_order_w_account</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">至财务</field>
+        </record>
+        <record id="preparation_order_w_chairman" model="mail.message.subtype">
+            <field name="name">preparation_order_w_chairman</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">至董事长</field>
+        </record>
+        <record id="preparation_order_w_purchase" model="mail.message.subtype">
+            <field name="name">preparation_order_w_purchase</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">至采购</field>
+        </record>
+        <record id="preparation_order_done" model="mail.message.subtype">
+            <field name="name">preparation_order_done</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">preparation.order</field>
+            <field name="description">申购完成</field>
+        </record>
+
+        <!-- 物料供应商 -->
+        <record id="product_supplierinfo_w_chief_inspector" model="mail.message.subtype">
+            <field name="name">至总监</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="description">至总监</field>
+        </record>
+        <record id="product_supplierinfo_w_general_manager" model="mail.message.subtype">
+            <field name="name">至总经理</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="description">至总经理</field>
+        </record>
+        <record id="product_supplierinfo_done" model="mail.message.subtype">
+            <field name="name">完成</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="description">完成</field>
+        </record>
+
+    </data>
+</openerp>

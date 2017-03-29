@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_invoice_tree" model="ir.ui.view">
+            <field name="name">supplier.account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_tree'/>
+            <field name="arch" type="xml">
+                <field name="amount_untaxed" position="after">
+                    <field name="amount_tax" invisible="not context.get('show_tax')"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="mtlcs_account_invoice_supplier" model="ir.ui.view">
+            <field name="name">supplier.account.invoice</field>
+            <field name="model">account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_supplier_form'/>
+            <field name="arch" type="xml">
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">draft,confirmed,open,paid</attribute>
+                </field>
+                <!--==========1108-->
+                <xpath expr="//field[@name='type']" position="after">
+                    <button type="object" name="show_approve_logs" class="oe_right oe_inline oe_stat_button"
+                            string="审批日志"
+                            icon="fa-pencil-square-o"/>
+                </xpath>
+                <button name="invoice_cancel" position="attributes">
+                    <attribute name="states">draft,confirmed,account_approve,proforma2</attribute>
+                </button>
+                <button name="invoice_open" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <xpath expr="//button[@name='invoice_open'][last()]" position="after">
+                    <button name="confirm" type="object" string="确认（采购）" states="draft" class="oe_highlight"
+                            groups="purchase.group_purchase_user"/>
+                    <button name="account_approve" type="object" string="审核（财务）" states="confirmed" class="oe_highlight"
+                            groups="account.group_account_user"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line']/tree/field[@name='product_id']" position="before">
+                    <field name="fapiao_id"/>
+                </xpath>
+                <field name="invoice_line" position="before">
+                    <button name="write_supplier_invoice_number2lines" type="object" string="录入发票号码" states="draft"
+                            groups="purchase.group_purchase_user,account.group_account_user"/>
+                </field>
+                <field name="supplier_invoice_number" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="supplier_invoice_number" position="after">
+                    <field name="fapiao_id"/>
+                </field>
+                <xpath expr="//field[@name='invoice_line']/tree/field[@name='product_id']" position="after">
+                    <field name="picking_id"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+        <record id="mtlcs_account_voucher" model="ir.ui.view">
+            <field name="name">mtlcs.account.voucher</field>
+            <field name="model">account.voucher</field>
+            <field name='inherit_id' ref='account_voucher.view_vendor_payment_form'/>
+            <field name="arch" type="xml">
+                <field name="state" position="attributes">
+                    <attribute name="statusbar_visible">
+                        draft,w_purchase_manager,w_account,w_account_manager,w_account_chief_inspector,w_general_manager,w_pay,posted
+                    </attribute>
+                </field>
+                <button name="proforma_voucher" position="attributes">
+                    <attribute name="string">登帐</attribute>
+                    <attribute name="states">w_pay</attribute>
+                </button>
+                <button name="cancel_voucher" string="Cancel Voucher" position="attributes">
+                    <attribute name="string">取消</attribute>
+                    <attribute name="states">
+                        draft,w_purchase_manager,w_account_manager,w_account,w_account_manager,w_account_chief_inspector,w_general_manager
+                    </attribute>
+                </button>
+
+                <field name="type" position="after">
+                    <div class="oe_right">
+                        <button type="object" name="show_approve_logs" class="oe_inline oe_stat_button" string="审批日志"
+                                icon="fa-pencil-square-o"/>
+                    </div>
+                </field>
+
+                <field name="name" position="after">
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </field>
+
+                <field name="state" position="before">
+                    <button name="confirm" type="object" string="确认（采购）" states="draft" class="oe_highlight"
+                            groups="purchase.group_purchase_user"/>
+                    <button name="purchase_manager_approve" type="object" string="确认（采购经理）" states="w_purchase_manager"
+                            class="oe_highlight"
+                            groups="purchase.group_purchase_manager"/>
+                    <button name="account_approve" type="object" string="审核（财务会计）" states="w_account"
+                            class="oe_highlight"
+                            groups="account.group_account_user"/>
+                    <button name="account_manager_approve" type="object" string="审核（财务经理）" states="w_account_manager"
+                            class="oe_highlight"
+                            groups="account.group_account_user"/>
+                    <button name="account_chief_inspector_approve" type="object" string="审核（财务总监）"
+                            states="w_account_chief_inspector" class="oe_highlight"
+                            groups="mtlcs_account.group_chief_inspector"/>
+                    <button name="general_manager_approve" type="object" string="审核（总经理）" states="w_general_manager"
+                            class="oe_highlight"
+                            groups="mtlcs_base.group_general_manager"/>
+
+                </field>
+
+                <field name="amount" position="attributes">
+                    <attribute name="on_change">onchange_amount(amount, payment_rate, partner_id, journal_id,
+                        currency_id, type, date, payment_rate_currency_id, company_id, start_date, end_date, context)
+                    </attribute>
+                </field>
+
+
+            </field>
+        </record>
+
+        <record id="account_invoice_line_view_search" model="ir.ui.view">
+            <field name="name">account.invoice.line.search</field>
+            <field name="model">account.invoice.line</field>
+            <field name='inherit_id' ref='account_invoice_line_xls.account_invoice_line_view_search'/>
+            <field name="arch" type="xml">
+                <field name="invoice_number" position="before">
+                    <field name="fapiao_id"/>
+                </field>
+                <filter name="out_invoice" position="before">
+                    <filter name="no_supplier_number" string="草稿" domain="[('invoice_state','=','draft')]"/>
+                </filter>
+            </field>
+        </record>
+
+        <!-- 发票明细 -->
+        <record id="action_account_invoice_line_supplier" model="ir.actions.act_window">
+            <field name="name">电子对账凭证明细</field>
+            <field name="res_model">account.invoice.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('invoice_type','in',['in_invoice', 'in_refund'])]</field>
+            <field name="context">{'search_default_no_supplier_number':1}</field>
+            <field name="search_view_id" ref="account_invoice_line_xls.account_invoice_line_view_search"/>
+        </record>
+        <record id="inherit_account_invoice_line_tree" model="ir.ui.view">
+            <field name="name">account.invoice.line.tree</field>
+            <field name="model">account.invoice.line</field>
+            <field name='inherit_id' ref='account_invoice_line_xls.account_invoice_line_view_tree'/>
+            <field name="arch" type="xml">
+                <field name="invoice_partner_id" position="before">
+                    <field name="fapiao_id" attrs="{'readonly':[('invoice_state','!=','draft')] }"/>
+                    <field name="po_id"/>
+                </field>
+                <field name="price_subtotal" position="after">
+                    <field name="date_due" readonly="1"/>
+                    <field name="picking_id" readonly="1"/>
+                </field>
+
+
+            </field>
+        </record>
+        <record id="account_invoice_line_view_action_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="account_invoice_line_xls.account_invoice_line_view_tree"/>
+            <field name="act_window_id" ref="action_account_invoice_line_supplier"/>
+        </record>
+        <record id="account_invoice_line_view_action_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_invoice_line_xls.account_invoice_line_view_form"/>
+            <field name="act_window_id" ref="action_account_invoice_line_supplier"/>
+        </record>
+        <menuitem id="account_invoice_line_view_menu_for_purchase"
+                  name="电子对账凭证明细"
+                  parent="purchase.menu_procurement_management_invoice"
+                  action="action_account_invoice_line_supplier"
+                  sequence="70"/>
+
+        <menuitem
+                id="purchase.menu_procurement_management_pending_invoice"
+                action="purchase.action_invoice_pending"
+                parent="purchase.menu_procurement_management_invoice"
+                sequence="50"/>
+
+        <menuitem action="account_voucher.action_vendor_payment" icon="STOCK_JUSTIFY_FILL" sequence="99"
+                  name="供应商付款" id="menu_action_vendor_payment_for_purchase"
+                  parent="purchase.menu_procurement_management_invoice"/>
+
+        <menuitem id="menu_finance_reporting" name="Accounting" parent="base.menu_reporting" sequence="35"
+                  groups="account.group_account_invoice"/>
+
+        <record id="purchase.action_invoice_pending" model="ir.actions.act_window">
+            <field name="name">On Draft Invoices</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','in_invoice')]</field>
+            <field name="context">{'no_create':1,'default_type':'in_invoice', 'type':'in_invoice', 'journal_type':
+                'purchase',
+                'search_default_draft': 1}
+            </field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        </record>
+
+        <!-- account_statement_order -->
+        <record model="ir.ui.view" id="account_statement_order_search_view">
+            <field name="name">account.statement.order.form</field>
+            <field name="model">account.statement.order</field>
+            <field name="arch" type="xml">
+                <search string="对账单">
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_statement_order_tree_view">
+            <field name="name">account.statement.order.form</field>
+            <field name="model">account.statement.order</field>
+            <field name="arch" type="xml">
+                <tree string="对账单">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="create_uid"/>
+                    <field name="end_time"/>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="account_statement_order_form_view">
+            <field name="name">account.statement.order.form</field>
+            <field name="model">account.statement.order</field>
+            <field name="arch" type="xml">
+                <form string="对账单">
+                    <header>
+                        <button name="confirm" string="确认" states='draft' groups="purchase.group_purchase_user"
+                                class="oe_highlight" type="object"/>
+                        <button name="purchase_manager_approve" states='w_purchase_manager'
+                                groups="purchase.group_purchase_manager" string="审核（采购经理）" class="oe_highlight"
+                                type="object"/>
+                        <button name="quality_manager_approve" states='w_quality_manager'
+                                groups="quality_control.group_quality_control_manager" string="审核（品质经理）"
+                                class="oe_highlight" type="object"/>
+                        <button name="account_user_approve" states='w_account_user'
+                                groups="account.group_account_manager" string="审核（会计）" class="oe_highlight"
+                                type="object"/>
+                        <button name="account_manager_approve" states='w_account_manager'
+                                groups="account.group_account_manager" string="审核（财务经理）" class="oe_highlight"
+                                type="object"/>
+                        <button name="account_chief_inspector_approve" states='w_account_chief_inspector'
+                                groups="account.group_account_manager" string="审核（财务总监）" class="oe_highlight"
+                                type="object"/>
+
+                        <button name="fapiao_input" states='w_fapiao_input' groups="purchase.group_purchase_manager"
+                                string="审核（采购经理）" class="oe_highlight" type="object"/>
+                        <button name="fapiao_approve" states='w_fapiao_approve' groups="account.group_account_manager"
+                                string="审核（财务经理）" class="oe_highlight" type="object"/>
+                        <button name="reset_draft" string="重置草稿"
+                                states="w_purchase_manager,w_quality_manager,w_account_manager" class="oe_highlight"
+                                type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <button name="make_account_voucher" string="申请付款"
+                                attrs="{'invisible':['|',('state','!=','done'),('voucher_id','!=',False)]}"
+                                class="oe_highlight" type="object"/>
+                        <!--==========1108-->
+                        <div class="oe_right">
+                            <button type="object" name="show_approve_logs" class="oe_right oe_inline oe_stat_button"
+                                    string="审批日志"
+                                    icon="fa-pencil-square-o"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="supplier_id" attrs="{'invisible':[('type','!=','purchase')]}"/>
+                                <field name="customer_id" attrs="{'invisible':[('type','!=','sale')]}"/>
+                                <field name="partner_id" groups="base.group_system"/>
+                                <field name="create_uid"/>
+                                <field name="voucher_id"
+                                       context="{ 'form_view_ref': 'account_voucher.view_vendor_payment_form'}"/>
+
+                                <!--==========multi company-->
+                                <!--<field name="company_id"/>-->
+                            </group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="create_date"/>
+                                <field name="type"/>
+                            </group>
+                        </group>
+                        <button name="relation_lines" string="导入未对账明细" states="draft" class="oe_highlight"
+                                type="object"/>
+                        <button name="remove_lines" string="清空对账明细" states="draft" class="oe_highlight" type="object"/>
+                        <button name="input_fapiao" string="录入发票"
+                                attrs="{'invisible':[('state','in',['done','w_fapiao_approve'])]}" class="oe_highlight"
+                                type="object"/>
+                        <notebook>
+                            <page string="对账明细">
+                                <field name="line_ids">
+                                    <tree string="对账明细" create="false" delete="false" editable="top">
+                                        <field name="name" invisible="1"/>
+                                        <field name="fapiao_id"/>
+                                        <field name="picking_id"/>
+                                        <field name="pick_date"/>
+                                        <field name="move_origin"/>
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="uos_id" readonly="1"/>
+                                        <field name="quantity" readonly="1"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="date_due" readonly="1"/>
+                                        <field name="invoice_line_tax_id" readonly="1"/>
+                                        <field name="move_id" readonly="1" invisible="1"/>
+                                        <field name="price_subtotal" sum="Total" invisible="1"/>
+                                        <field name="price_subtotal_gross" sum="Total" readonly="1"/>
+                                        <field name="invoice_id" invisible="0" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="对账项目">
+                                <field name="invoice_ids" widget="many2many" context="{'show_tax':1}"/>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page string="对账明细 红字">
+                                <field name="line_cr_ids">
+                                    <tree string="对账明细" create="false" delete="false" editable="top">
+                                        <field name="name" invisible="1"/>
+                                        <field name="fapiao_id"/>
+                                        <field name="picking_id"/>
+                                        <field name="pick_date"/>
+                                        <field name="move_origin" readonly="1"/>
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="uos_id" readonly="1"/>
+                                        <field name="quantity" readonly="1"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="date_due" readonly="1"/>
+                                        <field name="invoice_line_tax_id" readonly="1"/>
+                                        <field name="move_id" readonly="1" invisible="1"/>
+                                        <field name="price_subtotal" sum="Total" invisible="1"/>
+                                        <field name="price_subtotal_gross" sum="Total" readonly="1"/>
+                                        <field name="invoice_id" invisible="0" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="对账项目 红字">
+                                <field name="invoice_cr_ids" widget="many2many" context="{'show_tax':1}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_account_statemen_order">
+            <field name="name">对账单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.statement.order</field>
+            <field name="domain">[('type','=','purchase')]</field>
+            <field name="context">{'default_type': 'purchase'}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_account_statemen_order" action="action_account_statemen_order"
+                  name="采购对账单" parent="purchase.menu_procurement_management_invoice" sequence="80"/>
+        <menuitem id="menu_account_statemen_order_for_account" action="action_account_statemen_order"
+                  name="采购对账单" parent="mtlcs_base.sub_menu_finance_purchase" sequence="0"/>
+        <menuitem id="menu_action_invoice_return_for_purchase" name="电子对账凭证-红"
+                  action="account.action_invoice_tree4" sequence="60"
+                  parent="purchase.menu_procurement_management_invoice"/>
+
+
+        <!-- 销售对账单 -->
+        <record model="ir.actions.act_window" id="action_account_statemen_order4sale">
+            <field name="name">销售对账单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.statement.order</field>
+            <field name="domain">[('type','=','sale')]</field>
+            <field name="context">{'default_type': 'sale'}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_account_statemen_order4sale" action="action_account_statemen_order4sale"
+                  name="销售对账单" parent="mtlcs_base.sub_menu_order_center" sequence="100"/>
+
+
+        <record id="inherit_view_payment_term_form" model="ir.ui.view">
+            <field name="name">account.payment.term.form</field>
+            <field name="model">account.payment.term</field>
+            <field name='inherit_id' ref='account.view_payment_term_form'/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="auto_voucher_monthly" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -1,0 +1,10 @@
+"id","name","code"
+"mtlcs_all.process_technic_001","表面处理","surface_treatment"
+"mtlcs_all.process_technic_002","通断测试","connected_test"
+"mtlcs_all.process_technic_003","外形加工","shape"
+"mtlcs_all.process_technic_004","阻焊","solder"
+"mtlcs_all.process_technic_005","字符","legend"
+"mtlcs_all.process_technic_006","功能测试","function_test"
+
+"mtlcs_all.process_technic_007","内包装","packing_inner"
+"mtlcs_all.process_technic_008","外包装","packing_outer"

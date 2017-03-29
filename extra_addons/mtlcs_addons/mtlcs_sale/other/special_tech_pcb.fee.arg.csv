@@ -1,0 +1,34 @@
+"id","type","special_tech_id/id","min_order_area","max_order_area","eval_code","value"
+"__export__.pcb_fee_special_tech_001","特殊流程费","mtlcs_all.special_technic_010",0,1,"def fn(pprice,feedic):    return  pprice.info_id.blind_count * feedic['fee_base'] * 0.45",0
+"__export__.pcb_fee_special_tech_002","特殊流程费","mtlcs_all.special_technic_009",0,1,"def fn(feedic):    return   feedic['fee_base'] * 0.1",0
+"__export__.pcb_fee_special_tech_003","特殊流程费","mtlcs_all.special_technic_015",0,1,,0.05
+"__export__.pcb_fee_special_tech_004","特殊流程费","mtlcs_all.special_technic_005",0,1,,0.15
+"__export__.pcb_fee_special_tech_005","特殊流程费","mtlcs_all.special_technic_031",0,1,,0.02
+"__export__.pcb_fee_special_tech_006","特殊流程费","mtlcs_all.special_technic_030",0,1,"def fn(feedic):    return   feedic['fee_base'] * 0.3",0
+"__export__.pcb_fee_special_tech_007","特殊流程费","mtlcs_all.special_technic_017",0,1,,0.02
+"__export__.pcb_fee_special_tech_008","特殊流程费","mtlcs_all.special_technic_001",0,1,,0.02
+"__export__.pcb_fee_special_tech_009","特殊流程费","mtlcs_all.special_technic_018",0,1,,0.05
+"__export__.pcb_fee_special_tech_010","特殊流程费","mtlcs_all.special_technic_004",0,1,,0.02
+"__export__.pcb_fee_special_tech_011","特殊流程费","mtlcs_all.special_technic_029",0,1,,0.03
+"__export__.pcb_fee_special_tech_012","特殊流程费","mtlcs_all.special_technic_025",0,1,,0.02
+"__export__.pcb_fee_special_tech_013","特殊流程费","mtlcs_all.special_technic_002",0,1,,0.15
+"__export__.pcb_fee_special_tech_014","特殊流程费","mtlcs_all.special_technic_032",0,1,,0.15
+"__export__.pcb_fee_special_tech_015","特殊流程费","mtlcs_all.special_technic_028",0,1,"def fn(pprice):    return  0.0",0
+"__export__.pcb_fee_special_tech_016","特殊流程费","mtlcs_all.special_technic_027",0,1,"def fn(feedic):    return   feedic['fee_base'] * 0.3",0
+"__export__.pcb_fee_special_tech_017","特殊流程费","mtlcs_all.special_technic_034",0,1,,0.15
+"__export__.pcb_fee_special_tech_019","特殊流程费","mtlcs_all.special_technic_009",1,99999999,"def fn(feedic):    return   feedic['fee_base'] * 0.1",0
+"__export__.pcb_fee_special_tech_020","特殊流程费","mtlcs_all.special_technic_015",1,99999999,,0.03
+"__export__.pcb_fee_special_tech_021","特殊流程费","mtlcs_all.special_technic_005",1,99999999,,0.12
+"__export__.pcb_fee_special_tech_022","特殊流程费","mtlcs_all.special_technic_031",1,99999999,,0.02
+"__export__.pcb_fee_special_tech_023","特殊流程费","mtlcs_all.special_technic_030",1,99999999,"def fn(feedic):    return   feedic['fee_base'] * 0.15",0
+"__export__.pcb_fee_special_tech_024","特殊流程费","mtlcs_all.special_technic_017",1,99999999,,0.02
+"__export__.pcb_fee_special_tech_025","特殊流程费","mtlcs_all.special_technic_001",1,99999999,,0.02
+"__export__.pcb_fee_special_tech_026","特殊流程费","mtlcs_all.special_technic_018",1,99999999,,0.03
+"__export__.pcb_fee_special_tech_027","特殊流程费","mtlcs_all.special_technic_004",1,99999999,,0.02
+"__export__.pcb_fee_special_tech_028","特殊流程费","mtlcs_all.special_technic_029",1,99999999,,0.03
+"__export__.pcb_fee_special_tech_029","特殊流程费","mtlcs_all.special_technic_025",1,99999999,,0.02
+"__export__.pcb_fee_special_tech_030","特殊流程费","mtlcs_all.special_technic_002",1,99999999,,0.12
+"__export__.pcb_fee_special_tech_031","特殊流程费","mtlcs_all.special_technic_032",1,99999999,,0.12
+"__export__.pcb_fee_special_tech_032","特殊流程费","mtlcs_all.special_technic_034",1,99999999,,0.12
+"__export__.pcb_fee_special_tech_033","特殊流程费","mtlcs_all.special_technic_028",1,99999999,,0.03
+"__export__.pcb_fee_special_tech_034","特殊流程费","mtlcs_all.special_technic_027",1,99999999,"def fn(feedic):    return   feedic['fee_base'] * 0.3",0

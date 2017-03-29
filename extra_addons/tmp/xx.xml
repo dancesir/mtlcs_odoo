@@ -1,0 +1,752 @@
+
+
+
+
+
+                    <button name="purchase_user_approve" string="审批（采购员）" states="draft" type="object" groups="purchase.group_purchase_user"
+                            class="oe_highlight"/>
+                             <button name="open_lowest_price" string="查看最低价格" type="object"/>
+
+        <!-- Menu product.supplierinfo
+        <record model="ir.ui.view" id="mtl_product_supplierinfo_tree_view">
+            <field name="name">product.supplierinfo.tree</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <tree string="物料供应商信息">
+                    <field name="name"/>
+                    <field name="product_tmpl_id"/>
+                    <field name="product_name"/>
+                    <field name="product_code"/>
+                    <field name="min_qty"/>
+                    <field name="delay"/>
+                    <field name="sequence"/>
+                    <field name="active" groups="base.group_system"/>
+                </tree>
+            </field>
+        </record>
+        -->
+
+        <!-- Menu product.supplierinfo
+        <record model="ir.ui.view" id="mtl_product_supplierinfo_form_view">
+            <field name="name">mtl.product.supplierinfo.form</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <form string="物料供应商信息">
+                    <header>
+                        <button name="confirm" states="draft" string="确认" type="object" class="oe_highlight"
+                                groups="purchase.group_purchase_user"/>
+                        <button name="chief_inspector_approve" states="w_chief_inspector" string="审批（总监）" type="object"
+                                groups="mtlcs_base.group_production_chief_inspector" class="oe_highlight"/>
+                        <button name="general_manager_approve" states="w_general_manager" string="审批（总经理）" type="object"
+                                groups="mtlcs_base.group_general_manager" class="oe_highlight"/>
+                        <button name="action_draft" states="w_chief_inspector,w_general_manager" string="重置草稿" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,w_chief_inspector,w_general_manager,done" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="product_name"/>
+                                <field name="product_code"/>
+                                <field name="active" groups="base.group_system"/>
+                            </group>
+                            <group>
+                                <field name="product_tmpl_id"/>
+                                <field name="min_qty"/>
+                                <field name="delay"/>
+                                <field name="sequence"/>
+                                <field name="create_uid"/>
+                            </group>
+                        </group>
+                        <group string="供应价格">
+                            <field name="pricelist_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="min_quantity"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        -->
+
+        <!--
+        <record model="ir.actions.act_window" id="mtl_action_product_supplierinfo">
+            <field name="name">物料供应商信息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="domain">[]</field>
+            <field name="context">{'no_create':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_tree_view"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="mtl_action_product_supplierinfo_view_tree">
+            <field name="act_window_id" ref="mtl_action_product_supplierinfo"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_tree_view"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="mtl_action_product_supplierinfo_view_form">
+            <field name="act_window_id" ref="mtl_action_product_supplierinfo"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_form_view"/>
+        </record>
+
+        <menuitem id="product_suppliserinfo_menu" name="物料供应信息" sequence="51" parent="mtlcs_base.sub_menu_supplier_management"
+                  action="mtl_action_product_supplierinfo" groups="purchase.group_purchase_user"/>
+
+        <record model="ir.actions.act_window" id="mtl_action_product_supplierinfo_no_active">
+            <field name="name">物料供应商信息-待审核</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="domain">[('active','=',False)]</field>
+            <field name="context">{'default_active':0}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_tree_view"/>
+        </record>
+        <record model="ir.actions.act_window.view"
+                id="mtl_action_product_supplierinfo_no_active_view_tree">
+            <field name="act_window_id" ref="mtl_action_product_supplierinfo_no_active"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_tree_view"/>
+        </record>
+        <record model="ir.actions.act_window.view"
+                id="mtl_action_product_supplierinfo_no_active_view_form">
+            <field name="act_window_id" ref="mtl_action_product_supplierinfo_no_active"/>
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mtl_product_supplierinfo_form_view"/>
+        </record>
+        <menuitem id="product_suppliserinfo_no_active_menu" name="物料供应信息-待审" sequence="52"
+                  parent="mtlcs_base.sub_menu_supplier_management" action="mtl_action_product_supplierinfo_no_active"
+                  groups="purchase.group_purchase_user"/>
+
+
+        <record model="ir.ui.view" id="pricelist_partnerinfo_search_view">
+            <field name="name">pricelist.partnerinfo.search</field>
+            <field name="model">pricelist.partnerinfo</field>
+            <field name="arch" type="xml">
+                <search string="物料供应价格信息">
+                    <field name="tmpl_id"/>
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pricelist_partnerinfo_tree_view">
+            <field name="name">pricelist.partnerinfo.tree</field>
+            <field name="model">pricelist.partnerinfo</field>
+            <field name="arch" type="xml">
+                <tree string="物料供应价格信息" create="false" delete="false">
+                    <field name="name" invisble="1"/>
+                    <field name="partner_id"/>
+                    <field name="tmpl_id"/>
+                    <field name="price"/>
+                    <field name="min_quantity"/>
+                    <field name="delay"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_pricelist_partnerinfo">
+            <field name="name">物料供应价格信息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pricelist.partnerinfo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_pricelist_partnerinfo" name="物料供应价格信息" sequence="53"
+                  parent="mtlcs_base.sub_menu_supplier_management" action="action_pricelist_partnerinfo"
+                  groups="purchase.group_purchase_user"/>
+
+                  -->
+
+
+        <!--
+        <record model="ir.ui.view" id="preparation_order_line_search_view">
+            <field name="name">preparation.order.line.search</field>
+            <field name="model">preparation.order.line</field>
+            <field name="arch" type="xml">
+                <search string="申购明细">
+                    <field name="product_id" filter_domain="[('product_id', 'ilike', self)]"/>
+                    <field name="order_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="申购单" domain="[]" context="{'group_by':'order_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="preparation_order_line_tree_view">
+            <field name="name">preparation.order.line.tree</field>
+            <field name="model">preparation.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="申购明细" create="0" delete="0" >
+                    <field name="order_id" readonly="1"/>
+                    <field name="product_id" readonly="1"/>
+                    <field name="plan_qty" readonly="1"/>
+                    <field name="product_qty" sum="计总"/>
+                    <field name="uom_id" readonly="1"/>
+                    <field name="qty_uom_po" sum="计总"/>
+                    <field name="uom_po_id"/>
+                    <field name="categ_id" readonly="1"/>
+                    <field name="create_time" readonly="1"/>
+                    <field name="state" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="preparation_order_line_form_view">
+            <field name="name">preparation.order.line.form</field>
+            <field name="model">preparation.order.line</field>
+            <field name="arch" type="xml">
+                <form string="申购明细" create="false" delete="false">
+                    <group>
+                        <field name="order_id"/>
+                        <field name="product_id"/>
+                        <field name="product_qty"/>
+                        <field name="uom_id"/>
+                        <field name="create_time"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_preparation_order_line">
+            <field name="name">申购明细</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">preparation.order.line</field>
+            <field name="domain">[]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem id="menu_preparation_order_line" action="action_preparation_order_line"
+                  name="申购明细" parent="mtlcs_base.sub_menu_preparation_management" sequence="7"/>
+
+         -->
+
+
+
+        <!-- picking mtl_type  receive -->
+        <record id="action_picking_receive" model="ir.actions.act_window">
+            <field name="name">收货单</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="'[(&quot;picking_type_id&quot;,&quot;=&quot;,%s),(&quot;mtl_type&quot;,&quot;=&quot;,&quot;production_application_slip&quot;)]' % ref('mtlcs_stock.picking_type_material_production')"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="'{&quot;default_move_type&quot;:&quot;one&quot;,&quot;default_picking_type_id&quot;: %s,&quot;default_mtl_type&quot;:&quot;production_application_slip&quot; }' %  ref('mtlcs_stock.picking_type_material_production')"/>
+        </record>
+        <record id="action_picking_receive_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_receive"/>
+        </record>
+        <record id="action_picking_receive_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_receive"/>
+        </record>
+        <menuitem name="收货单" id="menu_picking_receive" action="action_picking_receive"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="2"/>
+
+
+        <record id="seq_type_material_acquire" model="ir.sequence.type">
+            <field name="name">领料单</field>
+            <field name="code">material.acquire</field>
+        </record>
+        <record id="seq_material_acquire" model="ir.sequence">
+            <field name="name">领料单</field>
+            <field name="code">material.acquire</field>
+            <field name="prefix">LL</field>
+            <field name="padding">8</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_purchase_receipt" model="ir.sequence.type">
+            <field name="name">收货单</field>
+            <field name="code">purchase.receipt</field>
+        </record>
+        <record id="seq_purchase_receipt" model="ir.sequence">
+            <field name="name">收货单</field>
+            <field name="code">purchase.receipt</field>
+            <field name="prefix">SF</field>
+            <field name="padding">8</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <!-- picking ready-->
+        <record id="purchase_receipt_view_search_view" model="ir.ui.view">
+            <field name="name">purchase.receipt.search</field>
+            <field name="model">purchase.receipt</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="收货单、采购单" filter_domain="['|',('name','ilike',self),('po_id','ilike',self)]"/>
+                    <field name="partner_ref"/>
+                </search>
+            </field>
+        </record>
+        <record id="purchase_receipt_view_tree_view" model="ir.ui.view">
+            <field name="name">purchase.receipt.tree</field>
+            <field name="model">purchase.receipt</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="po_id"/>
+                    <field name="picking_id" string="入库单"/>
+                    <field name="partner_ref"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="purchase_receipt_view_form_view" model="ir.ui.view">
+            <field name="name">purchase.receipt.form</field>
+            <field name="model">purchase.receipt</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+
+                        <button name="open_transfer" string="收货入库" states="w_warehouse_manager" groups="base.group_system"
+                                class="oe_highlight" type="object"/>
+                        <button name="confirm" string="确认" states="draft" groups="stock.group_stock_user" class="oe_highlight" type="object"/>
+                        <button name="qc_approve" string="审批（IQC）" states="w_qc" groups="quality_control.group_quality_control_user"
+                                class="oe_highlight" type="object"/>
+                        <button name="warehouse_approve" string="审批（仓库）" states="w_warehouse" groups="stock.group_stock_user"
+                                class="oe_highlight" type="object"/>
+                        <button name="warehouse_manager_approve" string="审批（仓库主管）" states="w_warehouse_manager"
+                                groups="stock.group_stock_manager" class="oe_highlight"
+                                type="object"/>
+                        <button name="to_cancel" string="取消" states="w_qc,w_warehouse,w_warehouse_manager" class="oe_highlight"
+                                type="object" confirm="取消后该单作废，请谨慎操作"/>
+                        <button name="reset_draft" string="重置草稿" states="cancel" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,w_qc,w_warehouse,w_warehouse_manager,done"
+                               readonly="0"/>
+
+                        <button name="return_confirm" string="退货审批（质检）" type="object" attrs="{'invisible':[('return_state','!=','draft')]}"/>
+                        <button name="return_purchase_approve" string="退货审批（采购）" type="object" attrs="{'invisible':[('return_state','!=','w_purchase')]}"/>
+                        <button name="return_account_approve" string="退货审批（财务）" type="object" attrs="{'invisible':[('return_state','!=','w_account')]}"/>
+                        <button name="return_warehouse_approve" string="退货审批（仓库）" type="object" attrs="{'invisible':[('return_state','!=','w_warehouse')]}"/>
+
+                        <field name="return_state" widget="statusbar" readonly="1" attrs="{'invisible':[('have_unqualified','!=',True)]}"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="po_id" readonly="1"/>
+                                <field name="partner_id"/>
+                                <field name="partner_ref"/>
+                                <field name="have_unqualified"/>
+
+                            </group>
+                            <group>
+                                <field name="pick_type_id"/>
+                                <field name="picking_id" string="入库单" readonly="1"/>
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="收货明细">
+                                <field name="line_ids" nolabel="1" context="{'readonly_by_pass': ['move_qty',]}">
+                                    <tree editable="top">
+                                        <field name="product_id" readonly="1"/>
+                                        <field name="track_incoming" readonly="1"/>
+                                        <field name="uom_id" readonly="1"/>
+                                        <field name="receipt_qty" on_change="onchange_qty(receipt_qty,move_qty,unqualified_qty,'receipt_qty')"/>
+                                        <field name="move_qty" on_change="onchange_qty(receipt_qty,move_qty,unqualified_qty,'move_qty')" attrs="{'readonly': [('state','!=','w_qc')]}" string="合格数量"/>
+                                        <field name="unqualified_qty" on_change="onchange_qty(receipt_qty,move_qty,unqualified_qty,'unqualified_qty')"  attrs="{'readonly': [('state','!=','w_qc')]}" string="不合格数量"/>
+                                        <field name="pol_id" readonly="1" groups="base.group_system"/>
+                                        <field name="state"/>
+                                        <field name="lot_id"/>
+                                        <button name="create_lot" string="创建批次" type="object"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+
+                        <field name="note"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_receipt" model="ir.actions.act_window">
+            <field name="name">收货单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.receipt</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'readonly_by_pass': ['move_qty',]}</field>
+        </record>
+        <menuitem name="收货单" id="menu_picking_purchase_input" action="action_purchase_receipt"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="6"/>
+        <menuitem name="收货单" id="menu_picking_purchase_input_for_iqc" action="action_purchase_receipt"
+                  parent="quality_control.iqc_menu_parent" sequence="6"/>
+
+
+
+        <!-- material_acquire_line -->
+        <record id="material_acquire_line_view_tree_view" model="ir.ui.view">
+            <field name="name">material.acquire.line.tree</field>
+            <field name="model">material.acquire.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="move_qty"/>
+                    <field name="uom_id"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- material_acquire 领料单
+        <record id="material_acquire_view_search_view" model="ir.ui.view">
+            <field name="name">material.acquire.search</field>
+            <field name="model">material.acquire</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="department_id"/>
+                    <field name="picking_id"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+        <record id="material_acquire_view_tree_view" model="ir.ui.view">
+            <field name="name">material.acquire.tree</field>
+            <field name="model">material.acquire</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="department_id"/>
+                    <field name="picking_id"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="material_acquire_view_form_view" model="ir.ui.view">
+            <field name="name">material.acquire.form</field>
+            <field name="model">material.acquire</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="confirm" string="确认" states="draft" class="oe_highlight" type="object"
+                                groups="mtlcs_base.group_material_control_user,mtlcs_base.group_plan_user"/>
+                        <button name="material_control_approve" string="审批（物控）" states="w_material_control"
+                                groups="mtlcs_base.group_material_control_user"
+                                class="oe_highlight" type="object"/>
+                        <button name="warehouse_approve" string="审批（仓库）" states="w_warehouse" groups="stock.group_stock_user"
+                                class="oe_highlight" type="object"/>
+                        <button name="%(mtlcs_stock.action_report_material_acquire)d" states="w_warehouse,done" string="打印领料单" type="action"
+                                groups="mtlcs_base.group_material_control_user,mtlcs_base.group_plan_user"/>
+                        <button name="create_picking" string="出库" groups="base.group_system" class="oe_highlight" type="object"
+                                attrs="{'invisible':['|',('state','!=','confirmed'),('picking_id','!=',False)]}"/>
+                        <button name="to_cancel" string="取消" states="w_material_control,w_warehouse" type="object"
+                                confirm="取消后该单作废，请谨慎操作"/>
+                        <button name="reset_draft" string="重置草稿" states="cancel" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,w_material_control,w_warehouse,done" readonly="0"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="department_id"/>
+                                <field name="picking_id"/>
+                            </group>
+                            <group>
+                                <field name="pick_type_id"/>
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="领料明细">
+                                <button name="batch_select_product" states="draft" string="选择多个物料"
+                                        type="object"/>
+                                <button type="object" name="view_product_qty" class="oe_stat_button" string="查看产品数量"
+                                        icon="fa-pencil-square-o"/>
+                                <button type="object" name="view_this_month_record" class="oe_stat_button" string="查看本月领用记录"
+                                        icon="fa-pencil-square-o"/>
+                                <field name="line_ids" nolabel="1" context="{'readonly_by_pass': ['move_qty']}">
+                                    <tree editable="bottom">
+                                        <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                        <field name="uom_id"/>
+                                        <field name="qty" on_change="onchange_qty(qty)"/>
+                                        <field name="move_qty" string="实发数" attrs="{'readonly': [('state','!=','confirmed')]}"/>
+                                        <button string="有边料" name="have_offcut" attrs="{'invisible': [('state','=','done')]}" type='object'
+                                                groups="stock.group_stock_user"/>
+                                        <button string="无边料" name="no_offcut" attrs="{'invisible': [('state','=','done')]}" type='object'
+                                                groups="stock.group_stock_user"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                        <field name="note"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        -->
+        <!--
+        <record id="action_material_acquire" model="ir.actions.act_window">
+            <field name="name">领料单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.acquire</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        -->
+
+
+
+        <!-- New Picking Form for matrial use
+        <record id="new_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field eval="999" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Transfer">
+                    <header>
+                        <button name="action_confirm" states="draft" string="标记为待办事项" type="object" class="oe_highlight"
+                                groups="base.group_user"/>
+                        <button name="action_assign" states="confirmed" string="检查可用" type="object" class="oe_highlight"
+                                groups="stock.group_stock_user"/>
+                        <button name="rereserve_pick" string="Recheck Availability" type="object" class="oe_highlight"
+                                groups="stock.group_stock_user"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'partially_available')), ('pack_operation_exist','=',True)]}"/>
+                        <button name="force_assign" states="confirmed,waiting,partially_available" string="Force Availability" type="object"
+                                groups="stock.group_stock_user"/>
+                        <button name="do_enter_transfer_details" states="assigned,partially_available" string="转移"
+                                groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                        <button name="do_print_picking" string="Print Picking List" groups="stock.group_stock_user" type="object"
+                                attrs="{'invisible': ['|', ('picking_type_code', '=', 'outgoing'), ('state', '!=', 'assigned')]}"/>
+                        <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting" string="取消转移"
+                                groups="stock.group_stock_user" type="object"/>
+                        <button name="do_unreserve" string="Unreserve" groups="stock.group_stock_user" type="object"
+                                attrs="{'invisible': [('quant_reserved_exist', '=', False)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,assigned,done"
+                               statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+
+
+                    </header>
+                    <sheet>
+                        <div class="oe_right oe_button_box">
+                            <button name="do_partial_open_barcode" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button"
+                                    attrs="{'invisible': ['|',('pack_operation_exist', '=', True),('state','not in',('assigned', 'partially_available'))]}">
+                                <img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/>
+                            </button>
+                            <button name="open_barcode_interface" groups="stock.group_stock_user" type="object" class="oe_stock_scan_button"
+                                    attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state','not in',('assigned', 'partially_available'))]}">
+                                <img src="/stock/static/src/img/scan.png" class="oe_stock_scan_image oe_stock_scan_image_btn"/>
+                            </button>
+                        </div>
+                        <h1>
+                            <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="department_id"/>
+                                <field name="create_uid" readonly="1" string="创建人"/>
+                                <field name="backorder_id" readonly="1" attrs="{'invisible': [('backorder_id','=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="min_date"/>
+                                <field name="origin" placeholder="e.g. PO0032" class="oe_inline"/>
+                                <label for="owner_id" groups="stock.group_tracking_owner"/>
+                                <div groups="stock.group_tracking_owner">
+                                    <field name="owner_id"/>
+                                    <button name="action_assign_owner" string="Assign Owner" type="object"
+                                            attrs="{'invisible': ['|',('pack_operation_exist', '=', False),('state', 'not in', ('draft','assigned','confirmed'))]}"
+                                            class="oe_link oe_edit_only"/>
+                                </div>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <separator string="Stock Moves" attrs="{'invisible': [('pack_operation_exist', '=', False)]}"/>
+                                 <button name="%(wizard_template.action_preparation_order_product_selection)d" string="批量填充" type="action"/>
+                                <field name="move_lines"
+                                       context="{'use_po_unit':True, 'address_in_id': partner_id,  'default_picking_type_id': picking_type_id,'default_picking_id': active_id}">
+                                    <tree colors="grey:scrapped == True" string="Stock Moves" editable="bottom">
+                                        <field name="name" invisible="1"/>
+                                        <field name="product_id"
+                                               on_change="onchange_product_id(product_id,location_id,location_dest_id, parent.partner_id, context)"/>
+                                        <field name="product_uom_qty"
+                                               on_change="onchange_quantity(product_id, product_uom_qty, product_uom, product_uos)"/>
+                                        <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                                        <field name="product_uos_qty" groups="product.group_uos"/>
+                                        <field name="product_uos" groups="product.group_uos"/>
+                                        <field name="picking_id" invisible="1"/>
+                                        <field name="create_date" invisible="1"/>
+                                        <field name="date_expected" invisible="1"/>
+
+                                        <field name="scrapped" invisible="1"/>
+                                        <field name="availability" invisible="1"/>
+                                        <field name="reserved_availability" invisible="1"/>
+                                        <field name="location_id"/>
+                                        <field name="location_dest_id"/>
+                                        <field name="remaining_qty" invisible="1"/>
+                                        <field name="string_availability_info"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                                <field name="pack_operation_exist" invisible="1"/>
+                                <field name="note" placeholder="Add an internal note..." class="oe_inline"/>
+                            </page>
+                            <page string="Operations" attrs="{'invisible': ['|', ('state','!=','done'), ('pack_operation_ids','=',[])]}">
+                                <field name="pack_operation_ids"
+                                       context="{'default_picking_id': active_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id}">
+                                    <tree editable="top">
+                                        <field name="package_id" groups="stock.group_tracking_lot"/>
+                                        <field name="product_id" on_change="product_id_change(product_id, product_uom_id, product_qty)"/>
+                                        <field name="product_uom_id" groups="product.group_uom"/>
+                                        <field name="lot_id" domain="[('product_id','=?', product_id)]" context="{'product_id': product_id}"
+                                               groups="stock.group_production_lot"/>
+                                        <field name="picking_id" invisible="1"/>
+                                        <field name="owner_id" groups="stock.group_tracking_owner"/>
+                                        <field name="product_qty" attrs="{'required': [('product_id', '!=', False)]}"/>
+                                        <field name="location_id" domain="[('id', 'child_of', parent.location_id)]"/>
+                                        <field name="location_dest_id" domain="[('id', 'child_of', parent.location_dest_id)]"/>
+                                        <field name="result_package_id" groups="stock.group_tracking_lot"
+                                               context="{'location_id': location_dest_id}"/>
+                                    </tree>
+                                </field>
+                                <p class="oe_grey" groups="stock.group_tracking_lot">
+                                    If there is no product but a source package, this means the source package was moved entirely. If there is a
+                                    product and a source package, the product was taken from the source package.
+                                </p>
+                            </page>
+                            <page string="Additional Info">
+                                <group string="General Informations">
+                                    <group>
+                                        <field name="move_type"/>
+                                        <field name="picking_type_id"/>
+                                        <field name="picking_type_code" invisible="1"/>
+                                        <field name="quant_reserved_exist" invisible="1"/>
+                                        <field name="location_id" invisible="1"/>
+                                        <field name="location_dest_id" invisible="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                        <field name="date_done" groups="base.group_no_one"/>
+                                        <field name="group_id"/>
+                                        <field name="priority"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        -->
+
+        <!-- 生产领料
+        <record id="action_picking_material_production" model="ir.actions.act_window">
+            <field name="name">领料出库</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain" eval="'[(&quot;picking_type_id&quot;,&quot;=&quot;,%s)]' % ref('picking_type_material_production')"/>
+            <field name="filter" eval="True"/>
+            <field name="context" eval="'{&quot;default_picking_type_id&quot;: %s}' %  ref('picking_type_material_production')"/>
+            <field name="search_view_id" eval="False"/>
+        </record>
+        <menuitem name="领料出库" id="menu_picking_material_production" action="action_picking_material_production"
+                  parent="mtlcs_base.menu_stock_material_production_management" groups="base.group_user" sequence="1"/>
+        -->
+
+
+
+                        <!-- Menu material.department -->
+        <record model="ir.ui.view" id="mtlcs_material_department_tree_view">
+            <field name="name">material.department.tree</field>
+            <field name="model">material.department</field>
+            <field name="arch" type="xml">
+                <tree string="物料部门权限">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="department_id"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="mtlcs_material_department_form_view">
+            <field name="name">material.department.form</field>
+            <field name="model">material.department</field>
+            <field name="arch" type="xml">
+                <form string="物料部门权限">
+                    <header>
+                        <button name="xxx" string="xxxx" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="product_id"/>
+                                <field name="department_id"/>
+                                <field name="create_uid"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="actopm_material_department">
+            <field name="name">物料部门权限</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">material.department</field>
+            <field name="domain">[]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_material_department" action="actopm_material_department"
+                  name="物料部门权限" parent="mtlcs_base.sub_menu_preparation_management" sequence="9"/>

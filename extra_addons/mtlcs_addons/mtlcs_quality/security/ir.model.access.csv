@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inspection_line_user,access_inspection_line_user,mtlcs_quality.model_inspection_line,base.group_user,1,1,1,1
+access_quality_inspection_order_user,access_quality_inspection_order_user,mtlcs_quality.model_quality_inspection_order,base.group_user,1,1,1,1
+access_unqualified_item_user,access_unqualified_item_user,mtlcs_quality.model_unqualified_item,base.group_user,1,1,1,0
+
+
+
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="procurement_report_tree_view">
+            <field name="name">procurement.report.form</field>
+            <field name="model">procurement.report</field>
+            <field name="arch" type="xml">
+                <tree string="需求报表">
+                    <field name="preparation_id"/>
+                    <field name="product_id"/>
+                    <field name="uom_id"/>
+                    <field name="product_qty"/>
+                    <field name="purchase_qty"/>
+                    <field name="input_qty"/>
+                    <field name="purchase_approve_date"/>
+                    <field name="date_planned"/>
+                    <field name="input_date"/>
+                    <field name="is_overtime"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_procurement_report">
+            <field name="name">需求报表</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">procurement.report</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_procurement_report" action="action_procurement_report"
+                  name="需求报表" parent="base.next_id_73" sequence="3"
+                  groups="purchase.group_purchase_user,mtlcs_base.group_material_control_user"/>
+
+
+    </data>
+</openerp>

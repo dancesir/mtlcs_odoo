@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_purchase_receipt_iqc_document">
+
+            <div class="header">
+                <h5 align="center">
+                    <span t-field="user.company_id.name"/>
+                </h5>
+                <h5 align="center">收货及验收报告：
+                    <span t-field="o.name"/>
+                </h5>
+            </div>
+
+
+            <div class="page">
+                <table width="933" class="table-bordered">
+                    <tr>
+                        <td align="center" colspan="2">供方名称：</td>
+                        <td colspan="2"></td>
+                        <td colspan="1">送货号码：</td>
+                        <td colspan="1"></td>
+                    </tr>
+                    <tr align="center">
+                        <td>序号</td>
+                        <td>货物名称</td>
+                        <td>规格型号</td>
+                        <td>包装</td>
+                        <td>货物数量</td>
+                        <td>验收记录</td>
+                    </tr>
+                    <tr t-foreach="range(len(o.line_ids))" t-as="index">
+                        <t t-set="line" t-value="o.line_ids[index]"/>
+                        <td>
+                            <span t-esc="index + 1"/>
+                        </td>
+                        <td>
+                            <span t-field="line.product_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="line.product_id.variants"/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <span t-field="line.receipt_qty"/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right" colspan="6">收货人：________ 日期：________</td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="6">检验/验证记录（品质部门）</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td align="center" colspan="3">检验情况</td>
+                        <td></td>
+                    </tr>
+                    <tr align="center">
+                        <td>序号</td>
+                        <td>抽验数量</td>
+                        <td>重缺陷</td>
+                        <td>轻缺陷</td>
+                        <td>缺陷描述</td>
+                        <td>判定结果</td>
+                    </tr>
+                    <tr t-foreach="range(len(o.line_ids))" t-as="index">
+                        <t t-set="line" t-value="o.line_ids[index]"/>
+                        <td>
+                            <span t-esc="index + 1"/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <input type="checkbox"/>合格
+                            <input type="checkbox"/>不合格
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">品质部：</td>
+                        <td colspan="2">检验员：</td>
+                        <td colspan="2">日期：</td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="6">检验不合格时的处置决定</td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="3">不合格货物处理措施</td>
+                        <td align="center" colspan="3">总经办意见</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div><input type="checkbox"/>筛选</div>
+                            <div>合格数</div>
+                            <div>不合格数</div>
+                            <div><input type="checkbox"/>让步接收</div>
+                            <div><input type="checkbox"/>退货</div>
+                        </td>
+                        <td colspan="3" style="vertical-align:bottom">
+                            <div>批准:______ 审核：______ 日期:______</div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="footer">
+                <div  style="vertical-align:bottom;align:right">CMTL-FM-QA-0.30A</div>
+            </div>
+
+        </template>
+
+        <template id="report_purchase_receipt_iqc">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_stock.report_purchase_receipt_iqc_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+

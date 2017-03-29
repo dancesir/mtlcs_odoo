@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <act_window
+            multi="False"
+            id="product_category_excel_importor_action"
+            name="物料编码规则导入"
+            res_model="excel.importor"
+            src_model="product.category.code"
+            view_mode="form"
+            target="new"
+            context="{}"
+            view_type="form"/>
+    </data>
+
+</openerp>

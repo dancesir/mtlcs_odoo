@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="pcb_info_tree_view">
+            <field name="name">pcb.info.tree</field>
+            <field name="model">pcb.info</field>
+            <field name="arch" type="xml">
+                <tree string="用户单">
+                    <field name="name"/>
+                    <field name="file_name"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <field name="layer_count"/>
+                    <field name="finish_thick"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pcb_info_form_view">
+            <field name="name">pcb.info.form</field>
+            <field name="model">pcb.info</field>
+            <field name="arch" type="xml">
+                <form string="用户单">
+                    <header>
+                        <button name="sync_to_dongshuo"  string="同步到东烁"  type="object" groups="base.group_system"/>
+                        <button name="confirm" states="draft,tochang" string="确认" class="oe_highlight" type="object"/>
+                        <button name="director_approve" states="w_director" string="审批（主管）" class="oe_highlight" type="object"/>
+                        <button name="to_cancel" states="draft,w_director" string="作废" class="oe_highlight" type="object"/>
+                        <button name="set_w_change" states="done" string="更改" class="oe_highlight" type="object"/>
+                        <button name="set_change_finish" states="w_change" string="更改完成" class="oe_highlight" type="object"/>
+
+                        <button name="to_draft" states="w_director" string="重置草稿" class="oe_highlight" type="object"/>
+                        <button name="make_fnumber" states="draft" string="生成档案号" class="oe_highlight" groups="base.group_system"
+                                type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group col="6">
+                            <group colspan="2">
+                                <field name="name"/>
+                                <field name="partner_id" context="{'no_edit':1, 'no_create':1}"/>
+                                <field name="file_name"/>
+                                <field name="ref"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="soft_version_id"/>
+                                <field name="ref_info_name"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                                <field name="user_id"/>
+                                <field name="approve_uid"/>
+                                <field name="approve_date"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="基础信息">
+                                <group col="6">
+                                    <group colspan="2">
+                                        <field name="board_from_customer"/>
+                                        <field name="board_usage_rate"/>
+                                        <field name="board_format_ids" widget="many2many_tags" context="{'show_attribute':0}"/>
+                                        <field name="fill_core_count"/>
+                                        <field name="fill_pp_count"/>
+                                        <field name="layer_count"/>
+                                        <field name="plot_count"/>
+
+                                        <field name="special_tech_ids" widget="many2many_tags"/>
+                                        <field name="mark_ids" widget="many2many_tags"/>
+
+                                        <field name="min_line_width"/>
+                                        <field name="min_line_space"/>
+                                        <field name="min_hole2line"/>
+                                        <field name="min_finish_hole"/>
+
+                                        <field name="hole_count"/>
+                                        <field name="hole_count_small"/>
+                                        <field name="slot_count"/>
+                                        <field name="hole_density"/>
+
+                                        <field name="shape_id"/>
+                                        <field name="vcut_angle"/>
+                                        <field name="vcut_thick"/>
+                                        <field name="test_id"/>
+                                        <field name="tp_count"/>
+                                        <field name="tp_density"/>
+
+
+                                    </group>
+                                    <group colspan="2">
+                                        <field name="base_board_thick"/>
+                                        <field name="finish_thick"/>
+                                        <field name="finish_thick_tolu"/>
+                                        <field name="finish_thick_told"/>
+
+                                        <field name="via_solder_pad"/>
+                                        <field name="via_solder_hole"/>
+                                        <field name="solder_color" context="{'show_attribute':0}"/>
+                                        <field name="solder_format" context="{'show_attribute':0}"/>
+
+                                        <field name="legend_type"/>
+                                        <field name="legend_color" context="{'show_attribute':0}"/>
+                                        <field name="legend_format" context="{'show_attribute':0}"/>
+
+                                        <field name="unit_length"/>
+                                        <field name="unit_width"/>
+                                        <field name="length"/>
+                                        <field name="width"/>
+                                        <field name="x_count"/>
+                                        <field name="y_count"/>
+                                        <field name="panel_count"/>
+                                        <field name="panel_area"/>
+                                        <field name="allow_scrap_percent"/>
+                                        <field name="allow_scrap_count"/>
+
+                                    </group>
+
+                                    <group colspan="2">
+                                        <field name="surface_coating" on_change="onchange_surface_coating(surface_coating)"/>
+                                        <field name="show_au_thick" invisible="1"/>
+                                        <field name="show_ni_thick" invisible="1"/>
+                                        <field name="show_au_thick_2" invisible="1"/>
+                                        <field name="show_ni_thick_2" invisible="1"/>
+                                        <field name="show_pd_thick" invisible="1"/>
+                                        <field name="show_sn_thick" invisible="1"/>
+                                        <field name="show_ag_thick" invisible="1"/>
+                                        <field name="au_thick" attrs="{'invisible':[('show_au_thick','!=',True)]}"/>
+                                        <field name="ni_thick" attrs="{'invisible':[('show_ni_thick','!=',True)]}"/>
+                                        <field name="au_thick_2" attrs="{'invisible':[('show_au_thick_2','!=',True)]}"/>
+                                        <field name="ni_thick_2" attrs="{'invisible':[('show_ni_thick_2','!=',True)]}"/>
+                                        <field name="pd_thick" attrs="{'invisible':[('show_pd_thick','!=',True)]}"/>
+                                        <field name="sn_thick" attrs="{'invisible':[('show_sn_thick','!=',True)]}"/>
+                                        <field name="ag_thick" attrs="{'invisible':[('show_ag_thick','!=',True)]}"/>
+                                        <field name="surface_percent"/>
+
+
+                                        <field name="packing_inner" widget="many2many_tags"/>
+                                        <field name="packing_outer"/>
+                                        <field name="packing_inner_requires" widget="many2many_tags"/>
+                                        <field name="misc_ids" widget="many2many_tags"/>
+                                        <field name="need_steel_stencil"/>
+                                        <field name="need_confirm_gerber"/>
+                                        <field name="need_provide_gerber"/>
+
+
+                                        <field name="test_et"/>
+                                        <field name="test_ids" widget="many2many_tags" string="功能测试"/>
+                                        <field name="acceptance_standard_id"/>
+
+
+                                        <field name="have_finger"/>
+                                        <field name="finger_qty" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                        <field name="finger_angle" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                        <field name="finger_au_thick" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                        <field name="finger_ni_thick" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                        <field name="finger_length" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                        <field name="finger_width" attrs="{'invisible':[('have_finger','!=',True)]}"/>
+                                    </group>
+
+
+                                    <group colspan="2">
+                                        <field name="special_note_quality"/>
+                                    </group>
+                                    <group colspan="2">
+                                        <field name="special_note_package"/>
+                                    </group>
+                                    <group colspan="2">
+                                        <field name="special_note_technical"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                            <page string="结构信息">
+                                <group col="6">
+                                    <group colspan="2">
+                                        <field name="max_cu_thick"/>
+                                    </group>
+
+                                </group>
+
+                                <button name="make_structure_lines" type="object" class="oe_highlight" string="创建层压结构"/>
+                                <field name="structure_lines">
+                                    <tree editable="bottom">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="layer_number"/>
+                                        <field name="type"/>
+                                        <field name="cu_thick_base"/>
+                                        <field name="thick"/>
+                                        <field name="unit"/>
+
+                                        <field name="cu_thick_finish" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="盲埋孔信息">
+                                <group>
+                                    <group colspan="2">
+                                        <field name="blind_count"/>
+                                    </group>
+                                    <group colspan="2">
+                                        <field name="blind_lines" nolabel="1" >
+                                            <tree editable="bottom">
+                                                <field name="start_id" domain="[('info_id','=', parent.id)]"/>
+                                                <field name="end_id" domain="[('info_id','=', parent.id)]"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="阻抗信息">
+                                <group>
+                                    <group colspan="2">
+                                        <field name="impedance_ids" nolabel="1" >
+                                            <tree editable="bottom">
+                                                <field name="type"/>
+                                                <field name="layer_id" domain="[('info_id','=', parent.id)]"/>
+                                                <field name="shield_ids" domain="[('info_id','=', parent.id)]" widget="many2many_tags"/>
+                                                <field name="v_customer" domain="[('info_id','=', parent.id)]"/>
+                                                <field name="v_design"/>
+                                                <field name="v_compute"/>
+
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="其他信息">
+                                <group>
+                                    <group colspan="2">
+                                        <field name="uom_id" string="基本单位"/>
+                                        <field name="sale_unit_id" string="销售单位"/>
+                                        <field name="product_id" groups="base.group_system"/>
+                                        <field name="fnumber_ok" groups="base.group_system"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_pcb_info">
+            <field name="name">用户单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pcb.info</field>
+            <field name="domain">[]</field>
+            <field name="context">{'no_create':1,}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_pcb_info" name="用户单" sequence="3"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_pcb_info"/>
+
+
+    </data>
+</openerp>

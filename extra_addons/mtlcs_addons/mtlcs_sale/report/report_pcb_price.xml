@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_pcb_price_document">
+            <div align="center" style="width:649px;height:978px;border:0px solid #000000;">
+                <div class="header">
+
+                    <div align="center">
+                        <br></br>
+                        <h3 align="center">
+                            <span t-esc="o.company_id.name"/>
+                        </h3>
+                    </div>
+                    <hr style="height:3px;border-bottom:2px black solid;"></hr>
+                    <h3  align="center">报 价 单</h3>
+                    <br></br>
+
+                </div>
+
+                <div class="page" align="center">
+
+                    <br></br>
+                    <br></br>
+                    <t t-set="data" t-value="multi_selection_data(o.info_id)"/>
+
+                    <table style="width:649px;body:0px;align:left">
+                        <tr>
+                            <td style="width:110px;height:30px">客户名称：</td>
+                            <td style="width:320px">
+                                <span t-esc="o.partner_id.name"/>
+                            </td>
+                            <td style="width:110px">发件人：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px">收件人：</td>
+                            <td></td>
+                            <td>抄送：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px">客户电话：</td>
+                            <td>
+                                <span t-esc="o.partner_id.phone"/>
+                            </td>
+                            <td>页数：</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px">客户传真：</td>
+                            <td>
+                                <span t-esc="o.partner_id.fax"/>
+                            </td>
+                            <td>日期：</td>
+                            <td>
+                                <span t-esc="datetime.date.today()"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table style="width:649px;body:0px">
+                        <br></br>
+                        <tr>
+                            <td style="width:100px; height:30px">
+                                <span t-esc="o.partner_id.name"/>
+                            </td>
+                            <td>您好：</td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px"></td>
+                            <td>您的文件我们已经收到，谢谢！现将我司报价给您。请您查收！</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <table style="width:649px;body:0px">
+                        <tr>
+                            <td style="width:110px;height:30px">文件(板)名：</td>
+                            <td>
+                                <span t-esc="o.receive_id.file_name"/>
+                            </td>
+                            <td>材料：</td>
+                            <td>
+                                <span t-esc="data[1]"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">层数：</td>
+                            <td style="width:320px">
+                                <span t-esc="o.info_id.layer_count"/>
+                            </td>
+                            <td style="width:100px">工艺：</td>
+                            <td>
+                                <span t-esc="o.info_id.surface_coating.name"/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">铜厚：</td>
+                            <td style="width:220px">
+                                <table>
+                                    <tr>
+                                        <td>外层：<span t-esc="o.info_id.max_cu_thick"/>OZ
+                                        </td>
+                                        <td style="width:10px"></td>
+                                        <td>内层：<span t-esc="data[2]"/>OZ
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                            <td style="width:110px">板厚：</td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td><span t-esc="o.info_id.finish_thick"/>mm(+
+                                        </td>
+                                        <td><span t-esc="o.info_id.finish_thick_tolu"/>mm-
+                                        </td>
+                                        <td><span t-esc="o.info_id.finish_thick_told"/>mm)
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">尺寸：</td>
+                            <td style="width:220px">
+                                <table>
+                                    <tr>
+                                        <td><span t-esc="o.info_id.length"/>CM ×
+                                        </td>
+                                        <td><span t-esc="o.info_id.width"/>CM/PNL
+                                        </td>
+                                        <td></td>
+                                        <td><span t-esc=" o.info_id.x_count"/> ×
+                                        </td>
+                                        <td><span t-esc="o.info_id.y_count"/>PCS/PNL
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width:110px">数量：</td>
+                            <td><span t-esc="o.qty"/>PCS
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">特殊要求：</td>
+                            <td style="width:220px">
+                                <span t-esc="data[0]"/>
+                            </td>
+                            <td width="110">交期：</td>
+                            <td><span t-esc="o.delivery_period"/>天
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">单价：</td>
+                            <td style="width:220px"><span t-esc="o.price_pcs"/>元/PCS
+                            </td>
+                            <td style="width:110px">工程费：</td>
+                            <td><span t-esc="o.amount_eng"/>元
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px; height:30px">光绘费：</td>
+                            <td style="width;220px"><span t-esc="o.amount_plot_"/>元
+                            </td>
+                            <td style="width:110px">测试费：</td>
+                            <td><span t-esc="o.amount_test"/>元
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:110px;height:30px">其他费：</td>
+                            <td style="width:220px"><span t-esc="o.amount_other"/>元
+                            </td>
+                            <td style="width:110px">总价：</td>
+                            <td><span t-esc="o.amount"/>元
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <table style="width:649px" body="0">
+                        <tr>
+                            <td style="height:30px">备注：以上为人民币报价。</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <table style="width:649px;body:0px">
+                        <tr>
+                            <td style="height:30px">付款方式：货到付款</td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px">若 有 疑 问，请 来 电 垂 询！谢 谢！</td>
+                        </tr>
+                    </table>
+                    <table style="width:649px;body:0px">
+                        <tr>
+                            <td style="width:110px;height:30px">报价人：</td>
+                            <td style="width:220px"></td>
+                            <td style="width:110px">审核人：</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <table style="width:649px;body:0px">
+                        <tr>
+                            <td style="height:30px">客户确认：</td>
+                        </tr>
+                    </table>
+                    <br></br>
+                    <br></br>
+                </div>
+
+                <div class="footer" align="center">
+                    <div align="left" style="width:800px;">
+                        电话：
+                        <span t-esc="o.company_id.phone"/>
+                        传真：
+                        <span t-esc="o.company_id.fax"/>
+                    </div>
+                    <div align="left" style="width:800px;">
+                        网址：
+                        <span t-esc="o.company_id.website"/>
+                        Email：
+                        <span t-esc="o.company_id.email"/>
+                    </div>
+                    <div align="right" style="width:800px;">
+                        <p style="float:right">MTL-SR-011</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_pcb_price">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_sale.report_pcb_price_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

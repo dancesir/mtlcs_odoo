@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_product_supplierinfo_search" model="ir.ui.view">
+            <field name="name">product.supplierinfo.search</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="arch" type="xml">
+                <search string="物料供应商">
+                    <!--==========1214-->
+                	<field name="name" string="供应商"/>
+                    <field name="product_id" string="产品"/>
+                	<field name="product_code" string="Supplier Product Code" invisible="1"/>
+                    <field name="product_name" string="Supplier Product name" invisible="1"/>
+                    <group  expand='1' string='Group by...' groups="base.group_extended">
+                       <filter string='Product' name='product' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'product_id'}" />
+                       <filter string='Supplier' name='supplier' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'name'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_product_supplierinfo_tree1" model="ir.ui.view">
+            <field name="name">product.supplierinfo.tree1</field>
+            <field name="model">product.supplierinfo</field>
+            <field eval="20" name="priority"/>            
+            <field name="arch" type="xml">
+            	<tree string="物料供应商">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="min_qty"/>
+                    <field name="delay"/>
+                    <field name="product_code"/>
+                    <field name="product_name"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_product_supplier_info" model="ir.actions.act_window">
+            <field name="name">物料供应商</field>
+            <field name="res_model">product.supplierinfo</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_product_supplierinfo_tree1"/>
+            <field name="search_view_id" ref="view_product_supplierinfo_search"/>
+            <field name="context">{'show_supplier_code':1, 'show_product_id':1}</field>
+        </record>
+
+	    <menuitem
+	        id="menu_product_supplier_info"
+	        name="物料供应商"
+	        sequence="15"
+	        action="action_product_supplier_info"
+	        parent="purchase.menu_procurement_management_product"/>
+
+<!-- Supplier info for supplier pricelist -->
+
+        <record id="product_supplierinfo_form_view_for_partner_info" model="ir.ui.view">
+            <field name="name">product.supplierinfo.from1</field>
+            <field name="model">product.supplierinfo</field>
+            <field eval="20" name="priority"/>
+            <field name="arch" type="xml">
+             <!--<field name="inherit_id" ref="product.product_supplierinfo_form_view"/> -->
+                <form string="供应商价格表" version="7.0">
+                    <group col="4">
+                        <!-- <field name="product_id"/> -->
+                        <field name="name" context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"/>
+                        <field name="product_id"/>
+                        <field name="sequence"/>
+                        <field name="product_name"/>
+                        <field name="product_code"/>
+                        <field name="min_qty"/>
+                        <field name="product_uom" groups="product.group_uom"/>
+                        <field name="delay"/>
+                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+<!--  SUPPLIER PRICELIST-->
+        <record id="view_product_partnerinfo_search" model="ir.ui.view">
+            <field name="name">pricelist.partnerinfo.search</field>
+            <field name="model">pricelist.partnerinfo</field>
+            <field name="arch" type="xml">
+                <search string="供应商价格表">
+                    <!--==========1214-->
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <group  expand='1' string='Group by...'>
+                       <filter string='Supplier' name='partner_id' domain="[]" context="{'group_by' : 'partner_id'}" />
+                       <filter string='Product' name='product_tmpl_id' domain="[]" context="{'group_by' : 'product_tmpl_id'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_product_partnerinfo_tree1" model="ir.ui.view">
+            <field name="name">pricelist.partnerinfo.tree1</field>
+            <field name="model">pricelist.partnerinfo</field>
+            <field name="arch" type="xml">
+                <tree string="供应商价格表">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="product_id" invisible="1"/>
+                    <field name="price"/>
+                    <field name="min_quantity"/>
+                    <field name="product_uom"/>
+                    <!-- <field name="product_code"/>
+                    <field name="partner_id"/>
+                    <field name="product_name"/>
+                    <field name="min_qty"/>
+                    <field name="delay"/>
+                    <field name="company_id" groups="base.group_multi_company"/> -->
+                </tree>
+            </field>
+
+        </record>
+
+<!--         <record id="view_product_partnerinfo_from1" model="ir.ui.view">
+            <field name="name">pricelist.partnerinfo.from1</field>
+            <field name="model">pricelist.partnerinfo</field>
+            <field name="arch" type="xml">
+                <form string="Supplier Information">
+                    <group>
+                        <field name="product_name"/>
+                        <field name="product_code" />
+                        <field name="product_uom" />
+                        <field name="min_qty" />
+                        <field name="product_id" />
+                        <field name="delay" />
+                        <field name="partner_id" />
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </form>
+            </field>
+        </record> -->
+
+
+        <record id="action_product_supplier_pricelist" model="ir.actions.act_window">
+            <field name="name">供应商价格表</field>
+            <field name="res_model">pricelist.partnerinfo</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_product_partnerinfo_tree1"/>
+             <field name="search_view_id" ref="view_product_partnerinfo_search"/>
+            <field name="context">{'show_supplier_code':1}</field>
+        </record>
+
+        <menuitem
+            id="menu_product_supplier_pricelist"
+            name="供应商价格表"
+            sequence="15"
+            action="action_product_supplier_pricelist"
+            parent="purchase.menu_procurement_management_product"/>
+    </data>
+</openerp>

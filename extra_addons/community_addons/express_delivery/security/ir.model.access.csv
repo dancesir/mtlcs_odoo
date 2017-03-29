@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_user_express_delivery,access_user_express_delivery,express_delivery.model_express_delivery,base.group_user,1,1,1,0
+

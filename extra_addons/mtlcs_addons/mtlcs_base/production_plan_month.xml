@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="production_plan_month_tree_view">
+            <field name="name">production.plan.month.tree</field>
+            <field name="model">production.plan.month</field>
+            <field name="arch" type="xml">
+                <tree string="月生产计划">
+                    <field name="name"/>
+                    <field name="month_id"/>
+                    <field name="value"/>
+                    <field name="count_layer"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="production_plan_month_form_view">
+            <field name="name">production.plan.month.form</field>
+            <field name="model">production.plan.month</field>
+            <field name="arch" type="xml">
+                <form string="月生产计划">
+                    <header>
+                        <button name="action_confirm" string="审批（物控）" states="draft"  class="oe_highlight" type="object"/>
+                        <button name="plan_approve" string="审批（计划）" states="wait_plan" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <grop>
+                            <group>
+                                <!--==========multi company-->
+                                <!--<field name="company_id"/>-->
+
+                                <field name="name"/>
+                                <field name="month_id" required="1"/>
+                                <field name="create_uid"/>
+                                <field name="value"/>
+                                <field name="count_layer" invisible="1"/>
+                                <field name="note"/>
+                            </group>
+                        </grop>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_production_plan_month">
+            <field name="name">月生产计划</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">production.plan.month</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="production_plan_month_tree_view"/>
+        </record>
+        <menuitem id="menu_material_control" action="action_production_plan_month" name="月生产计划"
+                  parent="mtlcs_base.sub_menu_preparation_management" sequence="1"/>
+
+    </data>
+</openerp>
+

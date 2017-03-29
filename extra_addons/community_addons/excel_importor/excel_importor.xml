@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="excel_importor_form_view">
+            <field name="name">excel.importor.form</field>
+            <field name="model">excel.importor</field>
+            <field name="arch" type="xml">
+                <form string="数据导入" version="7.0">
+                    <group>
+                        <group>
+                            <field name="sheet_index"/>
+                            <field name="strict"/>
+                            <field name="file" required="1"/>
+                            <field name="type" required="1"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认导入" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

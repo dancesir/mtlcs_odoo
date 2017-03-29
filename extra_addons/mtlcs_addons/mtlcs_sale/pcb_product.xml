@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- PCB Product -->
+        <record model="ir.ui.view" id="pcb_product_tree_view">
+            <field name="name">pcb_product.tree</field>
+            <field name="model">product.product</field>
+            <field eval="901" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="成品">
+                    <field name="name" invisble="1"/>
+                    <field name="default_code"/>
+                    <field name="pcb_info_id"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="pcb_product_form_view">
+            <field name="name">pcb_product.form</field>
+            <field name="model">product.product</field>
+            <field eval="902" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="成品">
+                    <field name="name"/>
+                    <field name="pcb_info_id"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pcb_product">
+            <field name="name">成品</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="domain">[('pcb_info_id','!=',False)]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <record id="action_pcb_product_tree" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_pcb_product"/>
+            <field name="sequence">999</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="pcb_product_tree_view"/>
+        </record>
+
+        <record id="action_pcb_product_form" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_pcb_product"/>
+            <field name="sequence">999</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pcb_product_form_view"/>
+        </record>
+
+        <menuitem id="menu_pcb_product" name="成品" sequence="10"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_pcb_product"/>
+
+        </data>
+    </openerp>

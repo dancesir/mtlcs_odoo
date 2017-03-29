@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- 技术非常规-->
+        <record model="ir.ui.view" id="tech_standard_detection_tree_view">
+            <field name="name">tech.standard.detection.tree</field>
+            <field name="model">tech.standard.detection</field>
+            <field name="arch" type="xml">
+                <tree string="非常规">
+                    <field name="name"/>
+                    <field name="info_id"/>
+                    <field name="receive_id"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="tech_standard_detection_form_view">
+            <field name="name">tech.standard.detection.form</field>
+            <field name="model">tech.standard.detection</field>
+            <field name="arch" type="xml">
+                <form string="非常规">
+                    <header>
+                        <button name="action_next" string="确认" states="draft" type="object"/>
+                        <button name="action_next" string="审批（工程）"  states="w_eng"  type="object"/>
+                        <button name="action_next" string="审批（计划）"  states="w_plan"  type="object"/>
+                        <button name="action_next" string="审批（各部门）" states="w_dpt"  type="object"/>
+                        <button name="action_next" string="审批（总经办）" states="w_gm" type="object"/>
+                        <button name="action_next" string="审批（订单中心）" states="w_oc" type="object"/>
+                        <button name="rest_draft" string="重置草稿" states="cancel" type="object"/>
+                        <button name="action_cancel" string="取消"  states="w_plan,w_dpt,w_gm,w_oc" type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="pprice_id"/>
+                            <field name="info_id"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="partner_id"/>
+                            <field name="receive_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="is_tech"/>
+                            <field name="is_delivery_time"/>
+                            <field name="qty"/>
+                            <field name="delivery_period"/>
+                        </group>
+                    </group>
+
+                    <group string="非常规内容">
+                        <field name="line_ids" readonly="1" nolabel="1"/>
+                    </group>
+
+                    <group string="评审记录">
+                        <field name="comment_lines" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="department_id"/>
+                                <field name="name"/>
+                                <field name="ok"/>
+                                <button name="action_done" type="object" string="完成" attrs="{'invisible':[('state','=','done')]}"/>
+                                <field name="user_id"/>
+                                <field name="state"/>
+                                <field name="done_time"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_tech_standard_detection">
+            <field name="name">非常规</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">tech.standard.detection</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_tech_standard_detection" name="非常规" sequence="4"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_tech_standard_detection"/>
+
+
+        <!-- 非常规技术标准-->
+        <record model="ir.ui.view" id="unconventional_standard_tree_view">
+            <field name="name">unconventional.standard.tree</field>
+            <field name="model">unconventional.standard</field>
+            <field name="arch" type="xml">
+                <tree string="非常规技术标准">
+                    <field name="name"/>
+                    <field name="field_id"/>
+                    <field name="eval_code"/>
+                    <field name="description"/>
+                    <field name="company_id"/>
+
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="unconventional_standard_form_view">
+            <field name="name">unconventional.standard.form</field>
+            <field name="model">unconventional.standard</field>
+            <field name="arch" type="xml">
+                <form string="非常规技术标准">
+                    <header>
+                        <button name="xxx" string="下一步" type="object"/>
+                    </header>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="field_id"/>
+                        </group>
+                        <group colspan="2">
+
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group string="非常规内容">
+                        <field name="eval_code"/>
+                        <field name="description"/>
+                    </group>
+
+                    <div>
+                        帮助信息
+
+                    </div>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_unconventional_standard">
+            <field name="name">非常规技术标准</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">unconventional.standard</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--
+        <menuitem id="menu_unconventional_standard" name="非常规技术标准" sequence="998"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_unconventional_standard"/>
+                  -->
+
+
+        <!--加急标准 -->
+        <record id="view_delivery_time_standard_tree" model="ir.ui.view">
+            <field name="name">delivery.time.standard.tree</field>
+            <field name="model">delivery.time.standard</field>
+            <field name="arch" type="xml">
+                <tree string="非常规交期标准">
+                    <field name="value"/>
+                    <field name="min_value"/>
+                    <field name="layer_min"/>
+                    <field name="layer_max"/>
+                    <field name="area_min"/>
+                    <field name="area_max"/>
+                    <field name="eval_code"/>
+                    <field name="company_id"/>
+                    <field name="uniq_code" groups="base.group_system"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_delivery_time_standard_form" model="ir.ui.view">
+            <field name="name">delivery.time.standard.form</field>
+            <field name="model">delivery.time.standard</field>
+            <field name="arch" type="xml">
+                <form string="非常规交期标准">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="value"/>
+                            <field name="min_value"/>
+                            <field name="layer_min"/>
+                            <field name="layer_max"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="area_min"/>
+                            <field name="area_max"/>
+                            <field name="uniq_code" readonly="1"/>
+                            <field name="company_id"/>
+                        </group>
+
+                    </group>
+
+                    <group string="计算方式">
+                        <field name="eval_code" string=""/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="action_delivery_time_standard" model="ir.actions.act_window">
+            <field name="name">非常规交期标准</field>
+            <field name="res_model">delivery.time.standard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!--
+        <menuitem id="menu_delivery_time_standard" name="非常规交期标准" parent="mtlcs_base.sub_menu_order_center"
+                  action="action_delivery_time_standard" sequence="999"/>
+                  -->
+
+        <!-- standard by company -->
+        <record model="ir.ui.view" id="res_company_kanban_view">
+            <field name="name">res.company.kanban</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <kanban string="公司非常规标准">
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card">
+                                <div class="oe_kanban_content">
+                                    <h4 class="text-center">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </h4>
+                                </div>
+                                <div class="oe_items_list oe_kanban_ellipsis">
+                                    <div>
+                                        <a name="get_unconventional_standard" type="object">技术标准</a>
+                                    </div>
+                                    <newline/>
+                                    <div>
+                                        <a name="get_delivery_time_standard" type="object">交期标准</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record id="action_res_company_kanban" model="ir.actions.act_window">
+            <field name="name">公司非常规标准</field>
+            <field name="res_model">res.company</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban</field>
+            <field name="context">{}</field>
+        </record>
+        <menuitem id="menu_res_company_kanban" name="公司非常规标准" parent="base.menu_base_config"
+                  action="action_res_company_kanban" sequence="2"/>
+
+    </data>
+</openerp>

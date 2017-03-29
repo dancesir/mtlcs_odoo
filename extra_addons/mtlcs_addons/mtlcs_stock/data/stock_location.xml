@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data noupdate="0">
+        <!--仓库-->
+        <record id="stock_warehouse_stock" model="stock.warehouse">
+            <field name="name">长沙成品仓</field>
+            <field name="code">ST</field>
+        </record>
+    </data>
+
+    <data noupdate="0">
+        <!--
+    Resource: stock.location 已定义库位设置公司
+    -->
+        <!--物理库位-->
+        <record id="stock.stock_location_locations" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--合作伙伴库位-->
+        <record id="stock.stock_location_locations_partner" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--虚拟库位-->
+        <record id="stock.stock_location_locations_virtual" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--已报废-->
+        <record id="stock.stock_location_scrapped" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--盘存盈亏-->
+        <record id="stock.location_inventory" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--补货-->
+        <record id="stock.location_procurement" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--生产-->
+        <record id="stock.location_production" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--供应商-->
+        <record id="stock.stock_location_suppliers" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--客户-->
+        <record id="stock.stock_location_customers" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+        <!--公司内部运输-->
+        <record id="stock.stock_location_inter_wh" model="stock.location">
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!--各种仓位-->
+        <record id="stock_location_board" model="stock.location">
+            <field name="name">板材仓</field>
+            <field name="location_id" eval="11"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_pp" model="stock.location">
+            <field name="name">半固化片仓</field>
+            <field name="location_id" eval="11"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_chem" model="stock.location">
+            <field name="name">化学品仓</field>
+            <field name="location_id" eval="11"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_oil" model="stock.location">
+            <field name="name">油墨仓</field>
+            <field name="location_id" eval="11"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_mixed" model="stock.location">
+            <field name="name">综合物料仓</field>
+            <field name="location_id" eval="11"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_producttion_material" model="stock.location">
+            <field name="name">生产工序</field>
+            <field name="usage">internal</field>
+            <field name="company_id"></field>
+            <field name="location_id">11</field>
+            <field name="active" eval="False"/>
+        </record>
+        <record id="stock_location_ng_material" model="stock.location">
+            <field name="name">不合格物料</field>
+            <field name="usage">internal</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="location_id">11</field>
+            <field name="active" eval="1"/>
+        </record>
+
+        <!-- stock.picking.type 领料 -->
+        <record id="picking_type_material_production" model="stock.picking.type">
+            <field name="name">物料仓到生产</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="stock.location_production"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+            <field name="ref">stock2production</field>
+        </record>
+
+        <!-- stock.picking.type 退领料 -->
+        <record id="picking_type_material_production_return" model="stock.picking.type">
+            <field name="name">生产到物料仓</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.location_production"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+            <field name="ref">production2stock</field>
+        </record>
+        <!-- stock.picking.type 一步入库 -->
+        <record id="stock.picking_type_in" model="stock.picking.type">
+            <field name="name">供应商到物料仓</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_in"/>
+            <field name="default_location_src_id" ref="stock.stock_location_suppliers"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">incoming</field>
+            <field name="ref">supplier2stock</field>
+        </record>
+        <!-- stock.picking.type 采购收货
+        <record id="picking_type_purchase_receive" model="stock.picking.type">
+            <field name="name">供应商到收货区</field>
+            <field name="sequence_id" search="[('code','=', 'stock.picking.in')]"/>
+            <field name="default_location_src_id" ref="stock.stock_location_suppliers"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_company"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">incoming</field>
+            <field name="ref">supplier2input</field>
+            <field name="active" eval="0"/>
+        </record>
+        -->
+        <!-- stock.picking.type 收货入库
+        <record id="picking_type_purchase_input" model="stock.picking.type">
+            <field name="name">收货区到物料仓</field>
+            <field name="sequence_id" search="[('code','=', 'stock.picking')]"/>
+            <field name="default_location_src_id" ref="stock.stock_location_company"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+            <field name="ref">input2stock</field>
+        </record>
+        -->
+        <!-- stock.picking.type 收货退货
+        <record id="picking_type_receive_return" model="stock.picking.type">
+            <field name="name">收货区到供应商</field>
+            <field name="sequence_id" search="[('code','=', 'stock.picking.out')]"/>
+            <field name="default_location_src_id" ref="stock.stock_location_company"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">outgoing</field>
+            <field name="ref">input2supplier</field>
+        </record>
+        -->
+        <!-- stock.picking.type 入库退货 -->
+        <record id="picking_type_purchase_input_return" model="stock.picking.type">
+            <field name="name">物料仓到供应商</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing"/>
+            <field name="default_location_src_id" ref="stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">outgoing</field>
+            <field name="ref">stock2supplier</field>
+        </record>
+
+        <!-- stock.picking.type 物料到不合格 -->
+        <record id="picking_type_material_ng" model="stock.picking.type">
+            <field name="name">物料到不合格</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="stock_location_ng_material"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+            <field name="ref">stock2ng</field>
+        </record>
+
+        <!-- stock.picking.type  生产到不合格 -->
+        <record id="picking_type_production_ng" model="stock.picking.type">
+            <field name="name">生产到不合格</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.location_production"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_stock"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+            <field name="ref">production2ng</field>
+        </record>
+
+        <!-- stock.picking.type 不合格到供应商 -->
+        <record id="picking_type_ng_supplier" model="stock.picking.type">
+            <field name="name">不合格到供应商</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing"/>
+            <field name="default_location_src_id" ref="stock_location_ng_material"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_suppliers"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">outgoing</field>
+            <field name="ref">ng2supplier</field>
+        </record>
+
+
+        <!-- 定义各类型的 返回类型 -->
+
+        <!--不合格到供应商   入库 -->
+        <record id="picking_type_ng_supplier" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="stock.picking_type_in"/>
+        </record>
+
+        <!-- 领料  退领料 -->
+        <record id="picking_type_material_production" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_material_production_return"/>
+        </record>
+        <!-- 退领料 领料 -->
+        <record id="picking_type_material_production_return" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_material_production"/>
+        </record>
+        <!-- 一步入库  入库退货-->
+        <record id="stock.picking_type_in" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_purchase_input_return"/>
+        </record>
+        <!-- 入库退货  一步入库 -->
+        <record id="picking_type_purchase_input_return" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="stock.picking_type_in"/>
+        </record>
+        <!-- 采购收货 收货退货
+        <record id="picking_type_purchase_receive" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_receive_return"/>
+        </record>
+        -->
+        <!-- 收货退货 采购收货
+        <record id="picking_type_receive_return" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_purchase_receive"/>
+        </record>
+        -->
+        <!-- 收货入库  入库退货
+        <record id="picking_type_purchase_input" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_purchase_input_return"/>
+        </record>
+         -->
+
+        <!-- 补货规则 Buy 质检入库   -->
+
+        <!-- 补货规则 Buy 不质检一步入库
+        <record id="procurement_rule_buy_no_iqc" model="procurement.rule">
+            <field name="name">仓库:Buy NO_IQC</field>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="action">buy</field>
+            <field name="picking_type_id" ref="stock.picking_type_in"/>
+            <field name="invoice_state">none</field>
+            <field name="active" eval="1"/>
+            <field name="sequence" eval="21"/>
+            <field name="propagate" eval="1"/>
+            <field name="group_propagation_option">propagate</field>
+        </record>
+         -->
+
+        <!-- 成品仓库 -->
+        <!-- 成品 出库 -->
+        <record id="picking_type_finish_pick" model="stock.picking.type">
+            <field name="name">拣货</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <!--<field name="default_location_src_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="default_location_dest_id" ref="stock.stock_location_output"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+        </record>
+        <record id="stock.picking_type_out" model="stock.picking.type">
+            <field name="name">发货</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing"/>
+            <field name="default_location_src_id" ref="stock.stock_location_output"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_customers"/>
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">outgoing</field>
+        </record>
+        <record id="picking_type_finish_pick_return" model="stock.picking.type">
+            <field name="name">返拣货</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.stock_location_output"/>
+            <!--<field name="default_location_dest_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">internal</field>
+        </record>
+        <record id="picking_type_finish_out_return" model="stock.picking.type">
+            <field name="name">客户退货</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_in"/>
+            <field name="default_location_src_id" ref="stock.stock_location_customers"/>
+            <!--<field name="default_location_dest_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="warehouse_id" eval="1"/>
+            <field name="code">incoming</field>
+        </record>
+        <!--定义各成品 返回类型-->
+        <record id="picking_type_finish_pick" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_pick_return"/>
+        </record>
+        <record id="stock.picking_type_out" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_out_return"/>
+        </record>
+        <record id="picking_type_finish_pick_return" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_pick"/>
+        </record>
+        <record id="picking_type_finish_out_return" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="stock.picking_type_out"/>
+        </record>
+
+    </data>
+</openerp>
+

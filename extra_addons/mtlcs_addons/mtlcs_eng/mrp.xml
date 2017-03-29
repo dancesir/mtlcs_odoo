@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="work_order_arg_tree_view">
+            <field name="name">work.order.arg.tree</field>
+            <field name="model">work.order.arg</field>
+            <field name="arch" type="xml">
+                <tree string="工序参数" editable="bottom">
+                    <field name="sequence"/>
+                    <field name="routing_wcl_id" invisible="not context.get('show_routing_wc')"/>
+                    <field name="routing_id" invisible="not context.get('show_routing')"/>
+                    <field name="production_wcl_id" invisible="not context.get('show_production_wcl')"/>
+                    <field name="production_id" invisible="not context.get('show_production')"/>
+                    <field name="attribute_id"/>
+                    <field name="name"/>
+                    <field name="note"/>
+                    <field name="need_print"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="film_film_tree_view">
+            <field name="name">film.film.tree</field>
+            <field name="model">film.film</field>
+            <field name="arch" type="xml">
+                <tree string="菲林指示">
+                    <field name="routing_id"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_film_film">
+            <field name="name">菲林指示</field>
+            <field name="res_model">film.film</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem parent="menu_eng_sub" action="action_film_film"
+                  name="菲林指示"
+                  id="menu_film_film"
+                  sequence="2"/>
+
+        <record model="ir.ui.view" id="drill_drill_search_view">
+            <field name="name">drill.drill.tree</field>
+            <field name="model">drill.drill</field>
+            <field name="arch" type="xml">
+                <search string="钻孔指示" editable="bottom">
+                    <field name="production_id"/>
+                    <field name="routing_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="drill_drill_tree_view">
+            <field name="name">drill.drill.tree</field>
+            <field name="model">drill.drill</field>
+            <field name="arch" type="xml">
+                <tree string="钻孔指示" editable="bottom">
+                    <field name="sequence"/>
+                    <field name="name" invisible="1"/>
+                    <field name="routing_id" invisible="not context.get('show_routing')"/>
+                    <field name="production_id" invisible="not context.get('show_production')"/>
+                    <field name="finish_size"/>
+                    <field name="tol_upper"/>
+                    <field name="tol_lower"/>
+                    <field name="tool_size"/>
+                    <field name="count"/>
+                    <field name="is_slot"/>
+                    <field name="is_npth"/>
+                    <field name="type"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_drill_drill">
+            <field name="name">钻孔指示</field>
+            <field name="res_model">drill.drill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'no_create':1, 'no_edit':1, 'show_routing':1, 'show_production':1}</field>
+        </record>
+
+        <menuitem parent="menu_eng_sub" action="action_drill_drill"
+                  name="钻孔指示"
+                  id="menu_drill_drill"
+                  sequence="1"/>
+
+        <record id="inherit_mrp_routing_form" model="ir.ui.view">
+            <field name="name">mrp.routing.form</field>
+            <field name="model">mrp.routing</field>
+            <field name='inherit_id' ref='mrp.mrp_routing_form_view'/>
+            <field name="arch" type="xml">
+                <page string="Work Center Operations" position="after">
+                    <page string="参数">
+                        <field name="arg_ids" context="{'tree_view_ref': 'work_order_arg_tree_view', 'show_routing_wc':1}"/>
+                    </page>
+                    <page string="一钻">
+                        <field name="drill_ids" context="{'default_type':'first', 'tree_view_ref':'drill_drill_tree_view'}"/>
+                    </page>
+                    <page string="二钻">
+                        <field name="drill_ids2" context="{'default_type':'second', 'tree_view_ref':'drill_drill_tree_view'}"/>
+                    </page>
+                    <page string="定位，盘中孔">
+                        <field name="drill_ids3" context="{'default_type':'position', 'tree_view_ref':'drill_drill_tree_view'}"/>
+                    </page>
+                    <page string="菲林">
+                        <field name="film_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="type"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                </page>
+            </field>
+        </record>
+
+        <!--  WC attribute-->
+        <record model="ir.ui.view" id="workcenter_attribute_value_tree_view">
+            <field name="name">workcenter_attribute.value.tree</field>
+            <field name="model">workcenter.attribute.value</field>
+            <field name="arch" type="xml">
+                <tree string="工艺参数值" editable="bottom">
+                    <field name="name"/>
+                    <field name="attribute_id"/>
+                    <field name="workcenter_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_workcenter_attribute_value">
+            <field name="name">工艺参数值</field>
+            <field name="res_model">workcenter.attribute.value</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+        <menuitem parent="menu_eng_conf" action="action_workcenter_attribute_value"
+                  name="工艺参数值"
+                  id="menu_workcenter_attribute_value"
+                  sequence="10"/>
+
+        <record model="ir.ui.view" id="workcenter_attribute_tree_view">
+            <field name="name">workcenter_attribute.tree</field>
+            <field name="model">workcenter.attribute</field>
+            <field name="arch" type="xml">
+                <tree string="工艺参数" editable="bottom">
+                    <field name="workcenter_id" invisible="not context.get('show_workcenter')"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="workcenter_attribute_form_view">
+            <field name="name">workcenter_attribute.form</field>
+            <field name="model">workcenter.attribute</field>
+            <field name="arch" type="xml">
+                <form string="工艺参数">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="workcenter_id"/>
+                        </group>
+                    </group>
+                    <field name="value_ids" context="{'tree_view_ref': 'workcenter_attribute_value_tree_view'}"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_workcenter_attribute">
+            <field name="name">工艺参数</field>
+            <field name="res_model">workcenter.attribute</field>
+            <field name="view_type">form</field>
+            <field name="context">{'show_workcenter':1}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="menu_eng_conf" action="action_workcenter_attribute"
+                  name="工艺参数"
+                  id="menu_workcenter_attribute"
+                  sequence="10"/>
+
+
+        <record id="inherit_mrp_workcenter_form" model="ir.ui.view">
+            <field name="name">mrp.workcenter.form</field>
+            <field name="model">mrp.workcenter</field>
+            <field name='inherit_id' ref='mrp.mrp_workcenter_view'/>
+            <field name="arch" type="xml">
+                <page string="General Information" position="after">
+                    <page string="属性">
+                        <field name="attribute_ids"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <record id="inherit_mrp_production_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name='inherit_id' ref='mrp.mrp_production_form_view'/>
+            <field name="arch" type="xml">
+                <page string="Work Orders" position="after">
+                    <page string="参数">
+                        <field name="arg_ids" context="{'tree_view_ref': 'work_order_arg_tree_view', 'show_production_wcl':1}">
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

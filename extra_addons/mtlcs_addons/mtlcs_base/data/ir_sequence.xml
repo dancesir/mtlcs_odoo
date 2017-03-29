@@ -1,0 +1,99 @@
+<openerp>
+    <data noupdate="1">
+        <!-- supplier code-->
+        <record id="seq_type_ref_supplier_a" model="ir.sequence.type">
+            <field name="name">供应商编码A</field>
+            <field name="code">ref.supplier.a</field>
+        </record>
+        <record id="seq_ref_supplier_a" model="ir.sequence">
+            <field name="name">供应商编码A</field>
+            <field name="code">ref.supplier.a</field>
+            <field name="prefix">A</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_type_ref_supplier_b" model="ir.sequence.type">
+            <field name="name">供应商编码B</field>
+            <field name="code">ref.supplier.b</field>
+        </record>
+        <record id="seq_ref_supplier_b" model="ir.sequence">
+            <field name="name">供应商编码B</field>
+            <field name="code">ref.supplier.b</field>
+            <field name="prefix">B</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_type_ref_supplier_c" model="ir.sequence.type">
+            <field name="name">供应商编码C</field>
+            <field name="code">ref.supplier.c</field>
+        </record>
+        <record id="seq_ref_supplier_c" model="ir.sequence">
+            <field name="name">供应商编码</field>
+            <field name="code">ref.supplier.c</field>
+            <field name="prefix">C</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_type_ref_supplier_w" model="ir.sequence.type">
+            <field name="name">供应商编码W</field>
+            <field name="code">ref.supplier.w</field>
+        </record>
+        <record id="seq_ref_supplier_w" model="ir.sequence">
+            <field name="name">供应商编码</field>
+            <field name="code">ref.supplier.w</field>
+            <field name="prefix">W</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_type_ref_supplier_f" model="ir.sequence.type">
+            <field name="name">供应商编码F</field>
+            <field name="code">ref.supplier.f</field>
+        </record>
+        <record id="seq_ref_supplier_f" model="ir.sequence">
+            <field name="name">供应商编码F</field>
+            <field name="code">ref.supplier.f</field>
+            <field name="prefix">F</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_type_ref_supplier_j" model="ir.sequence.type">
+            <field name="name">供应商编码J</field>
+            <field name="code">ref.supplier.j</field>
+        </record>
+        <record id="seq_ref_supplier_j" model="ir.sequence">
+            <field name="name">供应商编码J</field>
+            <field name="code">ref.supplier.j</field>
+            <field name="prefix">F</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- customer code -->
+        <record id="seq_type_ref_customer" model="ir.sequence.type">
+            <field name="name">客户编码</field>
+            <field name="code">ref.customer</field>
+        </record>
+        <record id="seq_ref_customer" model="ir.sequence">
+            <field name="name">客户编码</field>
+            <field name="code">ref.customer</field>
+            <field name="prefix">C</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--多公司记录规则-->
+
+        <!--采购-月生产计划production.plan.month-->
+        <!--<record id="production_plan_month_multi_company_rule" model="ir.rule">-->
+            <!--<field name="name">production.plan.month multi-company</field>-->
+            <!--<field name="model_id" ref="mtlcs_base.model_production_plan_month"/>-->
+            <!--<field name="global" eval="True"/>-->
+            <!--<field name="active" eval="True"/>-->
+            <!--<field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>-->
+        <!--</record>-->
+
+        <!--采购-物料使用标准material.consumption.standard-->
+        <!--<record id="material_consumption_standard_multi_company_rule" model="ir.rule">-->
+            <!--<field name="name">material.consumption.standard multi-company</field>-->
+            <!--<field name="model_id" ref="mtlcs_base.model_material_consumption_standard"/>-->
+            <!--<field name="global" eval="True"/>-->
+            <!--<field name="active" eval="True"/>-->
+            <!--<field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>-->
+        <!--</record>-->
+
+        <!--采购-申购preparation.order-->
+        <record id="preparation_order_multi_company_rule" model="ir.rule">
+            <field name="name">preparation.order multi-company</field>
+            <field name="model_id" ref="mtlcs_purchase.model_preparation_order"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--采购-安全库存stock.warehouse.orderpoint-->
+        <record id="stock_warehouse_orderpoint_multi_company_rule" model="ir.rule">
+            <field name="name">stock.warehouse.orderpoint multi-company</field>
+            <field name="model_id" ref="mtlcs_stock.model_stock_warehouse_orderpoint"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--采购-物料需求procurement.order-->
+        <record id="procurement_order_multi_company_rule" model="ir.rule">
+            <field name="name">procurement.order multi-company</field>
+            <field name="model_id" ref="mtlcs_purchase.model_procurement_order"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--采购-比价单purchase.requisition-->
+        <record id="purchase_requisition_multi_company_rule" model="ir.rule">
+            <field name="name">purchase.requisition multi-company</field>
+            <field name="model_id" ref="mtlcs_purchase.model_purchase_requisition"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--采购-采购订单purchase.order-->
+        <record id="purchase_order_multi_company_rule" model="ir.rule">
+            <field name="name">purchase.order multi-company</field>
+            <field name="model_id" ref="mtlcs_purchase.model_purchase_order"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--采购-采购明细purchase.order.line-->
+        <record id="purchase_order_line_multi_company_rule" model="ir.rule">
+            <field name="name">purchase.order.line multi-company</field>
+            <field name="model_id" ref="mtlcs_purchase.model_purchase_order_line"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+        <!--HR-部门hr.department-->
+        <record id="hr_department_multi_company_rule" model="ir.rule">
+            <field name="name">hr.department multi-company</field>
+            <field name="model_id" ref="hr.model_hr_department"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--产品-物料product.product-->
+        <record id="product_product_multi_company_rule" model="ir.rule">
+            <field name="name">product.product multi-company</field>
+            <field name="model_id" ref="mtlcs_product.model_product_product"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--产品模板-物料product.template-->
+        <record id="product_template_multi_company_rule" model="ir.rule">
+            <field name="name">product.template multi-company</field>
+            <field name="model_id" ref="mtlcs_product.model_product_template"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="True"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</openerp>

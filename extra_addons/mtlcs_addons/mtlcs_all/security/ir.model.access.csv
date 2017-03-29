@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+purchase.access_stock_warehouse_orderpoint_manager,stock.warehouse.orderpoint,stock.model_stock_warehouse_orderpoint,purchase.group_purchase_user,1,1,1,0
+mtlcs_all.access_sale_order_purchase_user,access_sale_order_purchase_user,sale.model_sale_order,purchase.group_purchase_user,1,0,0,0
+
+
+

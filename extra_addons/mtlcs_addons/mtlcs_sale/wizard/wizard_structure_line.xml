@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="wizard_layer_structure_form_view">
+            <field name="name">wizard.layer.structure.form</field>
+            <field name="model">wizard.layer.structure</field>
+            <field name="arch" type="xml">
+                <form string="创建层结构">
+                    <group>
+                        <group string="设置">
+                            <field name="cu_thick_base"/>
+                            <field name="cu_thick_finish"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

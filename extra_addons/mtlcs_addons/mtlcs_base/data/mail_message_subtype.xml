@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Supplier -->
+        <record id="res_partner_w_chief_inspector" model="mail.message.subtype">
+            <field name="name">至总监</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">至总监</field>
+        </record>
+        <record id="res_partner_w_account" model="mail.message.subtype">
+            <field name="name">至财务</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">至财务</field>
+        </record>
+        <record id="res_partner_w_general_manager" model="mail.message.subtype">
+            <field name="name">至总经理</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">至总经理</field>
+        </record>
+        <record id="res_partner_done" model="mail.message.subtype">
+            <field name="name">供应商完成</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">供应商完成</field>
+        </record>
+
+        <!-- Customer -->
+        <record id="cus_res_partner_w_director" model="mail.message.subtype">
+            <field name="name">至主管</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">至主管</field>
+        </record>
+        <record id="cus_res_partner_w_chief_inspector" model="mail.message.subtype">
+            <field name="name">至总监</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">至总监</field>
+        </record>
+        <record id="cus_res_partner_done" model="mail.message.subtype">
+            <field name="name">客户完成</field>
+            <field name="default" eval="False"/>
+            <field name="res_model">res.partner</field>
+            <field name="description">客户完成</field>
+        </record>
+
+
+
+
+
+
+    </data>
+
+
+
+
+
+</openerp>

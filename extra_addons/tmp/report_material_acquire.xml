@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_material_acquire_document">
+
+            <div class="header">
+                <h5 align="center">
+                    <span t-field="user.company_id.name"/>
+                </h5>
+                <h5 align="center">领料单
+                    <span t-field="o.name"/>
+                </h5>
+                <h6 align="left">领料部门：
+                    <span t-field="o.department_id.name"/>
+                    <span t-esc="time.strftime('%Y-%m-%d')"/>
+                </h6>
+            </div>
+
+            <div class="page">
+
+                <table width="933" class="table-bordered">
+                    <tr>
+                        <td>公司编号：</td>
+                        <td>材料名称：</td>
+                        <td>规格型号：</td>
+                        <td>单位：</td>
+                        <td>请领数量：</td>
+                        <td>实发数量：</td>
+                        <td>备注：</td>
+                    </tr>
+                    <tr t-foreach="o.line_ids" t-as="line">
+                        <td><span t-field="line.product_id.default_code"/></td>
+                        <td><span t-field="line.product_id.name"/></td>
+                        <td><span t-field="line.product_id.variants"/></td>
+                        <td><span t-field="line.qty"/></td>
+                        <td><span t-field="line.move_qty"/></td>
+                        <td><span /></td>
+                        <td><span /></td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+        </template>
+
+        <template id="report_material_acquire">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.partner_id.lang', 'mtlcs_stock.report_material_acquire_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+

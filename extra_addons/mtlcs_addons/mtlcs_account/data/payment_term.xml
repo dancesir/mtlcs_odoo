@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="pament_term_month_90" model="account.payment.term">
+            <field name="name">月结90天</field>
+            <field name="note">月结90天</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_month_60" model="account.payment.term">
+            <field name="name">月结60天</field>
+            <field name="note">月结60天</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_month_30" model="account.payment.term">
+            <field name="name">月结30天</field>
+            <field name="note">月结30天</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_half_month" model="account.payment.term">
+            <field name="name">半月结</field>
+            <field name="note">半月结</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_month" model="account.payment.term">
+            <field name="name">月结</field>
+            <field name="note">月结</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_prepay_all" model="account.payment.term">
+            <field name="name">预付全额货款</field>
+            <field name="note">预付全额货款</field>
+            <field name="active" eval="1"/>
+        </record>
+        <record id="pament_term_net_30" model="account.payment.term">
+            <field name="name">货到30天付款</field>
+            <field name="note">货到30天付款</field>
+            <field name="active" eval="1"/>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+
+<template id="report_preparation_order_document">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <h2>Hello World</h2>
+                    <p>This object's name is <span t-field="o.name"/></p>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+<template id="report_preparation_order">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.lang', 'mtl_cs.report_preparation_order_document')"/>
+        </t>
+    </t>
+</template>
+
+
+</data>
+</openerp>

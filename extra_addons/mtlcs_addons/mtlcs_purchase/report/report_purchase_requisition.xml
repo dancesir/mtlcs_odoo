@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_purchase_requisition_document">
+
+
+            <div class="page" width="2000">
+                <div class="oe_structure"/>
+                <div class="row">
+
+
+                        <t t-set="data" t-value="make_pol_data(o)"/>
+                        <t t-set="partner_count" t-value="len(data[1])"/>
+
+                        <h3 align="center">
+                            <span t-esc="user.company_id.name"/>
+                        </h3>
+                        <h1 align="center">采购价格对比表格</h1>
+                        <table class="table-bordered">
+                            <tr border="1">
+                                <td>采购单号：
+                                    <td colspan="8"/>
+                                </td>
+                                <td colspan="3" class="report_test">日期:
+                                    <span t-esc="time.strftime('%Y-%m-%d')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>物料名称：</td>
+                                <td>规格型号：</td>
+                                <td>采购数量：</td>
+
+                                <td t-foreach="data[1]" t-as="partner_name" colspan="2">
+                                    供应商：
+                                    <span t-esc="partner_name"/>
+                                </td>
+                                <td colspan="2">公司最近一次采购单价：</td>
+                                <td>备注：</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3"/>
+                                <td>单价</td>
+                                <td>税率</td>
+                                <td>单价</td>
+                                <td>税率</td>
+                                <td>单价</td>
+                                <td>税率</td>
+                                <td>单价</td>
+                                <td>税率</td>
+                                <td/>
+                            </tr>
+
+
+                            <tr t-foreach="data[0].values()" t-as="line">
+                                <td>
+                                    <span t-esc="line[0]"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line[1]"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line[2]"/>
+                                </td>
+                                <t t-foreach="data[1]" t-as="partner_name">
+                                    <td>
+                                        <span t-esc="line[4].get(partner_name,['-','-'])[0]"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line[4].get(partner_name,['-','-'])[1]"/>
+                                    </td>
+                                </t>
+                                <td>
+                                    <span t-esc="data[2].get(line[5],['-','-'])[0]"/>
+                                </td>
+                                <td>
+                                    <span t-esc="data[2].get(line[5],['-','-'])[1]"/>
+                                </td>
+                                <td/>
+
+
+                            </tr>
+
+                            <tr>
+                                <td>采购员：</td>
+                                <td colspan="6">谈判情况简述：</td>
+                                <td colspan="2">采购主管：</td>
+                                <td colspan="3">是否参与谈判：</td>
+                            </tr>
+
+                            <tr>
+                                <td>签名：</td>
+                                <td colspan="6">拟下单供应商：</td>
+                                <td colspan="2">签名:</td>
+                                <td colspan="3">采购意向：</td>
+                            </tr>
+
+                            <tr>
+                                <td>制造总监审核：</td>
+                                <td colspan="6"/>
+                                <td colspan="2">副总经理审核：</td>
+                                <td colspan="3"/>
+                            </tr>
+                            <tr>
+                                <td>总经理审批：</td>
+                                <td colspan="11"/>
+                            </tr>
+                            <tr>
+                                <td colspan="1">备注：</td>
+                                <td colspan="11">
+                                    <br>1、任何采购订单都必须有生效的对应申购单，且采购订单数量≦申请单数量；此单经总经理批准后生效。</br>
+                                    <br>2、所有采购物品必须先审批此单后方可下正式采购订单，未经公司总经理同意，不允许先采购后补采购订单，因此造成的损失由采购负责。</br>
+                                    <br>3、此单原则上只对应一张采购订单。</br>
+                                </td>
+                            </tr>
+
+                        </table>
+
+
+
+                </div>
+            </div>
+
+            <div class="footer">
+                <p  style="float:right">CMTL-FM-QA-0.030A</p>
+            </div>
+
+
+
+        </template>
+
+        <template id="report_purchase_requisition">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'user_id.partner_id.lang', 'mtlcs_purchase.report_purchase_requisition_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

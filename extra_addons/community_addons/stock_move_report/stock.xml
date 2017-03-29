@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="stock_move_tree_view" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="arch" type="xml">
+                <tree string="库存移动">
+                    <field name="partner_id"/>
+                    <field name="product_id"/>
+                    <field name="product_uom_qty"/>
+                    <field name="product_uom" />
+                    <field name="amount" sum="Subtotal"/>
+                    <field name="origin"/>
+                    <field name="picking_type_id"/>
+                    <field name="create_date" />
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_income_stock_move_2binoiced" model="ir.actions.act_window" >
+            <field name="name">收货未开票</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move</field>
+            <field name="domain">[('state','=','done'),('picking_id.reception_to_invoice','=',True),('picking_id.invoice_state','=','2binvoiced')]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+
+             <field name="view_id" ref="stock_move_tree_view"/>
+
+        </record>
+
+        <menuitem id="menu_income_stock_move_2binoiced" action="action_income_stock_move_2binoiced"
+                  name="收货未开票" parent="base.next_id_73" sequence="3"
+                  groups="purchase.group_purchase_user,account.group_account_user"/>
+
+
+
+    </data>
+</openerp>

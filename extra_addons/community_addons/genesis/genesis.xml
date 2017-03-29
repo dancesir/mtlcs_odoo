@@ -1,0 +1,107 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="genesis_job_tree_view">
+            <field name="name">genesis.jobs.tree</field>
+            <field name="model">genesis.jobs</field>
+            <field name="arch" type="xml">
+                <tree string="Genesis Job tree">
+                    <field name="name"/>
+                    <field name="finish_date"/>
+                    <field name="username"/>
+                    <button name="open_scale" type="object" string="Scale"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="genesis_job_form_view">
+            <field name="name">genesis.jobs.form</field>
+            <field name="model">genesis.jobs</field>
+            <field name="arch" type="xml">
+                <form string="Genesis Job form">
+                    <header>
+                        <button name="to_manager" states="draft" type="object" string="To Manager"/>
+                        <button name="to_done" states="wait_manager" type="object" string="To Manager"/>
+                        <button name="button_test" type="object" string="test"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="finish_date"/>
+                            <field name="image"/>
+
+
+                        </group>
+                        <group>
+                            <field name="username"/>
+
+                            <field name="create_uid"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_genesis_job">
+            <field name="name">Genesis Job</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">genesis.jobs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_genesis_job"  parent='base.menu_management' action="action_genesis_job" name="Genesis Job" sequence="200"/>
+
+
+
+        <record model="ir.ui.view" id="scale_parameter_tree_view">
+            <field name="name">scale.parameter.tree</field>
+            <field name="model">scale.parameter</field>
+            <field name="arch" type="xml">
+                <tree string="Scale Parameter">
+                    <field name="name"/>
+                    <field name="scale_x"/>
+                    <field name="scale_y"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="scale_parameter_form_view">
+            <field name="name">scale.parameter.form</field>
+            <field name="model">scale.parameter</field>
+            <field name="arch" type="xml">
+                <form string="Scale Parameter form">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="scale_x"/>
+                        </group>
+                        <group>
+                            <field name="scale_y"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="scale_parameter_job">
+            <field name="name">Scale Parameter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">scale.parameter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_scale_parameter"  parent='base.menu_management' action="scale_parameter_job" name="Scale Parameter" sequence="201"/>
+
+
+
+        <!-- define a report -->
+        <report
+                string="打印JOB"
+                id="action_report_genesis_jobs"
+                model="genesis.jobs"
+                report_type="qweb-pdf"
+                name="genesis.report_genesis_jobs"
+                file="genesis.report_genesis_jobs"
+                />
+
+
+    </data>
+</openerp>

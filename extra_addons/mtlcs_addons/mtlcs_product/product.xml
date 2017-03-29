@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="product_tag_tree_view">
+            <field name="name">product.tag.tree</field>
+            <field name="model">product.tag</field>
+            <field name="arch" type="xml">
+                <tree string="标签" editable="top">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_product_tag">
+            <field name="name">标签</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.tag</field>
+            <field name="domain">[]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_product_tag" action="action_product_tag"
+                  name="物料标签" parent="product.prod_config_main" sequence="90"/>
+
+
+        <record model="ir.ui.view" id="inherit_product_attribute_value_tree_view">
+            <field name="name">product.attribute.value.tree</field>
+            <field name="model">product.attribute.value</field>
+            <field name="inherit_id" ref="product.variants_tree_view"/>
+            <field name="arch" type="xml">
+                <tree position="inside">
+                    <field name="is_unconventional"/>
+                    <field name="is_htg"/>
+                    <field name="product_tags" widget="many2many_tags" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_attribute_value_from_view">
+            <field name="name">product.attribute.value.form</field>
+            <field name="model">product.attribute.value</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="attribute_id"/>
+                        <field name="name"/>
+                        <field name="product_tags" widget="many2many_tags"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="relation_product_group_tree_view">
+            <field name="name">relation.product.group.tree</field>
+            <field name="model">relation.product.group</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree string="产品关联组">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="relation_product_group_form_view">
+            <field name="name">relation.product.group.form</field>
+            <field name="model">relation.product.group</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="产品关联组">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="相关物料">
+                            <field name="product_ids" widget="many2many" domain="[('relation_gid','=',False)]"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_relation_product_group">
+            <field name="name">产品关联组</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">relation.product.group</field>
+            <field name="domain">[]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_relation_product_group" action="action_relation_product_group"
+                  name="产品关联组" parent="purchase.menu_procurement_management" sequence="90"/>
+
+
+        <!-- Product Material this tree view for quickly add product to other object -->
+        <record model="ir.ui.view" id="product_tree_view_for_preparation_order">
+            <field name="name">material.product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="priority" eval="999"/>
+            <field name="arch" type="xml">
+                <tree string="添加申购明细" create="0" selectable="0">
+                    <button name="add_to_preparation_order" string="添加申购明细" type="object"
+                            invisible="not context.get('add_to_preparation_order', False)"/>
+                    <button name="add_to_stock_picking" string="添加领料明细" type="object"
+                            invisible="not context.get('add_to_stock_picking', False)"/>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="variants"/>
+                    <field name="length"/>
+                    <field name="width"/>
+                    <field name="height"/>
+                    <field name="colour"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="uom_id"/>
+                    <field name="product_tmpl_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="material_product_form_view1">
+            <field name="name">material.product.product.form1</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="variants"/>
+                </field>
+
+            </field>
+        </record>
+
+
+        <!-- Product Category -->
+        <record id="inherit_product_category_tree_view" model="ir.ui.view">
+            <field name="name">product.category.tree</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="complete_code"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="inherit_product_category_list_view">
+            <field name="name">product.category.tree</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+                <field name="complete_name" position="after">
+                    <field name="complete_code"/>
+                    <field name="level"/>
+                    <field name="code"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="inherit_product_category_form_view">
+            <field name="name">product.category.form</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="level"/>
+                    <field name="code"/>
+                    <field name="complete_code"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="inherit_product_category_search_view">
+            <field name="name">product.category.search</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_search_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <filter name="big_category" string="大类" domain="[('level','=',1)]"/>
+                    <filter name="big_category" string="中类" domain="[('level','=',2)]"/>
+                    <filter name="big_category" string="小类" domain="[('level','=',3)]"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Product Material-->
+        <record model="ir.ui.view" id="material_product_tree_view">
+            <field name="name">material.product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="attribute_value_ids" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="lst_price" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+
+                <field name="uom_id" position="before">
+                    <field name="procurement_qty"/>
+                </field>
+
+                <field name="name" position="after">
+                    <field name="variants"/>
+                </field>
+
+                <field name="uom_id" position="after">
+                    <field name="abc"/>
+                    <field name="unconventional"/>
+                    <field name="purchase_period"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="material_product_form_view">
+            <field name="name">material.product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <sheet position="before">
+                    <header attrs="{'invisible':[('active','=',True)]}">
+                        <button name="make_default_code" string="创建物料编号" type="object"/>
+                        <button name="confirm" string="确认（采购员）" attrs="{'invisible':[('material_state','!=','draft')]}"
+                                type="object" class="oe_highlight"/>
+                        <button name="technical_approve" attrs="{'invisible':[('material_state','!=','w_technical')]}"
+                                string="审批（工艺）" type="object" class="oe_highlight"/>
+                        <button name="materia_control_approve"
+                                attrs="{'invisible':[('material_state','!=','w_materia_control')]}" string="审批（物控）"
+                                type="object" class="oe_highlight"/>
+                        <button name="quality_approve" attrs="{'invisible':[('material_state','!=','w_quality')]}"
+                                string="审批（品质）" type="object" class="oe_highlight"/>
+                        <button name="general_manager"
+                                attrs="{'invisible':[('material_state','!=','w_general_manager')]}" string="审批（总经理）"
+                                type="object" class="oe_highlight"/>
+                        <field name="material_state" widget="statusbar"/>
+                    </header>
+                </sheet>
+
+                <field name="uom_id" position="attributes">
+                    <attribute name="groups">base.group_user</attribute>
+                </field>
+
+                <field name="default_code" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </field>
+                <field name="virtual_available" position="after">
+                    <field name="procurement_qty"/>
+                </field>
+                <field name="type" position="before">
+                    <field name="category_code_id"/>
+                </field>
+                <field name="description" position="before">
+                    <group>
+                        <group>
+                            <field name="abc"/>
+                            <field name="need_iqc"/>
+                            <field name="unconventional"/>
+                            <field name="strict_department"/>
+                            <field name="strict_supplier"/>
+                            <field name="purchase_period"/>
+                        </group>
+                        <group>
+                            <label string="尺寸" class="oe_title"/>
+                            <div>
+                                <div>
+                                    <span>长:</span>
+                                    <field name="length" class="oe_inline"/>
+                                    <span>宽:</span>
+                                    <field name="width" class="oe_inline"/>
+                                    <field name="size_uom" class="oe_inline" widget="selection"/>
+                                </div>
+                            </div>
+                            <field name="area_sqm"/>
+                            <field name="height"/>
+                            <field name="dangerous"/>
+                            <field name="colour"/>
+                            <field name="need_trial"/>
+                            <field name="is_precious"/>
+                            <field name="is_poison"/>
+                        </group>
+                    </group>
+                </field>
+                <field name="uom_po_id" position="after">
+                    <field name="location_id"/>
+                </field>
+                <notebook position="inside">
+                    <page string="分类属性">
+                        <group string="板料">
+                            <field name="cu_thick"/>
+                            <field name="tg_value"/>
+                        </group>
+                        <group string="钻头铣刀">
+                            <field name="diameter"/>
+                        </group>
+                        <group string="油墨">
+                            <field name="colour"/>
+                        </group>
+                    </page>
+                    <page string="领用授权部门" groups="mtlcs_base.group_material_control_user">
+                        <group string="部门">
+                            <field name="material_department_ids"/>
+                        </group>
+                    </page>
+
+                    <!--==========1216-->
+                    <page string="采购信息">
+                        <group string="价格" col="3">
+                            <group colspan="1">
+                                <field name="highest_price"/>
+                                <field name="highest_date"/>
+                                <field name="highest_qty"/>
+                                <field name="highest_parnter"/>
+                            </group>
+                            <group colspan="1">
+                                <field name="bottom_price"/>
+                                <field name="bottom_date"/>
+                                <field name="bottom_qty"/>
+                                <field name="bottom_parnter"/>
+                            </group>
+                            <group colspan="1">
+                                <field name="last_price"/>
+                                <field name="last_date"/>
+                                <field name="last_qty"/>
+                                <field name="last_parnter"/>
+                            </group>
+                        </group>
+                        <group string="数量" col="3">
+                            <group colspan="1">
+                                <field name="last12months_average"/>
+                            </group>
+                            <group colspan="1">
+                                <field name="last3months_average"/>
+                            </group>
+                            <group colspan="1">
+                                <field name="lastmonth_average"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+        <!-- 采购产品菜单 -->
+        <record id="purchase.product_normal_action_puchased" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('purchase_ok','=',True)]</field>
+            <field name="context">{'no_create':1, 'no_edit':1}</field>
+            <field name="search_view_id" eval="False"/>
+            <field name="view_id" eval="False"/>
+        </record>
+
+        <record id="product_normal_action_no_approved" model="ir.actions.act_window">
+            <field name="name">产品-待审</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('purchase_ok','=',True),('active','=',False)]</field>
+            <field name="context">{'default_uom_id':False, 'default_sale_ok':False,'default_purchase_ok':True,}</field>
+            <field name="search_view_id" eval="False"/>
+            <field name="view_id" eval="False"/>
+        </record>
+        <menuitem id="product_no_approved_menu" name="产品-待审"
+                  parent="purchase.menu_procurement_management_product"
+                  action="product_normal_action_no_approved" sequence="9"/>
+
+        <!--==========1202-->
+        <!--物料搜索-->
+        <record id="product_search_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.search.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="default_code" string="内部单号"/>
+                    <field name="dongshuo_code" string="东烁编码"/>
+                </field>
+            </field>
+        </record>
+
+
+        <act_window
+                multi="True"
+                id="product_product_info_share"
+                name="同步基础资料"
+                res_model="share.to.server"
+                src_model="product.product"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+
+    </data>
+</openerp>

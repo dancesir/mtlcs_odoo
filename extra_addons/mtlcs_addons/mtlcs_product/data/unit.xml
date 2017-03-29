@@ -1,0 +1,29 @@
+<openerp>
+    <data>
+
+        <record id="uom_categ_area" model="product.uom.categ">
+            <field name="name">面积</field>
+        </record>
+        <record id="product_uom_metre_square" model="product.uom">
+            <field name="name">平米</field>
+            <field name="category_id" ref="uom_categ_area"/>
+            <field name="factor" eval="1.0"/>
+            <field name="uom_type">reference</field>
+            <field name="active" eval="True"/>
+            <field name="roundng" eval="0.001"/>
+            <field name="sequence" eval="1"/>
+        </record>
+        <record id="product_uom_cm_square" model="product.uom">
+            <field name="name">平方厘米</field>
+            <field name="category_id" ref="uom_categ_area"/>
+            <field name="factor" eval="10000"/>
+            <field name="uom_type">smaller</field>
+            <field name="active" eval="True"/>
+            <field name="roundng" eval="0.001"/>
+            <field name="sequence" eval="2"/>
+        </record>
+
+
+
+    </data>
+</openerp>

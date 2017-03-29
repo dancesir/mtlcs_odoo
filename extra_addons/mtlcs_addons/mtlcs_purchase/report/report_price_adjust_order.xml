@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_price_adjust_order_document">
+            <div class="header">
+                <br></br>
+                <div align="center">
+                    <h3>
+                        长沙牧泰莱电路技术有限公司
+                        <!--<span t-esc="o.company_id.name"/>-->
+                    </h3>
+                </div>
+                <hr style="height:2px;border-bottom:1px black solid;"></hr>
+            </div>
+
+            <div class="page">
+                <h3 align="center">供方报价审批单</h3>
+                <!--<t t-set="data" t-value="get_tax(o)"/>-->
+                <table style="width:100%; border:0px solid #000000;">
+                    <tr style="width:100%; height:1000px;">
+                        <td>
+                            <table style="width:100%;" class="table-bordered">
+                                <tr>
+                                    <td style="width:10%; height:30px; vertical-align:middle;">
+                                        供方名称：
+                                    </td>
+                                    <td style="width:60%; height:30px; vertical-align:middle;" colspan="3">
+                                        <span t-field="o.partner_id.name"/>
+                                    </td>
+                                    <td style="width:10%; height:30px; vertical-align:middle;">
+                                        供方代码：
+                                    </td>
+                                    <td style="width:20%; height:30px; vertical-align:middle;">
+                                        <span t-field="o.partner_id.ref_supplier"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        报价编号：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;" colspan="3">
+                                        <span t-field="o.name"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        页数：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <!--<span t-field="o.name"/>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        报价日期：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="o.create_date"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        有效期限：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;" colspan="3">
+                                        <!--<span t-field="o.name"/>-->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        税率：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <!--<span t-esc="data[0]"/>-->
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        赎期：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="o.partner_id.property_supplier_payment_term"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        付款方式：
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="o.partner_id.property_supplier_payment_term"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="width:100%; border:0px solid #000000;">
+                                <tr>
+                                    <td style="height:30px; vertical-align:middle;" colspan="5">
+                                        特殊说明：
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td style="height:30px; vertical-align:middle;">货品名称</td>
+                                    <td style="height:30px; vertical-align:middle;">规格型号</td>
+                                    <td style="height:30px; vertical-align:middle;">税率</td>
+                                    <td style="height:30px; vertical-align:middle;">原价</td>
+                                    <td style="height:30px; vertical-align:middle;">现价</td>
+                                </tr>
+                                <t t-set="index" t-value="1"/>
+                                <tr t-foreach="o.line_ids" t-as="line">
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-esc="index"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="line.product_id.name"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="line.product_id.variants"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="line.product_id.supplier_taxes_id.name"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="line.old_price"/>
+                                    </td>
+                                    <td style="height:30px; vertical-align:middle;">
+                                        <span t-field="line.new_price"/>
+                                    </td>
+                                    <t t-set="index" t-value="index + 1"/>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table style="width:100%;" class="table-bordered">
+                    <tr>
+                        <td style="width:25%; height:30px; vertical-align:middle;">
+                            审核：
+                        </td>
+                        <td style="width:25%; height:30px; vertical-align:middle;">
+                            <span/>
+                        </td>
+                        <td style="width:25%; height:30px; vertical-align:middle;">
+                            批准：
+                        </td>
+                        <td style="width:25%; height:30px; vertical-align:middle;">
+                            <span/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="footer">
+                <p style="float:right">管制编号：CMTL-FM-MC-001B</p>
+            </div>
+
+        </template>
+
+        <template id="report_price_adjust_order">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_purchase.report_price_adjust_order_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

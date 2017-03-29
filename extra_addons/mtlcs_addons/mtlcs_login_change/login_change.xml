@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="monkey_login_from_view" model="ir.ui.view">
+            <field name="name">monkey.login.from</field>
+            <field name="model">monkey.login</field>
+            <field name="arch" type="xml">
+                <form string="登录">
+                    <group>
+                        <field name="name" widget="url" readonly='1'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+                id="action_wizard_monkey_login_sz"
+                multi="True"
+                key2="client_action_multi"
+                name="登录深圳OpenERP"
+                res_model="monkey.login"
+                view_mode="form"
+                target="new"
+                view_type="form"/>
+        <menuitem id="menu_monkey_login_sz" name="登录深圳OpenERP" parent="base.menu_sales" action="action_wizard_monkey_login_sz"
+                  groups="base.group_system"/>
+
+        <!-- short cut to open moneky crm -->
+        <record id="short_" model="web.shortcut">
+            <field name="name">登录深圳OpenERP</field>
+            <field name="menu_id" ref="menu_monkey_login_sz"/>
+        </record>
+
+    </data>
+</openerp>

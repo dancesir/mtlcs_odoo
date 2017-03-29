@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="pcb_price_batch_form_view">
+            <field name="name">pcb.price.batch.form</field>
+            <field name="model">pcb.price.batch</field>
+            <field name="arch" type="xml">
+                <form string="创建合同">
+                    <label string="客户的多个报价创建一个销售合同"/>
+                    <group>
+                        <group>
+                            <field name="have_sale_id"/>
+                            <field name="sale_id" attrs="{'invisible':[('have_sale_id','=',False)], 'required':[('have_sale_id','=',True)]}"
+                                   domain="[('state','=','draft')]"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+                multi="True"
+                id="action_pcb_price_batch"
+                name="创建PCB销售合同"
+                res_model="pcb.price.batch"
+                src_model="pcb.price"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+    </data>
+</openerp>

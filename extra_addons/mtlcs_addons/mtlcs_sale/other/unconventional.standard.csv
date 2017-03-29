@@ -1,0 +1,46 @@
+id,description,company_id/id,field_id/id,eval_code,name
+__export__.unconventional_standard_20,层数大于等于26 需要非常规,base.main_company,,"def fn(x):
+     return x.layer_count >= 26  and True or False",层数
+__export__.unconventional_standard_21,同一层盲埋孔次数>=3需要非常规,base.main_company,,"def fn(x):
+     return x.blind_count >= 3  and True or False",盲埋孔
+__export__.unconventional_standard_22,超出1阶HDI工艺 需要非常规,base.main_company,,"def fn(x):
+     return  'hdi' in [i.code for i in x.special_tech_ids]",HDI
+__export__.unconventional_standard_23,表面镀层超出范围（无铅喷锡、有铅喷锡、电镀镍金、化学镍金、OSP，沉银、镍钯金、沉锡、局部厚金）以及两种表面处理工艺 需要非常规,base.main_company,,"def fn(x):
+     return x.surface_coating.is_unconventional   ",表面镀层
+__export__.unconventional_standard_24,板材超出此范围（FR4，铝基，聚四氟乙烯，Rogers4350和FR4混压，CEM-3、ROGERS 4350B）需要非常规,base.main_company,,"def fn(x):
+     for bf_ids in x.board_format_ids:
+         return bf_ids.is_unconventional ",板材
+__export__.unconventional_standard_25,成品孔径<0.15mm; 板厚>1.2mm时成品孔径<0.2; 板厚>2mm时成品孔径<0.2; 板厚>3.2mm时成品孔径<0.3; 板厚>4.8mm时成品孔径<0.45 需要非常规,base.main_company,,"def fn(x):
+     return (x.min_finish_hole >0) and ((x.finish_thick > 1.2 and x.min_finish_hole < 0.2) or  (x.finish_thick > 2 and x.min_finish_hole < 0.25) or (x.finish_thick > 3.2 and x.min_finish_hole < 0.3) or (x.finish_thick > 4.8 and x.min_finish_hole < 0.45) or  (x.min_finish_hole < 0.15)) ",成品孔径D
+__export__.unconventional_standard_26,厚径比大于12 需要非常规,base.main_company,,"def fn(x):
+     return  (x.min_finish_hole >0) and (x.finish_thick > 0) and  float(x.finish_thick/x.min_finish_hole) > 12",厚径比
+__export__.unconventional_standard_27,镀层厚度镍、金厚度超出规定尺寸需要非常规,base.main_company,,"def fn(x):
+     return  x.au_thick > 8  or  x.ni_thick > 200 or x.au_thick_2 > 50 or x.ni_thick_2 > 200 or x.finger_au_thick > 50 or x.finger_ni_thick > 200",镀层厚度
+__export__.unconventional_standard_28,,base.main_company,,,孔铜厚度
+__export__.unconventional_standard_29,,base.main_company,,,底铜厚度
+__export__.unconventional_standard_30,阻焊颜色超出阻焊油墨物料代码范围,base.main_company,,"def fn(x):
+     return x.solder_color.is_unconventional ",阻焊颜色
+__export__.unconventional_standard_31,字符颜色不是白色、黄色、黑色的一种需要非常规,base.main_company,,"def fn(x):
+    if  ( x.legend_color.code == 'whhite' or x.legend_color.code == 'yellow' or x.legend_color.code == 'black'   or x.legend_color.code == False ):
+        return False
+    return True",字符颜色
+__export__.unconventional_standard_32,最大板厚大于6MM需要非常规,base.main_company,,"def fn(x):
+     return x.finish_thick > 6 and True or False",最大板厚
+__export__.unconventional_standard_33,最小板厚超出指定范围需要非常规,base.main_company,,"def fn(x):
+     return (x.layer_count <4 and x.base_board_thick < 0.15) or (x.layer_count == 4 and x.finish_thick < 0.4) or (x.layer_count == 6 and x.finish_thick < 0.8) or (x.layer_count == 8 and x.finish_thick < 1) or (x.layer_count == 10 and x.finish_thick < 1.2) or (x.layer_count == 12 and x.finish_thick < 1.5) or (x.layer_count == 14 and x.finish_thick < 1.8)",最小板厚
+__export__.unconventional_standard_34,板厚≤1.0时公差在±0.08内; 1.0≤ 板厚≤1.6时公差在±0.1内; 1.6≤ 板厚时 公差 / 板厚 在±0.08内 需要非常规,base.main_company,,"def fn(x):
+     return ((x.finish_thick > 0 and x.finish_thick <= 1) and (x.finish_thick_tolu < 0.08 or x.finish_thick_told < 0.08)) or (x.finish_thick > 1 and x.finish_thick <= 1.6 and (x.finish_thick_tolu < 0.1 or x.finish_thick_told < 0.1)) or (x.finish_thick > 1.6 and (x.finish_thick_tolu/x.finish_thick < 0.08 or x.finish_thick_told/x.finish_thick < 0.08))",板厚(T)公差MM
+__export__.unconventional_standard_35,最大成品板尺寸单、双面板任意长或宽大于580mm; 多层板任意长或宽大于550mm 需要非常规,base.main_company,,"def fn(x):
+     return (x.layer_count <4 and (x.length>580 or x.width>580)) or (x.layer_count >= 4 and (x.length>550 or x.width>550))",最大成品板尺寸
+__export__.unconventional_standard_36,最小成品板尺寸任意Unit长或Unit宽小于10mm 需要非常规,base.main_company,,"def fn(x):
+     return x.unit_length<10 or x.unit_width<10",最小成品板尺寸
+__export__.unconventional_standard_37,金手指斜边角度不为20° 30° 45° 60° 中的一种 需要非常规,base.main_company,,"def fn(x):
+     return x.finger_angle <> 20 and x.finger_angle <> 30 and x.finger_angle <> 45 and x.finger_angle <> 60 and x.finger_angle <> False",金手指斜边
+__export__.unconventional_standard_38,V-CUT 角度不为20° 30° 45° 60° 中的一种 需要非常规,base.main_company,,"def fn(x):
+    if  ( x.vcut_angle.code <> 'angle20'  and x.vcut_angle.code <> 'angle30'  and x.vcut_angle.code <> 'angle45'  and x.vcut_angle.code <> 'angle60'  and x.vcut_angle == True ):
+        return True
+    return False  ",V-CUT
+__export__.unconventional_standard_39,验收标准超出IPC3级标准 需要非常规,base.main_company,,"def fn(x):
+    if ( x.acceptance_standard_id.code == 'ipc3'  or  x.acceptance_standard_id.code == False ):
+        return False
+    return True",验收标准

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+        <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.production.scrap_reason</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='workcenter_lines']/tree/field[@name='hour']" position="after">
+                    <button name="scrap" type="object" string="报废" states="pause,startworking" groups="quality_control.group_quality_control_user"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_move_form" model="ir.ui.view">
+            <field name="name">stock.move.view.form.inherit</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <group name="scrap_reason" position="inside">
+                    <field name="ticket_id"/>
+                </group>
+            </field>
+        </record>
+
+    </data>
+</openerp>

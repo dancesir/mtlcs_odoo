@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="picking_slip_document">
+
+            <div class="header">
+                <h5 align="center">
+                    <span t-field="user.company_id.name"/>
+                </h5>
+                <h5 align="center">物料转移
+                    <span t-field="o.name"/> <span t-field="o.picking_type_id.name"/>
+                </h5>
+                <h6 align="left">部门工序：
+                    <span t-field="o.department_id.name"/>
+                    <span t-esc="time.strftime('%Y-%m-%d')"/>
+                </h6>
+            </div>
+
+            <div class="page">
+                <table width="933" class="table-bordered">
+                    <tr>
+                        <td>编号：</td>
+                        <td>名称：</td>
+                        <td>型号：</td>
+                        <td>单位：</td>
+                        <td>数量：</td>
+                        <td>备注：</td>
+                    </tr>
+                    <tr t-foreach="o.move_lines" t-as="move">
+                        <td><span t-field="move.product_id.default_code"/></td>
+                        <td><span t-field="move.product_id.name"/></td>
+                        <td><span t-field="move.product_id.variants"/></td>
+                        <td><span t-field="move.product_uom.name"/></td>
+                        <td><span t-field="move.product_qty"/></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+        </template>
+
+        <template id="picking_slip">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'mtlcs_stock.picking_slip_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+

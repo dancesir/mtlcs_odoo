@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- 提醒 -->
+        <record model="ir.ui.view" id="pcb_remind_tree_view">
+            <field name="name">pcb.remind.tree</field>
+            <field name="model">pcb.remind</field>
+            <field name="arch" type="xml">
+                <tree string="提醒">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="info_id"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="pcb_remind_form_view">
+            <field name="name">pcb.remind.form</field>
+            <field name="model">pcb.remind</field>
+            <field name="arch" type="xml">
+                <form string="提醒">
+                    <header>
+                        <button name="acton_confirm" string="确认" type="object"/>
+                    </header>
+                    <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="info_id"/>
+                        </group>
+                        <group>
+
+                        </group>
+                    </group>
+
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="info_id"/>
+                            <field name="processed"/>
+                        </tree>
+                    </field>
+                    </sheet>
+
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_pcb_remind">
+            <field name="name">提醒</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pcb.remind</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_pcb_remind" name="提醒" sequence="9999"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_pcb_remind"/>
+
+
+    </data>
+</openerp>

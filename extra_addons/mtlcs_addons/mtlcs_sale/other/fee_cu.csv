@@ -1,0 +1,4 @@
+id,value,type,max_cu_thick,min_cu_thick,eval_code
+__export__.pcb_cu_thick_01,0,铜厚费,1.9999,0,def fn(pprice):    return  0.0
+__export__.pcb_cu_thick_02,0,铜厚费,2,2,"def fn(pprice,feedic):    return   feedic['fee_base'] * 0.2"
+__export__.pcb_cu_thick_03,0,铜厚费,999,2.0001,def fn(pprice):    return  (pprice.info_id.max_cu_thick - 1) * pprice.info_id.layer_count * 0.02

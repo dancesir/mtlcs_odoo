@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!--<data>-->
+
+        <!--
+            <record id="group_account_invoice" model="res.groups">
+                <field name="name">物控</field>
+                <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+                <field name="users" eval="[(4, ref('base.user_root'))]"/>
+                <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            </record>
+        -->
+
+    <!--</data>-->
+
+    <!-- Rule -->
+    <data noupdate="0">
+
+        <!--<record id="rule_preparation_order_all" model="ir.rule">-->
+            <!--<field name="name">preparation_order_all</field>-->
+            <!--<field name="model_id" ref="mtlcs_purchase.model_preparation_order"/>-->
+            <!--<field name="global" eval="True"/>-->
+            <!--&lt;!&ndash;<field name="domain_force">[(1,'=',1),]</field>&ndash;&gt;-->
+            <!--<field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>-->
+            <!--<field name="perm_read" eval="True"/>-->
+            <!--<field name="perm_create" eval="True"/>-->
+            <!--<field name="perm_write" eval="True"/>-->
+            <!--<field name="perm_unlink" eval="True"/>-->
+        <!--</record>-->
+
+        <record id="rule_preparation_order" model="ir.rule">
+            <field name="name">preparation_order_delete_only_draft</field>
+            <field name="model_id" ref="mtlcs_purchase.model_preparation_order"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('state','=','draft')]</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!--<record id="rule_preparation_order_read_only" model="ir.rule">-->
+            <!--<field name="name">preparation_order_read_only_done</field>-->
+            <!--<field name="model_id" ref="mtlcs_purchase.model_preparation_order"/>-->
+            <!--<field name="global" eval="True"/>-->
+            <!--<field name="domain_force">[('state','=','done')]</field>-->
+            <!--<field name="perm_read" eval="True"/>-->
+            <!--<field name="perm_create" eval="True"/>-->
+            <!--<field name="perm_write" eval="False"/>-->
+            <!--<field name="perm_unlink" eval="False"/>-->
+        <!--</record>-->
+
+        <!--<record id="rule_purchase_order" model="ir.rule">-->
+            <!--<field name="name">rule_purchase_order</field>-->
+            <!--<field name="model_id" ref="mtlcs_purchase.model_purchase_order"/>-->
+            <!--<field name="global" eval="True"/>-->
+            <!--<field name="domain_force">[('state','=','done')]</field>-->
+            <!--<field name="perm_read" eval="1"/>-->
+            <!--<field name="perm_create" eval="0"/>-->
+            <!--<field name="perm_write" eval="0"/>-->
+            <!--<field name="perm_unlink" eval="0"/>-->
+        <!--</record>-->
+
+
+    </data>
+</openerp>

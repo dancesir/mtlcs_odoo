@@ -1,0 +1,527 @@
+<openerp>
+    <data>
+
+        <!--采购计划-->
+        <record id="ir_exports_preparation_order" model="ir.exports">
+            <field name="name">采购计划表</field>
+            <field name="resource">preparation.order</field>
+            <field name="model_name">采购计划表</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_preparation_order_name" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">name</field>
+            <field name="heading" >申购序号</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_product_id" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">procurement_ids/product_id/name</field>
+            <field name="heading" >产品名称</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_variants" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">procurement_ids/product_id/variants</field>
+            <field name="heading" >产品规格</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_product_uom" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">procurement_ids/product_uom/name</field>
+            <field name="heading" >单位</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_seller_ids" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">procurement_ids/product_id/seller_ids/name</field>
+            <field name="heading" >供应商</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_standard_price" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">procurement_ids/product_id/standard_price</field>
+            <field name="heading" >单价</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_product_qty" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">procurement_ids/product_qty</field>
+            <field name="heading" >计划订购数</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_preparation_order_price_subtotal" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">procurement_ids/price_subtotal</field>
+            <field name="heading" >总金额</field>
+            <field eval="ir_exports_preparation_order" name="export_id"/>
+        </record>
+
+        <!--采购明细-->
+        <record id="ir_exports_purchase_order" model="ir.exports">
+            <field name="name">采购记录表</field>
+            <field name="resource">purchase.order</field>
+            <field name="model_name">采购记录表</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_purchase_order_partner_id" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">partner_id/name</field>
+            <field name="heading" >供方</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_date_order" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">date_order</field>
+            <field name="heading" >电话采购时间</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_product_id" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">order_line/product_id/name</field>
+            <field name="heading" >物料名称</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_product_qty" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">order_line/product_qty</field>
+            <field name="heading" >数量</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_price_unit" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">order_line/price_unit</field>
+            <field name="heading" >单价</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_price_subtotal" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">order_line/price_subtotal</field>
+            <field name="heading" >金额</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_date_planned" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">order_line/date_planned</field>
+            <field name="heading" >补签采购定单时间</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_purchase_order_name" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">name</field>
+            <field name="heading" >采购单号</field>
+            <field eval="ir_exports_purchase_order" name="export_id"/>
+        </record>
+
+        <!--入库产品明细-->
+        <record id="ir_exports_stock_move" model="ir.exports">
+            <field name="name">入库产品表</field>
+            <field name="resource">stock.move</field>
+            <field name="model_name">入库产品表</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_stock_move_date" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">date</field>
+            <field name="heading" >日期</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_move_origin" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">origin</field>
+            <field name="heading" >来源</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_move_product_id" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">product_id/name</field>
+            <field name="heading" >物料名称</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_move_variants" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">product_id/variants</field>
+            <field name="heading" >物料规格</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_move_product_uom_qty" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">product_uom_qty</field>
+            <field name="heading" >数量</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_product_move_location_id" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">location_id/name</field>
+            <field name="heading" >源库位</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_product_move_location_dest_id" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">location_dest_id/name</field>
+            <field name="heading" >目的库位</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_stock_product_move_state" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">state</field>
+            <field name="heading" >状态</field>
+            <field eval="ir_exports_stock_move" name="export_id"/>
+        </record>
+
+
+        <!--合格供应商一览表-->
+        <record id="ir_exports_product_supplierinfo" model="ir.exports">
+            <field name="name">合格供应商</field>
+            <field name="resource">product.supplierinfo</field>
+            <field name="model_name">合格供应商</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_name" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">name/name</field>
+            <field name="heading" >合格供应商名称</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_supplier_type" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">name/supplier_type</field>
+            <field name="heading" >服务类型</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_product_id" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">product_id/name</field>
+            <field name="heading" >认可物料</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_contact_name" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">name/contact_name</field>
+            <field name="heading" >联系人</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_phone" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">name/phone</field>
+            <field name="heading" >联系电话</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_fax" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">name/fax</field>
+            <field name="heading" >传真号码</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_product_supplierinfo_street" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">name/street</field>
+            <field name="heading" >地址</field>
+            <field eval="ir_exports_product_supplierinfo" name="export_id"/>
+        </record>
+
+        <!--物料采购进度通报-->
+        <record id="ir_exports_procurement_report" model="ir.exports">
+            <field name="name">采购进度表</field>
+            <field name="resource">procurement.report</field>
+            <field name="model_name">采购进度表</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_procurement_report_preparation_id" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">preparation_id</field>
+            <field name="heading" >申购单</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_product_id" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">product_id</field>
+            <field name="heading" >物料名称</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_uom_id" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">uom_id</field>
+            <field name="heading" >单位</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_product_qty" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">product_qty</field>
+            <field name="heading" >数量</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_qty" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">purchase_qty</field>
+            <field name="heading" >采购数</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_input_qty" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">input_qty</field>
+            <field name="heading" >入库数</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_period" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">purchase_period</field>
+            <field name="heading" >采购周期：天</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_period" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">purchase_period</field>
+            <field name="heading" >采购周期：天</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_date_planned" model="ir.exports.line">
+            <field name="sequence" >9</field>
+            <field name="name">date_planned</field>
+            <field name="heading" >要求到货时间</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_approve_date" model="ir.exports.line">
+            <field name="sequence" >10</field>
+            <field name="name">purchase_approve_date</field>
+            <field name="heading" >采购接单时间</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_input_date" model="ir.exports.line">
+            <field name="sequence" >11</field>
+            <field name="name">input_date</field>
+            <field name="heading" >实际到厂时间</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_procurement_report_purchase_is_overtime" model="ir.exports.line">
+            <field name="sequence" >12</field>
+            <field name="name">is_overtime</field>
+            <field name="heading" >是否迟交</field>
+            <field eval="ir_exports_procurement_report" name="export_id"/>
+        </record>
+
+        <!--物料采购进度通报-->
+        <record id="ir_exports_quality_inspection_order" model="ir.exports">
+            <field name="name">供方考核表</field>
+            <field name="resource">quality.inspection.order</field>
+            <field name="model_name">供方考核表</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_name" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">name</field>
+            <field name="heading" >质检单</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_partner_id" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">partner_id/name</field>
+            <field name="heading" >供方</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_type" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">type</field>
+            <field name="heading" >类型</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_product_id" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">line_ids/product_id/name</field>
+            <field name="heading" >名称</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_uom_id" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">line_ids/uom_id/name</field>
+            <field name="heading" >单位</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_qty" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">line_ids/qty</field>
+            <field name="heading" >数量</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_qty_ok" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">line_ids/qty_ok</field>
+            <field name="heading" >合格数</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_qty_ng" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">line_ids/qty_ng</field>
+            <field name="heading" >不合格数</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_qty_accept_deviation" model="ir.exports.line">
+            <field name="sequence" >9</field>
+            <field name="name">line_ids/qty_accept_deviation</field>
+            <field name="heading" >待采数</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_quality_inspection_order_qty_return" model="ir.exports.line">
+            <field name="sequence" >10</field>
+            <field name="name">line_ids/qty_return</field>
+            <field name="heading" >退货数</field>
+            <field eval="ir_exports_quality_inspection_order" name="export_id"/>
+        </record>
+
+        <!--供货商付款-->
+        <record id="ir_exports_account_voucher" model="ir.exports">
+            <field name="name">供货商付款</field>
+            <field name="resource">account.voucher</field>
+            <field name="model_name">供货商付款</field>
+            <field name="domain">[]</field>
+            <field name="attachment_date"></field>
+            <field name="export_fields">export_fields</field>
+        </record>
+
+        <record id="ir_exports_account_voucher_partner_id" model="ir.exports.line">
+            <field name="sequence" >1</field>
+            <field name="name">partner_id/name</field>
+            <field name="heading" >供货商</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_journal_id" model="ir.exports.line">
+            <field name="sequence" >2</field>
+            <field name="name">journal_id</field>
+            <field name="heading" >付款方式</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_date_due" model="ir.exports.line">
+            <field name="sequence" >3</field>
+            <field name="name">date_due</field>
+            <field name="heading" >到期日期</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_reference" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">reference</field>
+            <field name="heading" >付款单编号</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_reference" model="ir.exports.line">
+            <field name="sequence" >4</field>
+            <field name="name">reference</field>
+            <field name="heading" >付款单编号</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_amount" model="ir.exports.line">
+            <field name="sequence" >5</field>
+            <field name="name">amount</field>
+            <field name="heading" >合计</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_move_line_id" model="ir.exports.line">
+            <field name="sequence" >6</field>
+            <field name="name">line_dr_ids/move_line_id/name</field>
+            <field name="heading" >记账项目</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_account_id" model="ir.exports.line">
+            <field name="sequence" >7</field>
+            <field name="name">line_dr_ids/account_id</field>
+            <field name="heading" >科目</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_amount_original" model="ir.exports.line">
+            <field name="sequence" >8</field>
+            <field name="name">line_dr_ids/amount_original</field>
+            <field name="heading" >原金额 </field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_amount_unreconciled" model="ir.exports.line">
+            <field name="sequence" >9</field>
+            <field name="name">line_dr_ids/amount_unreconciled</field>
+            <field name="heading" >开放余额</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+        <record id="ir_exports_account_voucher_amount_line_amount" model="ir.exports.line">
+            <field name="sequence" >10</field>
+            <field name="name">line_dr_ids/amount</field>
+            <field name="heading" >总额</field>
+            <field eval="ir_exports_account_voucher" name="export_id"/>
+        </record>
+
+
+
+
+    </data>
+</openerp>

@@ -1,0 +1,10 @@
+<openerp>
+    <data>
+
+        <record id="product_category_material" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">原材料</field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,3 @@
+"id","type","value","min_point_count","max_point_count","eval_code"
+"__export__.pcb_special_tes_1","专测费",0,0,800,"def fn(pprice):    return 800"
+"__export__.pcb_special_tes_2","专测费",0,800,999999,"def fn(pprice):     return 100"

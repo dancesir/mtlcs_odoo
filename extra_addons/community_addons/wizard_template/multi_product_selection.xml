@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="multi_product_selection_form_view">
+            <field name="name">multi.product.selection.form</field>
+            <field name="model">multi.product.selection</field>
+            <field name="arch" type="xml">
+                <form string="选择多个产品">
+                    <group>
+                        <group>
+                            <field name="product_ids"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            multi="False"
+            id="action_preparation_order_product_selection"
+            name="产品选择"
+            res_model="multi.product.selection"
+            view_mode="form"
+            target="new"
+            context="{}"
+            view_type="form"/>
+
+
+    </data>
+</openerp>

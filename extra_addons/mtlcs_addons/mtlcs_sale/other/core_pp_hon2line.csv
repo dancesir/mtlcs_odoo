@@ -1,0 +1,9 @@
+"id","type","value","min_hole2line","routing","min_pp_count","eval_code"
+"__export__.pcb_fee_min_hole2line_1","孔到线费",0,8,0,0,"def fn(pprice,feedic):
+    return  pprice.info_id.min_hole2line <=8  and  ( 8 - pprice.info_id.min_hole2line ) * 0.1 * feedic['fee_base'] or 0.0"
+"__export__.pcb_fee_routing_1","锣程费",0,0,0.9,0,"def fn(pprice):
+    info = pprice.info_id
+    m = (info.length*2 + info.width* 2) / (info.panel_area )
+    return m > 0.9 and  (m - 0.9) * 0.02  or 0.0"
+"__export__.pcb_fee_fill_core_count_1","光板费",0,0,0,0,"def fn(pprice):     return pprice.info_id.fill_core_count  * 0.03"
+"__export__.pcb_fee_fill_pp_count_1","PP费",0,0,0,2,"def fn(pprice):     return  pprice.info_id.fill_pp_count > 2 and ( pprice.info_id.fill_pp_count - 2 ) * 0.004  or 0.0"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+   <data>
+        <template id="assets_backend" name="numberspinner" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="web_field_numberspinner\static\src\js\field_numberspinner.js"></script>
+            </xpath>
+        </template>
+   </data>
+</openerp>

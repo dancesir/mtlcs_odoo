@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="action_report_picking_purchase_receive" model="ir.actions.report.xml">
+            <field name="name">打印收料单</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="model">stock.picking</field>
+            <field name="report_name">mtlcs_stock.picking_purchase_receive</field>
+            <field name="report_xml">mtlcs_stock.picking_purchase_receive</field>
+            <field name="paperformat_id" ref="mtlcs_report.paperformat_triple_small"/>
+        </record>
+        <!--
+        <record id="value_picking_purchase_receive" model="ir.values">
+            <field name="name">打印收料单</field>
+            <field name="model">stock.picking</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value_unpickle" eval=" 'ir.actions.report.xml,%s' % ref('mtlcs_stock.action_report_picking_purchase_receive')"/>
+        </record>
+        -->
+
+
+        <record id="action_picking_slip" model="ir.actions.report.xml">
+            <field name="name">打印领料单</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="model">stock.picking</field>
+            <field name="report_name">mtlcs_stock.picking_slip</field>
+            <field name="report_xml">mtlcs_stock.picking_slip</field>
+            <field name="paperformat_id" ref="mtlcs_report.paperformat_triple_small"/>
+        </record>
+        <!--
+        <record id="value_action_report_material_acquire" model="ir.values">
+            <field name="name">打印领料单</field>
+            <field name="model">stock.picking</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value_unpickle" eval="'ir.actions.report.xml,%s' % ref('mtlcs_stock.action_picking_slip')"/>
+        </record>
+        -->
+
+        <!--<report-->
+                <!--string="打印收料单"-->
+                <!--id="action_report_picking_purchase_receive"-->
+                <!--model="stock.picking"-->
+                <!--report_type="qweb-pdf"-->
+                <!--name="mtlcs_stock.picking_purchase_receive"-->
+                <!--file="mtlcs_stock.picking_purchase_receive"-->
+                <!--menu="False"-->
+        <!--/>-->
+        <!--<report-->
+                <!--string="打印领料单"-->
+                <!--id="action_picking_slip"-->
+                <!--model="stock.picking"-->
+                <!--report_type="qweb-pdf"-->
+                <!--name="mtlcs_stock.picking_slip"-->
+                <!--file="mtlcs_stock.picking_slip"-->
+                <!--menu="False"-->
+        <!--/>-->
+
+
+        <report
+                string="Picking"
+                id="stock.action_report_picking"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="stock.report_picking"
+                file="stock.report_picking"
+                menu="False"
+        />
+
+
+    </data>
+</openerp>

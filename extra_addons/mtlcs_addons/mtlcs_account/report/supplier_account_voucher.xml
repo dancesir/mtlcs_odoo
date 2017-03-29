@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_supplier_account_voucher_document">
+
+            <t t-set="info" t-value="get_info(o)"/>
+            <t t-set="order" t-value="get_order(o)"/>
+            <t t-set="voucher" t-value="get_voucher_ids(o)"/>
+
+            <div class="header">
+                <br/>
+                <h3 align="center">
+                    <span t-field="o.company_id.name"/>
+                </h3>
+                <h4 align="center">付款申请单据</h4>
+                <h5 align="left">
+                    付款申请日期：
+                    <span t-esc="info['date']"/>
+                </h5>
+                <h5 align="left">
+                    打印申请日期：
+                    <span t-esc="info['date']"/>
+                </h5>
+                <h5 align="left">
+                    申请人：
+                    <span t-field="order['order'].create_uid.name"/>
+                </h5>
+            </div>
+
+            <div class="page">
+                <br/>
+                <table style="width:100%;">
+                    <table style="width:100%; border:1px solid #000000;">
+                        <tr>
+                            <td style="width:15%; height:30px; vertical-align:middle; border-bottom:1px solid #000000; ">
+                                收款单位:
+                            </td>
+                            <td style=" vertical-align:middle; border-bottom:1px solid #000000;" colspan="3">
+                                <span t-field="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:15%; height:30px; vertical-align:middle;">帐号:</td>
+                            <td style="width:35%; vertical-align:middle;">
+                                <span t-esc="info['acc_number']"/>
+                            </td>
+                            <td style="width:15%; height:30px; vertical-align:middle;">开户行:</td>
+                            <td style=" vertical-align:middle;">
+                                <span t-esc="info['bank_name']"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; border:1px solid #000000;">
+                        <tr>
+                            <td style="width:15%; height:30px; vertical-align:middle;">
+                                已开发票金额：
+                            </td>
+                            <td style="width:15%; height:30px; vertical-align:middle;">
+                                <span t-field="o.amount"/>
+                            </td>
+                            <td style="width:15%; height:30px; vertical-align:middle;">
+                                未开发票金额：
+                            </td>
+                            <td style="width:15%; height:30px; vertical-align:middle;">
+                                <!--<span t-field=""/>-->
+                            </td>
+                            <td style="width:10%; height:30px; vertical-align:middle;">
+                                增值税：
+                            </td>
+                            <td style="width:10%; height:30px; vertical-align:middle;">
+                                <span t-field="o.tax_id.name"/>
+                            </td>
+                            <td style="width:10%; height:30px; vertical-align:middle;">
+                                币别：
+                            </td>
+                            <td style="width:10%; height:30px; vertical-align:middle;">
+                                <!--<span t-field=""/>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" style="vertical-align:top;">
+                                <h4><b>
+                                    申请付款金额：
+                                </b></h4>
+                            </td>
+                            <td colspan="5" style="border:2px solid #000000; background-color:#C0C0C0;">
+                                <h3><b>
+                                    <span t-esc="info['cn_number']"/>
+                                </b></h3>
+                            </td>
+                            <td colspan="2">
+                                <!--<span t-field=""/>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                付款方式：
+                            </td>
+                            <td style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <span t-field="o.partner_id.property_supplier_payment_term"/>
+                            </td>
+                            <td style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                以上货款交易月份：
+                            </td>
+                            <td style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <!--<span t-field=""/>-->
+                            </td>
+                            <td colspan="2"
+                                style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                以上货款到期日期：
+                            </td>
+                            <td colspan="2"
+                                style="height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <span t-field="o.line_dr_ids.date_due"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height:30px; vertical-align:middle;">
+                                备注：
+                            </td>
+                            <td colspan="7">
+                                <!--<span t-field=""/>-->
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table style="width:100%;" class="table-condensed">
+                        <tr>
+                            <td style="width:10%; vertical-align:middle; border-bottom:1px solid #000000;">
+                                序号
+                            </td>
+                            <td style="width:20%; vertical-align:middle; border-bottom:1px solid #000000;">
+                                出入库
+                            </td>
+                            <td style="width:30%; vertical-align:middle; border-bottom:1px solid #000000;">
+                                产品
+                            </td>
+                            <td style="width:15%; vertical-align:middle; border-bottom:1px solid #000000;">
+                                交易金额
+                            </td>
+                            <td style="width:15%; vertical-align:middle; border-bottom:1px solid #000000;">
+                                备注
+                            </td>
+                        </tr>
+
+                        <t t-set="index" t-value="1"/>
+                        <tr t-foreach="order['order'].line_ids" t-as="order">
+                            <td style="vertical-align:middle; border-bottom:1px solid #C0C0C0;">
+                                <span t-esc="index"/>
+                            </td>
+                            <td style="vertical-align:middle; border-bottom:1px solid #C0C0C0;">
+                                <span t-esc="order.picking_id.name"/>
+                            </td>
+                            <td style="vertical-align:middle; border-bottom:1px solid #C0C0C0;">
+                                <span t-esc="order.product_id.name"/>
+                            </td>
+                            <td style="vertical-align:middle; border-bottom:1px solid #C0C0C0;">
+                                <span t-esc="order.price_subtotal_gross"/>
+                            </td>
+                            <td style="vertical-align:middle; border-bottom:1px solid #C0C0C0;">
+                                <span t-esc="order.invoice_id.name"/>
+                            </td>
+                            <t t-set="index" t-value="index + 1"/>
+                        </tr>
+
+                        <tr>
+                            <td style="width:10%; height:30px;" colspan="3" align="right">
+                                <h4>付款总金额：</h4>
+                            </td>
+                            <td style="width:10%; height:30px;" colspan="2" align="left">
+                                <h4>
+                                    <span t-field="o.amount"/>
+                                </h4>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; border:1px solid #000000;">
+                        <tr>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>交易发生额</h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>+品质扣款</h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>+赞助扣款</h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>+其他扣款</h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>=付款总额</h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>
+                                    <span t-field="o.amount"/>
+                                </h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>
+                                    0.00<!--<span t-field=""/>-->
+                                </h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>
+                                    0.00<!--<span t-field=""/>-->
+                                </h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>
+                                    0.00<!--<span t-field=""/>-->
+                                </h4>
+                            </td>
+                            <td style="width:20%; height:30px; vertical-align:middle; border-bottom:1px solid #000000;">
+                                <h4>
+                                    <span t-field="o.amount"/>
+                                </h4>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; border:1px solid #000000;" align="center">
+                        <tr>
+                            <td style="width:35%; height:30px; vertical-align:middle; border:1px solid #000000;">
+                                <h4>上六次付款信息（出纳）</h4>
+                            </td>
+                            <td style="width:30%; height:30px; vertical-align:middle; border:1px solid #000000;">
+                                <h4>财务应付未付信息</h4>
+                            </td>
+                            <td style="width:35%; height:30px; vertical-align:middle; border:1px solid #000000;">
+                                <h4>采购应付未付信息</h4>
+                            </td>
+                        </tr>
+                        <t t-set="index" t-value="1"/>
+                        <tr t-foreach="voucher['voucher']" t-as="voucher">
+                            <td style="vertical-align:top; border-right:1px solid #000000;">
+                                <span t-esc="index"/>):日期：
+                                <span t-esc="voucher.date"/>
+                                <br/>编号：
+                                <span t-esc="voucher.number"/>
+                                金额：
+                                <span t-esc="voucher.amount"/>
+                            </td>
+                            <td style="vertical-align:middle; border-right:1px solid #000000;">
+                                <!--<span t-field=""/>-->
+                            </td>
+                            <td style="vertical-align:middle; border-right:1px solid #000000;">
+                                <!--<span t-field=""/>-->
+                            </td>
+                            <t t-set="index" t-value="index + 1"/>
+                        </tr>
+                    </table>
+
+
+                    <!--<tr>-->
+                    <!--<td>金额</td>-->
+                    <!--<td colspan="2"><span t-esc="info['cn_number']"/></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td colspan="2">附件 张</td>-->
+                    <!--<td>￥</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                    <!--<td colspan="2" height="150">审批</td>-->
+                    <!--<td width="300">财务</td>-->
+                    <!--</tr>-->
+                    <!--</td>-->
+
+                    <!--<td width="300" align="center" class="table-bordered">-->
+                    <!--付款原因-->
+                    <!--<p align="left"  t-field="o.narration"/>-->
+                    <!--</td>-->
+
+                    <!--</tr>-->
+
+                </table>
+
+
+            </div>
+
+
+            <div class="footer">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:20%;">会计主管:</td>
+                        <td style="width:20%;">记账:</td>
+                        <td style="width:20%;">复核:</td>
+                        <td style="width:20%;">出纳:</td>
+                        <td style="width:20%;">签收:</td>
+                    </tr>
+                </table>
+            </div>
+
+
+        </template>
+
+        <template id="report_supplier_account_voucher">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_account.report_supplier_account_voucher_document')"/>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</openerp>

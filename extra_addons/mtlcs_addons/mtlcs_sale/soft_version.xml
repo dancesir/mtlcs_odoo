@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="soft_version_tree_view">
+            <field name="name">soft.version.tree</field>
+            <field name="model">soft.version</field>
+            <field name="arch" type="xml">
+                <tree string="软件版本">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="soft_version_from_view">
+            <field name="name">soft.version.form</field>
+            <field name="model">soft.version</field>
+            <field name="arch" type="xml">
+                <form string="软件版本">
+                    <group>
+                        <field name="name"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_soft_version">
+            <field name="name">软件版本</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">soft.version</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_soft_version" action="action_soft_version" name="PCB软件版本"
+                  parent="base.menu_base_config" sequence="20"/>
+        </data>
+    </openerp>

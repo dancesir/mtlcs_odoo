@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+price_adjust_order_user,price_adjust_order_user,product_pricelist_history.model_price_adjust_order,base.group_user,1,1,1,1
+price_adjust_line_user,price_adjust_line_user,product_pricelist_history.model_price_adjust_line,base.group_user,1,1,1,1
+

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Menu supplier for not approved -->
+        <record model="ir.actions.act_window" id="action_supplier_no_active">
+            <field name="name">待审核供应商</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('active','=',False),('supplier','=',True)]</field>
+            <field name="context">{'default_active':0, 'default_customer':0,'default_supplier':1, 'no_active':1,
+                'default_is_company':1}
+            </field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="suppliser_no_active_menu" name="供应商-待审" sequence="50"
+                  parent="mtlcs_base.sub_menu_supplier_management" action="action_supplier_no_active"/>
+
+
+        <record model="ir.actions.act_window" id="base.action_partner_supplier_form">
+            <field name="name">供应商</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('supplier','=',True)]</field>
+            <field name="context">{'no_create':1, 'no_edit':1, 'default_active':0,
+                'default_customer':0,'default_supplier':1, 'no_active':1, 'default_is_company':1}
+            </field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="base.menu_procurement_management_supplier_name" name="供应商"
+                  parent="mtlcs_base.sub_menu_supplier_management"
+                  action="base.action_partner_supplier_form" sequence="15"/>
+
+
+        <!-- PR Form view 1:button for price compare 2: -->
+        <record id="mtl_purchase_requisition_tree" model="ir.ui.view">
+            <field name="name">mtl.purchase.requisition.tree</field>
+            <field name="model">purchase.requisition</field>
+            <field name='inherit_id' ref='purchase_requisition.view_purchase_requisition_tree'/>
+            <field name="arch" type="xml">
+                <tree position="inside">
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="mtl_purchase_requisition_form" model="ir.ui.view">
+            <field name="name">mtl.purchase.requisition.form</field>
+            <field name="model">purchase.requisition</field>
+            <field name="type">form</field>
+            <field name='inherit_id' ref='purchase_requisition.view_purchase_requisition_form'/>
+            <field name="arch" type="xml">
+
+                <field name="exclusive" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="multiple_rfq_per_supplier" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+
+                <button name="generate_po" position="replace"/>
+                <button name="open_bid" position="replace"/>
+                <button name="cancel_requisition" position="replace">
+                    <!--==========170119-->
+                    <button name="cancel_requisition"
+                            states="draft,in_progress,w_chief_inspector,w_purchase_manager,w_business_manager,w_general_manager"
+                            string="Cancel Call"/>
+                    <!--<button name="cancel_requisition" states="draft,in_progress,w_chief_inspector,w_general_manager"-->
+                    <!--string="Cancel Call"/>-->
+                </button>
+
+                <button name="open_product_line" position="replace">
+                    <button name="open_history_pol" string="历史采购明细" type="object"/>
+                    <button name="get_relation_product_price" type="object" string="查看关联产品价格" state="in_progress"
+                            invisible="1"/>
+
+                    <!--==========1126-->
+                    <button name="action_print" string="打印" states="done" type="object" class="oe_highlight"
+                            groups="purchase.group_purchase_user"/>
+
+                </button>
+                <button name="sent_suppliers" states="draft" string="Confirm Call"
+                        class="oe_highlight" position="after">
+                    <button name="purchase_approve" string="审批（采购）" states="in_progress" class="oe_highlight"
+                            type="object"
+                            groups="purchase.group_purchase_user"/>
+                    <button name="purchase_manager_approve" string="审批（采购主管）" states="w_purchase_manager"
+                            class="oe_highlight" type="object"
+                            groups="purchase.group_purchase_manager"/>
+                    <!--==========170119-->
+                    <button name="business_manager_approve" string="审批（事业部经理）" states="w_business_manager"
+                            class="oe_highlight" type="object"
+                            groups="purchase.group_purchase_manager"/>
+                    <!--==========1206-->
+                    <button name="general_manager_approve" string="审批（总经理）" states="w_general_manager"
+                            class="oe_highlight" type="object"
+                            groups="mtlcs_base.group_general_manager"/>
+                </button>
+
+                <!--==========1108-->
+                <xpath expr="//div[@class='pull-left']" position="before">
+                    <div class="oe_right oe_stat_button" style="margin-right: -43%" name="buttons">
+                        <button type="object" name="show_approve_logs" class="oe_right oe_stat_button" string="审批日志"
+                                icon="fa-pencil-square-o"/>
+                    </div>
+                </xpath>
+
+                <field name="user_id" position="after">
+                    <!--==========170119-->
+                    <!--<field name="price_method"/>-->
+                    <field name="is_price_abnormal" class="oe_font_red"/>
+                    <field name="price_note" class="oe_font_red"/>
+                </field>
+
+                <button name="open_rfq" position="before">
+
+                    <!--==========20170303-->
+                    <button name="report_purchase_history_price" type="object" string="查看历史采购价"
+                            state="in_progress" icon="terp-purchase"/>
+
+                    <button name="auto_req" type="object" string="自动询价"
+                            attrs="{'invisible': ['|', ('line_ids','=',[]),('state', 'in', ('draft' ,'open','done','cancel'))]}"
+                            icon="gtk-execute"/>
+                    <button name="unlink_no_supplierinfo_pol" type="object" string="删除非关联明细"
+                            state="in_progress" icon="gtk-execute"/>
+                </button>
+
+                <field name="state" position="attributes">
+                    <!--==========1206-->
+                    <!--<attribute name="statusbar_visible">in_progress,w_chief_inspector,w_general_manager,open,done</attribute>-->
+                    <attribute name="statusbar_visible">in_progress,w_chief_inspector,open,done</attribute>
+                </field>
+
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="domain">[('ref','=','supplier2stock')]</attribute>
+                </field>
+
+                <field name='purchase_ids' position="attributes">
+                    <!--==========1217-->
+                    <!--<attribute name="context">{'req_state': state}</attribute>-->
+                    <attribute name="context">{'req_state': state, 'show_supplier_code':1}</attribute>
+                </field>
+
+                <xpath expr="//field[@name='purchase_ids']/tree/button[@name='purchase_confirm']" position="replace"/>
+                <xpath expr="//field[@name='purchase_ids']/tree/button[@name='purchase_approve']" position="replace"/>
+                <xpath expr="//field[@name='purchase_ids']/tree/button[@name='purchase_cancel']" position="replace"/>
+                <!--==========1223-->
+                <xpath expr="//field[@name='purchase_ids']/tree/field[@name='state']" position="before">
+                    <!--==========20170223-->
+                    <!--<field name="child_ids"/>-->
+                    <field name="price_method"/>
+                </xpath>
+                <xpath expr="//field[@name='purchase_ids']/tree/field[@name='state']" position="after">
+                    <field name="is_bid_get"/>
+                    <!--==========1207-->
+                    <button name="bid_get" type="object" icon="gtk-apply" options="{'reload_on_button': true}"
+                            attrs="{'invisible': [('state', 'in', ('cancel', 'w_business_manager','w_general_manager','w_send', 'w_account', 'approved', 'done',))]}"/>
+                    <!--<button name="bid_get" type="object" icon="gtk-apply" options="{'reload_on_button': True}"-->
+                    <!--attrs="{'invisible': ['|', ('state', 'in', ('cancel','w_general_manager','w_send', 'w_account', 'approved', 'done')),'&amp;',('state', '=', 'draft'),('is_bid_get','=', False)]}"/>-->
+                </xpath>
+
+                <notebook position="inside">
+                    <page string="比价明细">
+                        <field name="pol_ids">
+                            <tree>
+                                <field name="product_id"/>
+                                <field name="partner_id"/>
+                                <field name="product_qty"/>
+                                <field name="product_uom"/>
+                                <!--==========1207-->
+                                <field name="qty_available" readonly="1"/>
+                                <field name="virtual_available" readonly="1"/>
+                                <field name="procurement_qty" readonly="1"/>
+
+                                <field name="price_unit"/>
+                                <field name="taxes_id"/>
+                                <field name="price_subtotal"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <!--==========1219-->
+                    <page string="产品详情">
+                        <field name="info_ids">
+                            <tree>
+                                <field name="product_tmpl_id" string="产品"/>
+                                <field name="category_code_id" string="类别"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <xpath expr="//field[@name='line_ids']/tree" position="inside">
+                    <!--==========1220-->
+                    <field name="qty_available" readonly="1"/>
+                    <field name="incoming_qty" readonly="1"/>
+                    <field name="virtual_available" readonly="1"/>
+                    <field name="procurement_qty" readonly="1"/>
+                    <field name="supplier_amount" readonly="1"/>
+
+                    <field name="highest_price" readonly="1"/>
+                    <field name="bottom_price" readonly="1"/>
+                    <field name="last_price" readonly="1"/>
+                    <!--==========1215-->
+                    <field name="origin" readonly="1"/>
+
+                </xpath>
+                <field name="description" position="replace">
+                    <field name="description" attrs="{'readonly': [('state','not in',('draft','in_progress'))]}"/>
+                </field>
+
+                <!--==========1229-->
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_uom_id']" position="attributes">
+                    <attribute name="string">单位</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="class">oe_tree_column_width_mtl</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Purchse Order -->
+        <record id="inherit_purchase_order_tree" model="ir.ui.view">
+            <field name="name">purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name='inherit_id' ref='purchase.purchase_order_tree'/>
+            <field name="arch" type="xml">
+                <tree position="inside">
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inherit_purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name='inherit_id' ref='purchase.purchase_order_form'/>
+            <field name="arch" type="xml">
+                <button name="purchase_confirm" states="draft" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="purchase_confirm" states="bid" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="print_quotation" states="draft" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="print_quotation" states="sent" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="bid_received" states="sent" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="wkf_send_rfq" states="draft" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="wkf_send_rfq" states="approved" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </button>
+
+                <field name="state" widget="statusbar" position="attributes">
+                    <attribute name="statusbar_visible">draft,w_general_manager,w_send,w_account,approved,done
+                    </attribute>
+                </field>
+                <button name="action_cancel_draft" position="after">
+                    <button name="purchase_manager_approve" string="审批（采购主管）" states="draft" type="object"
+                            groups="purchase.group_purchase_manager" class="oe_highlight"/>
+                    <!--==========1208-->
+                    <button name="general_manager_approve" string="审批（总经理）" states="w_general_manager" type="object"
+                            groups="mtlcs_base.group_general_manager" class="oe_highlight" invisible="1"/>
+                    <button name="send_approve" string="已发送（采购）" states="w_send" type="object"
+                            groups="purchase.group_purchase_user" class="oe_highlight"/>
+                    <button name="account_approve" string="审批（财务）" states="w_account" type="object"
+                            groups="account.group_account_user"
+                            class="oe_highlight"/>
+                    <!--==========1126-->
+                    <button name="action_print" string="打印" states="w_send,w_account,approved,done" type="object"
+                            groups="purchase.group_purchase_user" class="oe_highlight"/>
+                    <button name="open_history_pol" string="历史采购明细" type="object"/>
+                    <button name="re_create_picking" string="重新生成入库单" states="except_picking,except_invoice"
+                            type="object" groups="base.group_erp_manager"/>
+                </button>
+                <field name="pricelist_id" position="after">
+                    <field name="is_bid_get" groups="base.group_system"/>
+                    <!--==========1223-->
+                    <field name="price_method"/>
+                </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <field name="shipped" position="after">
+                    <field name="payment_by_shipped" groups="base.group_system"/>
+                </field>
+                <field name="picking_type_id" position="after">
+                    <field name="is_contract" on_change="onchange_is_contract(is_contract)"/>
+                    <field name="dongshuo_id" groups="base.group_system"/>
+                </field>
+                <field name="payment_term_id" position="attributes">
+                    <!--==========1231-->
+                    <attribute name="required">1</attribute>
+                    <!--<attribute name="required">0</attribute>-->
+                </field>
+                <field name="picking_type_id" position="attributes">
+                    <attribute name="domain">[('ref','=','supplier2stock')]</attribute>
+                </field>
+
+                <!--==========multi company-->
+                <!--<field name="location_id" position="attributes">-->
+                <!--<attribute name="domain">[('company_id','=',company_id)]</attribute>-->
+                <!--</field>-->
+
+                <!--==========1201-->
+                <field name="minimum_planned_date" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','!=','draft')]}</attribute>
+                </field>
+                <field name="fiscal_position" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','!=','draft')]}</attribute>
+                </field>
+
+                <!--==========20170222-->
+                <field name="partner_id" position="after">
+                    <field name="child_ids"
+                           domain="[('parent_id','!=', False), ('parent_id','=', partner_id),('supplier','=',False),('customer','=',False)]"/>
+                </field>
+                <!--==========20170224-->
+                <xpath expr="//notebook/page[@string='Products']" position="after">
+                    <page string="采购询价过程">
+                        <separator string="询价详情描述"/>
+                        <field name="purchase_note"/>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="name">Requests for Quotation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <!--==========1217-->
+            <!--<field name="context">{}</field>-->
+            <field name="context">{'show_supplier_code':1,}</field>
+            <field name="domain">[('state','in',('draft','sent','bid','cancel',
+                'confirmed','w_purchase_manager','w_business_manager','w_general_manager','w_account'))]
+            </field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        </record>
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <!--==========1217-->
+            <!--<field name="context">{}</field>-->
+            <field name="context">{'show_supplier_code':1,}</field>
+            <field name="domain">[('state','not in',('draft','sent','bid','cancel',
+                'confirmed','w_purchase_manager','w_business_manager','w_general_manager','w_account'))]
+            </field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+        </record>
+
+
+        <record model="ir.ui.view" id="inherit_purchase_order_line_tree_view">
+            <field name="name">purchase.order.line.search</field>
+            <field name="model">purchase.order.line</field>
+            <field name='inherit_id' ref='purchase_order_lines.purchase_order_line_tree_view'/>
+            <field name="arch" type="xml">
+                <tree position="inside">
+                    <field name="procurement_id"/>
+                </tree>
+                <!--==========1206-->
+                <field name="product_id" position="after">
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="procurement_qty"/>
+                </field>
+                <field name="state" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+            </field>
+        </record>
+
+        <menuitem
+                action="purchase.purchase_line_form_action2"
+                id="purchase.menu_purchase_line_order_draft"
+                parent="purchase.menu_procurement_management_invoice"
+                sequence="10"/>
+        <menuitem action="purchase.action_picking_tree_picking_to_invoice"
+                  id="purchase.menu_action_picking_tree_picking_to_invoice"
+                  parent="purchase.menu_procurement_management_invoice" sequence="20"/>
+
+        <menuitem id="purchase_requisition.menu_purchase_requisition_pro_mgt"
+                  sequence="2" name="比价单"
+                  parent="purchase.menu_procurement_management"
+                  action="purchase_requisition.action_purchase_requisition"/>
+
+        <menuitem id="purchase.menu_purchase_rfq" action="purchase.purchase_rfq"
+                  parent="purchase.menu_procurement_management" name="草稿采购订单"
+                  sequence="3"/>
+
+        <record id="purchase.purchase_order_2_stock_picking" model="ir.ui.view">
+            <field name="name">Purchase Picking Inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[contains(@class, 'oe_title')]" position="before">
+                    <div class="oe_right oe_button_box" name="buttons">
+                        <button type="object"
+                                name="view_picking"
+                                class="oe_stat_button"
+                                icon="fa-truck"
+                                attrs="{'invisible': [('shipment_count', '=', 0)]}">
+                            <field name="shipment_count" widget="statinfo" string="In Shipments"
+                                   help="Incoming Shipments"/>
+                        </button>
+                        <button type="object" name="invoice_open"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button type="object" name="show_approve_logs" class="oe_inline oe_stat_button"
+                                string="审批日志" icon="fa-pencil-square-o"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
+

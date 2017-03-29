@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="action_invoice_prepayment" model="ir.actions.act_window">
+            <field name="name">预付款</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <menuitem id="menu_action_invoice_prepayment" action="action_invoice_prepayment"  parent="account.menu_finance_payables"/>
+
+
+    </data>
+</openerp>

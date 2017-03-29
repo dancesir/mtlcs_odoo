@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_view_attendance_form" model="ir.ui.view">
+            <field name="name">inherit.hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_form"/>
+            <field name="arch" type="xml">
+                <form position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="edit">0</attribute>
+                </form>
+                <sheet position="before">
+                    <header>
+                        <button name="sync_from_DF" string="同步到本地" type="object" class="oe_highlight"
+                                groups="base.group_system"/>
+                    </header>
+                </sheet>
+                <field name="employee_id" position="before">
+                    <field name="code"/>
+                    <field name="DF_SN"/>
+
+                </field>
+                <field name="action" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="action_desc" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="sheet_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="inherit_view_attendance_who" model="ir.ui.view">
+            <field name="name">inherit.hr.attendance.tree</field>
+            <field name="model">hr.attendance</field>
+            <field eval="3" name="priority"/>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_who"/>
+            <field name="arch" type="xml">
+                <field name="employee_id" position="before">
+                    <field name="code"/>
+                </field>
+                <field name="action" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mtl_view_hr_attendance_filter">
+            <field name="name">mtl_view_hr_attendance_filter</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code" string="职员编号"/>
+                    <field name="employee_id" string="职员姓名"/>
+                    <field name="name" string="日期"/>
+                    <filter string="今天" name="today"
+                            domain="[('name','&gt;=',current_date),('name','&lt;=',current_date), ('employee_id.user_id.id', '=', uid)]"/>
+                    <filter string="本月" name="month"
+                            domain="[('name','&gt;=', datetime.datetime.now().strftime('%Y-%m-01')),('employee_id.user_id.id', '=', uid)]"/>
+                    <!--domain="[('name','&gt;=', datetime.datetime.now().strftime('%Y-%m-01')), ('employee_id.user_id.id', '=', uid)]"/>-->
+                    <separator/>
+                    <filter string="全部考勤" domain="[('employee_id.user_id.id', '=', uid)]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter name="employee" string="员工" context="{'group_by':'employee_id'}"/>
+                        <separator/>
+                        <filter name="groupby_name" string="月份" context="{'group_by':'name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- 日历-->
+        <record model="ir.ui.view" id="view_hr_attendance_calendar">
+            <field name="name">hr attendance Calendar</field>
+            <field name="model">hr.attendance</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar color="employee_id" date_start="name">
+                <!--<field name="name"/>-->
+                </calendar>
+            </field>
+        </record>
+
+
+        <record id="hr_attendance.open_view_attendance" model="ir.actions.act_window">
+            <field name="name">Attendances</field>
+            <field name="res_model">hr.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="inherit_id" ref="hr_attendance.open_view_attendance"/>
+            <field name="context">{"search_default_month":1}</field>
+            <field name="search_view_id" ref="mtl_view_hr_attendance_filter"/>
+            <field name="help">The Time Tracking functionality aims to manage employee attendances from Sign in/Sign out
+                actions. You can also link this feature to an attendance device using Odoo's web service features.
+            </field>
+        </record>
+
+    </data>
+</openerp>

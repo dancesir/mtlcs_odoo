@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="quality_inspection_order_tree_view">
+            <field name="name">quality.inspection.order.tree</field>
+            <field name="model">quality.inspection.order</field>
+            <field name="arch" type="xml">
+                <tree string="质检单">
+                    <field name="name"/>
+                    <field name="origin"/>
+                    <field name="create_uid"/>
+                    <field name="user_id"/>
+                    <field name="create_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="quality_inspection_order_form_view">
+            <field name="name">quality.inspection.order.form</field>
+            <field name="model">quality.inspection.order</field>
+            <field name="arch" type="xml">
+                <form string="质检单">
+                    <header>
+                        <button name="action_confirm" states="draft" string='确认'
+                                groups="quality_control.group_quality_control_user" type="object" class="oe_highlight"/>
+                        <button name="quality_manager_approve" states="w_quality_manager" string='审批(品质经理)'
+                                groups="quality_control.group_quality_control_manager" type="object"
+                                class="oe_highlight"/>
+                        <button name="purchase_approve" states="w_purchase" string='同意退货(采购)'
+                                groups="purchase.group_purchase_user" type="object" class="oe_highlight"/>
+                        <button name="make_picking2ng"
+                                attrs="{'invisible':['|',('state','!=','w_make_return'),('return_picking_id','!=',False)]}"
+                                groups="purchase.group_purchase_user" string='退货数入不合格品仓' type="object"
+                                class="oe_highlight"/>
+                        <button name="make_invoice_return"
+                                attrs="{'invisible':['|',('state','!=','w_make_return'),('return_inovice_id','!=',False)]}"
+                                groups="purchase.group_purchase_user" string='创建退款' type="object" class="oe_highlight"/>
+                        <button name="return_processed" states="w_make_return" groups="purchase.group_purchase_user"
+                                string='退款\退货 已创建' type="object" class="oe_highlight"/>
+                        <button name="reset_draft" states="w_manager" string='重置草稿' type="object" class="oe_highlight"/>
+                        <button name="print_iqc_report" states="done" string='打印'
+                                groups="quality_control.group_quality_control_user" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <!--==========1108-->
+                        <button type="object" name="show_approve_logs" class="oe_right oe_stat_button"
+                                string="审批日志" icon="fa-pencil-square-o"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="origin"/>
+                                <field name="type"/>
+                                <field name="res_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                                <field name="user_id"/>
+                                <!--==========multi company-->
+                                <!--<field name="company_id"/>-->
+
+                                <field name="return_picking_id"/>
+                                <field name="return_amount"/>
+                                <field name="return_inovice_id"/>
+                            </group>
+                        </group>
+                        <field name="line_ids" nolabel="1"
+                               attrs="{'readonly': [('state','not in',['draft','w_quality_manager'])]}">
+                            <tree editable="bottom" create="false">
+                                <field name="product_id" readonly="1"/>
+                                <field name="uom_id" readonly="1"/>
+                                <field name="qty" readonly="1"/>
+                                <field name="qty_ok"/>
+                                <field name="qty_ng"/>
+                                <field name="qty_accept_deviation"/>
+                                <field name="qty_return"/>
+                                <field name="note"/>
+                                <field name="move_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <field name="note"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_quality_inspection_order">
+            <field name="name">质检单</field>
+            <field name="res_model">quality.inspection.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_quality_inspection_order" name="质检单" sequence="21"
+                  parent="quality_control.qc_inspection_menu_parent" action="action_quality_inspection_order"/>
+        <menuitem id="menu_quality_inspection_order_for_purchase" name="质检单" sequence="40"
+                  parent="purchase.menu_procurement_management_invoice" action="action_quality_inspection_order"/>
+
+        <!-- unqualified_item  -->
+        <record model="ir.ui.view" id="unqualified_item_tree_view">
+            <field name="name">unqualified.item.tree</field>
+            <field name="model">unqualified.item</field>
+            <field name="arch" type="xml">
+                <tree string="不合格项" editable="top">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_unqualified_item">
+            <field name="name">不合格项</field>
+            <field name="res_model">unqualified.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="quality_control.qc_menu_config" action="action_unqualified_item"
+                  name="不合格项" id="menu_unqualified_item"
+                  sequence="1" groups="quality_control.group_quality_control_manager"/>
+
+
+        <act_window
+                multi="True"
+                id="quality_inspection_order_info_share"
+                name="共享信息..."
+                res_model="share.to.server"
+                src_model="quality.inspection.order"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+
+    </data>
+</openerp>

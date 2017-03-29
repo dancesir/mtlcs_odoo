@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="mtlcs_procurement_order_search_view">
+            <field name="name">procurement.order.search</field>
+            <field name="model">procurement.order</field>
+            <field name='inherit_id' ref='procurement.view_procurement_filter'/>
+            <field name="arch" type="xml">
+                <!--==========1209-->
+                <field name="product_id" position="before">
+                    <field name="origin" string="申购单号"/>
+
+                </field>
+                <filter name="exceptions" position="after">
+                    <filter string="申购" name="preparation"
+                            domain="[('state','=','confirmed'),('preparation_id','!=',False)]"/>
+                </filter>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="mtlcs_procurement_tree_view">
+            <field name="name">procurement.order.tree</field>
+            <field name="model">procurement.order</field>
+            <field name='inherit_id' ref='procurement.procurement_tree_view'/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="purchase_line_id"/>
+                </field>
+                <field name="origin" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="origin" position="after">
+                    <field name="preparation_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!--==========1209-->
+        <record model="ir.ui.view" id="mtlcs_procurement_form_view">
+            <field name="name">procurement.order.form</field>
+            <field name="model">procurement.order</field>
+            <field name='inherit_id' ref='procurement.procurement_form_view'/>
+            <field name="arch" type="xml">
+                <button name="run" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <button name="cancel" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_procurement_order">
+            <field name="name">物料需求</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">procurement.order</field>
+            <field name="domain">[('preparation_id','!=',False)]</field>
+            <field name="context">{'search_default_preparation':1, 'no_create':1, 'no_edit':1 }</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_procurement_order" action="action_procurement_order" name="物料需求"
+                  parent="purchase.menu_procurement_management" sequence="1"
+                  groups="purchase.group_purchase_user,mtlcs_base.group_material_control_user"/>
+
+
+        <record id="procurement.action_compute_schedulers" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system'),])]"/>
+        </record>
+        <record id="stock.action_procurement_compute" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system'),])]"/>
+        </record>
+
+        <!-- preparation.order -->
+        <record model="ir.ui.view" id="preparation_order_search_view">
+            <field name="name">preparation.order.search</field>
+            <field name="model">preparation.order</field>
+            <field name="arch" type="xml">
+                <search string="申购单">
+                    <field name="name"/>
+                    <field name="create_uid"/>
+                    <field name="department_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="preparation_order_tree_view">
+            <field name="name">preparation.order.tree</field>
+            <field name="model">preparation.order</field>
+            <field name="arch" type="xml">
+                <tree string="申购单">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <field name="type"/>
+                    <field name="ppm_id"/>
+                    <field name="unconventional"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="preparation_order_form_view">
+            <field name="name">preparation.order.form</field>
+            <field name="model">preparation.order</field>
+            <field name="arch" type="xml">
+
+                <form string="申购单">
+                    <header>
+                        <button name="make_procurement_by_ppm" string="根据计划生成申请" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"
+                                type="object" attrs="{'invisible': ['|',('type','!=','plan'),('state','!=','draft')]}"/>
+                        <button name="confirm" states="draft" string="确认" class="oe_highlight" type="object"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="production_chief_inspector_approve" states="w_production_chief_inspector"
+                                string="审批（制造总监督）"
+                                groups="mtlcs_base.group_production_chief_inspector" type="object"
+                                class="oe_highlight"/>
+                        <button name="account_approve" states="w_account" string="审批（财务）" class="oe_highlight"
+                                type="object"
+                                groups="account.group_account_user"/>
+                        <button name="chairman_approve" states="w_chairman" string="审批（董事长）" class="oe_highlight"
+                                type="object" groups="mtlcs_base.group_chairman"/>
+                        <button name="purchase_approve" states="w_purchase" string="审批（采购）" type="object"
+                                class="oe_highlight"
+                                groups="purchase.group_purchase_user"/>
+                        <button name="action_cancel"
+                                states="draft,w_production_chief_inspector,w_account,w_chairman,w_purchase" string="取消"
+                                class="oe_highlight" type="object" groups="mtlcs_base.group_material_control_user"
+                                confirm="取消后该单作废，请谨慎操作"/>
+
+                        <!--==========1126-->
+                        <button name="action_print" string="打印" states="done" type="object" class="oe_highlight"
+                                groups="purchase.group_purchase_user"/>
+
+
+                        <button name="reset_draft" states="cancel" string="重置草稿" type="object" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="create_purchase_requisition" string="立即比价" type="object" class="oe_highlight"
+                                groups="base.group_purchase_user"
+                                attrs="{'invisible':['|',('state','!=','done'),('is_started_requisition','=',True)]}"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,w_production_chief_inspector,w_purchase,done"
+                               readonly="1"/>
+                    </header>
+                    <sheet>
+
+                        <!--<div class="oe_left oe_button_box" name="buttons">-->
+                        <!--<button type="object" name="get_product_qty" class="oe_stat_button" string="查看产品数量"-->
+                        <!--icon="fa-pencil-square-o"/>-->
+                        <!--<button type="object" name="get_purchase_order_line" class="oe_stat_button" string="历史采购明细"-->
+                        <!--icon="fa-pencil-square-o"/>-->
+                        <!--<button type="object" name="get_history_procurement" class="oe_stat_button"-->
+                        <!--string="历史申购记录" icon="fa-pencil-square-o"/>-->
+                        <!--</div>-->
+                        <!--==========1108-->
+                        <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                            <button type="object" name="get_product_qty" class="oe_inline oe_stat_button"
+                                    string="查看产品数量"
+                                    icon="fa-pencil-square-o"/>
+                            <button type="object" name="get_purchase_order_line" class="oe_inline oe_stat_button"
+                                    string="历史采购明细"
+                                    icon="fa-pencil-square-o"/>
+                            <button type="object" name="get_history_procurement" class="oe_inline oe_stat_button"
+                                    string="历史申购记录" icon="fa-pencil-square-o"/>
+                            <button type="object" name="show_approve_logs" class="oe_inline oe_stat_button"
+                                    string="审批日志" icon="fa-pencil-square-o"/>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="user_id" required="1" on_change="onchange_uer(user_id)"/>
+                                <field name="department_id" required="1"/>
+                                <field name="type"/>
+                                <field name="ppm_id" attrs="{'invisible': [('type','!=','plan')]}"
+                                       domain="[('state','=','done')]"/>
+                            </group>
+                            <group>
+                                <field name="unconventional"/>
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                                <field name="is_started_requisition"/>
+                                <field name="company_id" groups="base.group_system" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="物料需求">
+                                <button name="batch_select_product" states="draft" string="选择多个物料"
+                                        groups="base.group_user" type="object"/>
+                                <button name="rouding_product_qty" string="采购单位取整" type="object" states="draft"
+                                        groups="mtlcs_base.group_material_control_user"/>
+
+                                <button name="create_procurement_by_excel" string="Excel导入申购明细" type="object"
+                                        states="draft"
+                                        groups="mtlcs_base.group_material_control_user"/>
+
+                                <field name="procurement_ids"
+                                       context="{'default_origin':name,'default_state':'draft', 'default_rule_id':rule_id, 'default_location_id':location_id,'default_warehouse_id':warehouse_id }">
+                                    <tree string="需求明细" editable="bottom">
+                                        <field name="product_id"
+                                               on_change="onchange_qty(product_id, qty, product_qty, date_planned, 'product_id',)"/>
+                                        <!--<field name="product_id" on_change="onchange_qty(product_id, qty, product_qty, 'product_id' )"/>-->
+                                        <field name="plan_qty"/>
+                                        <field name="qty"
+                                               on_change="onchange_qty(product_id, qty, product_qty, date_planned, 'qty' )"
+                                               invisible="1"/>
+                                        <!--<field name="qty" on_change="onchange_qty(product_id, qty, product_qty, 'qty' )" invisible="1"/>-->
+                                        <field name="uom_id" invisible="1"/>
+
+                                        <!--==========20170222-->
+                                        <!--<field name="product_qty"-->
+                                               <!--on_change="onchange_qty(product_id, qty, product_qty, date_planned,'product_qty' )"-->
+                                               <!--string="采购数量"/>-->
+                                        <field name="product_qty"
+                                               on_change="onchange_qty(product_id, qty, product_qty, date_planned,'product_qty' )"
+                                               string="申购数量"/>
+
+
+                                        <field name="qty_available"/>
+                                        <field name="incoming_qty"/>
+                                        <!--==========20170222-->
+                                        <!--<field name="procurement_qty"/>-->
+                                        <field name="procurement_qty" string="待采购数量"/>
+
+                                        <field name="product_uom" string="单位"/>
+                                        <field name="standard_price"/>
+                                        <field name="date_planned"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="rule_id" invisible="1"/>
+                                        <field name="location_id" invisible="1"/>
+                                        <field name="warehouse_id" invisible="1"/>
+                                        <field name="origin" invisible="1"/>
+                                        <field name="price_subtotal" sum="总计"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="其他信息" groups="base.group_system">
+                                <group>
+                                    <field name="rule_id"/>
+                                    <field name="location_id"/>
+                                    <field name="warehouse_id"/>
+                                </group>
+                            </page>
+
+
+                        </notebook>
+                        <field name="note"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_preparation_order">
+            <field name="name">申购单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">preparation.order</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_preparation_order" action="action_preparation_order"
+                  name="申购单" parent="mtlcs_base.sub_menu_preparation_management" sequence="6"
+                  groups="purchase.group_purchase_user,mtlcs_base.group_material_control_user"/>
+        <menuitem id="menu_preparation_order_for_account" action="action_preparation_order"
+                  name="申购单" parent="mtlcs_base.sub_menu_finance_purchase" sequence="1"/>
+
+        <menuitem id="menu_rfq_for_account" action="purchase.purchase_rfq"
+                  name="询价单" parent="mtlcs_base.sub_menu_finance_purchase" sequence="2"/>
+        <menuitem id="menu_po_for_account" action="purchase.purchase_form_action"
+                  name="采购单" parent="mtlcs_base.sub_menu_finance_purchase" sequence="3"/>
+
+    </data>
+</openerp>

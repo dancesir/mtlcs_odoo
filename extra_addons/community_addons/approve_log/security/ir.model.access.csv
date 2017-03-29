@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+access_approve_log,access_approve_log,approve_log.model_approve_log,base.group_user,1,1,1,0

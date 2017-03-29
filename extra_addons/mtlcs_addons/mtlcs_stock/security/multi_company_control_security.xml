@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--多公司记录规则-->
+
+        <!--仓库-入库产品stock.move-->
+        <record id="stock_move_multi_company_rule" model="ir.rule">
+            <field name="name">stock.move multi-company</field>
+            <field name="model_id" ref="mtlcs_stock.model_stock_move"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-分拣产品stock.picking-->
+        <record id="stock_picking_multi_company_rule" model="ir.rule">
+            <field name="name">stock.picking multi-company</field>
+            <field name="model_id" ref="mtlcs_stock.model_stock_picking"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-分拣类型stock.picking.type-->
+        <record id="stock_picking_type_multi_company_rule" model="ir.rule">
+            <field name="name">stock.picking.type multi-company</field>
+            <field name="model_id" ref="stock.model_stock_picking_type"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('warehouse_id.company_id', '=', False), ('warehouse_id.company_id','child_of',[user.company_id.id]),('warehouse_id.company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-盘存明细stock.inventory.line-->
+        <record id="stock_inventory_line_multi_company_rule" model="ir.rule">
+            <field name="name">stock.inventory.line multi-company</field>
+            <field name="model_id" ref="stock.model_stock_inventory_line"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-当前存货估值stock.history-->
+        <record id="stock_history_multi_company_rule" model="ir.rule">
+            <field name="name">stock.history multi-company</field>
+            <field name="model_id" ref="stock_account.model_stock_history"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-存货调整stock.inventory-->
+        <record id="stock_inventory_multi_company_rule" model="ir.rule">
+            <field name="name">stock.inventory multi-company</field>
+            <field name="model_id" ref="stock.model_stock_inventory"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-序列号stock.production.lot-->
+        <record id="stock_production_lot_multi_company_rule" model="ir.rule">
+            <field name="name">stock.production.lot multi-company</field>
+            <field name="model_id" ref="stock.model_stock_production_lot"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('product_id.company_id', '=', False), ('product_id.company_id','child_of',[user.company_id.id]),('product_id.company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-份stock.quant-->
+        <record id="stock_quant_multi_company_rule" model="ir.rule">
+            <field name="name">stock.quant multi-company</field>
+            <field name="model_id" ref="mtlcs_stock.model_stock_quant"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('product_id.company_id', '=', False), ('product_id.company_id','child_of',[user.company_id.id]),('product_id.company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-库位stock.location-->
+        <record id="stock_location_multi_company_rule" model="ir.rule">
+            <field name="name">stock.location multi-company</field>
+            <field name="model_id" ref="stock.model_stock_location"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+        <!--仓库-路线stock.location.route-->
+        <record id="stock_location_route_multi_company_rule" model="ir.rule">
+            <field name="name">stock.location.route multi-company</field>
+            <field name="model_id" ref="stock.model_stock_location_route"/>
+            <field name="global" eval="True"/>
+            <field name="active" eval="False"/>
+            <field name="domain_force">['|', '|', ('company_id', '=', False), ('company_id','child_of',[user.company_id.id]),('company_id','in',[c.id for c in user.company_ids])]</field>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </data>
+</openerp>

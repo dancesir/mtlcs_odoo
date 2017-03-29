@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- 发票-->
+        <record model="ir.ui.view" id="fa_piao_search_view">
+            <field name="name">fa.piao.search</field>
+            <field name="model">fa.piao</field>
+            <field name="arch" type="xml">
+                <search string="发票">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <filter name="not_done" string="未完成" domain="[('state','!=','done')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="fa_piao_tree_view">
+            <field name="name">fa.piao.tree</field>
+            <field name="model">fa.piao</field>
+            <field name="arch" type="xml">
+                <tree string="发票">
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="amount" sum="总计"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="fa_piao_form_view">
+            <field name="name">fa.piao.form</field>
+            <field name="model">fa.piao</field>
+            <field name="arch" type="xml">
+                <form string="发票">
+                    <header>
+                        <button name="action_confirm" string="确认" states="draft" class="oe_highlight" type="object"/>
+                        <button name="action_done" string="完成" states="confirmed" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="amount"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+
+                            <field name="amount_lines"/>
+                            <field name="type" readonly="1"/>
+                            <field name="create_date"/>
+                            <field name="create_uid"/>
+
+                            <!--==========multi company-->
+                            <!--<field name="company_id"/>-->
+                        </group>
+                    </group>
+
+                    <field name="line_dr_ids"/>
+                    <field name="line_cr_ids"/>
+
+                    <group string="备注">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_fa_piao">
+            <field name="name">发票</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">fa.piao</field>
+            <field name="domain">[('type','=','in')]</field>
+            <field name="context">{'show_supplier_code':1, 'default_type':'in', 'search_default_not_done':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_fa_piao" name="供应商纸质发票" sequence="100"
+                  parent="account.menu_finance_payables" action="action_fa_piao"/>
+        <menuitem id="menu_fa_piao_for_purchase" name="供应商纸质发票" sequence="90"
+                  parent="purchase.menu_procurement_management_invoice" action="action_fa_piao"/>
+
+    </data>
+</openerp>

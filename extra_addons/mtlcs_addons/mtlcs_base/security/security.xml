@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <!-- Group -->
+    <data noupdate="0">
+
+        <!-- 工艺 -->
+        <record model="ir.module.category" id="module_category_technical">
+            <field name="name">工艺</field>
+        </record>
+        <record model="res.groups" id="group_technical_user">
+            <field name="name">工艺用户</field>
+            <field name="category_id" ref="module_category_technical"/>
+        </record>
+        <record model="res.groups" id="group_technical_manager">
+            <field name="name">工艺主管</field>
+            <field name="implied_ids" eval="[(4, ref('group_technical_user'))]"/>
+            <field name="category_id" ref="module_category_technical"/>
+        </record>
+
+        <!-- 成品仓 -->
+        <record model="ir.module.category" id="module_category_warehouse_finish">
+            <field name="name">成品仓</field>
+        </record>
+        <record model="res.groups" id="group_warehouse_finish_user">
+            <field name="name">成品仓用户</field>
+            <field name="category_id" ref="module_category_warehouse_finish"/>
+        </record>
+        <record model="res.groups" id="group_warehouse_finish_manager">
+            <field name="name">成品仓主管</field>
+            <field name="implied_ids" eval="[(4, ref('group_warehouse_finish_user'))]"/>
+            <field name="category_id" ref="module_category_warehouse_finish"/>
+        </record>
+
+        <!-- 计划组-->
+        <record model="ir.module.category" id="module_category_plan">
+            <field name="name">计划</field>
+        </record>
+        <record model="res.groups" id="group_plan_user">
+            <field name="name">计划用户</field>
+            <field name="category_id" ref="module_category_plan"/>
+        </record>
+        <record model="res.groups" id="group_plan_manager">
+            <field name="name">计划主管</field>
+            <field name="implied_ids" eval="[(4, ref('group_plan_user'))]"/>
+            <field name="category_id" ref="module_category_plan"/>
+        </record>
+
+        <!-- 物控组-->
+        <record model="ir.module.category" id="module_category_material_control">
+            <field name="name">物控</field>
+        </record>
+        <record model="res.groups" id="group_material_control_user">
+            <field name="name">物控用户</field>
+            <field name="category_id" ref="module_category_material_control"/>
+        </record>
+        <record model="res.groups" id="group_material_control_manager">
+            <field name="name">物控主管</field>
+            <field name="implied_ids" eval="[(4, ref('group_material_control_user'))]"/>
+            <field name="category_id" ref="module_category_material_control"/>
+        </record>
+
+        <!-- 销售总监 -->
+        <record model="res.groups" id="group_sale_chief_inspector">
+            <field name="name">销售总监</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_sale_manager'))]"/>
+            <field name="category_id" ref="base.module_category_sales_management"/>
+        </record>
+
+        <!-- 总经办 -->
+        <record model="ir.module.category" id="module_category_office_general_manager">
+            <field name="name">总经办</field>
+        </record>
+        <record id="group_production_chief_inspector" model="res.groups">
+            <field name="name">生产制造总监</field>
+            <field name="category_id" ref="module_category_office_general_manager"/>
+        </record>
+        <record id="group_deputy_general_manager" model="res.groups">
+            <field name="name">常务副总经理</field>
+            <field name="category_id" ref="module_category_office_general_manager"/>
+            <field name="implied_ids" eval="[(4, ref('group_production_chief_inspector'))]"/>
+        </record>
+        <record id="group_general_manager" model="res.groups">
+            <field name="name">总经理</field>
+            <field name="implied_ids" eval="[
+            (4, ref('stock.group_stock_manager')),
+            (4, ref('base.group_sale_manager')),
+            (4, ref('mrp.group_mrp_manager')),
+            (4, ref('purchase.group_purchase_manager')),
+            (4, ref('group_production_chief_inspector')),
+            (4, ref('group_deputy_general_manager'))]"/>
+            <field name="category_id" ref="module_category_office_general_manager"/>
+        </record>
+        <record id="group_chairman" model="res.groups">
+            <field name="name">董事长</field>
+            <field name="implied_ids" eval="[(4, ref('group_general_manager'))]"/>
+            <field name="category_id" ref="module_category_office_general_manager"/>
+        </record>
+    </data>
+
+    <!-- Rule -->
+    <data noupdate="0">
+        <record model="ir.rule" id="rule_production_plan_month">
+            <field name="name">production_plan_month_delete_only_draft</field>
+            <field name="model_id" ref="mtlcs_base.model_production_plan_month"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('state','=','draft')]</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+        <record model="ir.rule" id="rule_material_consumption_standard">
+            <field name="name">material_consumption_standard_delete_only_draft</field>
+            <field name="model_id" ref="mtlcs_base.model_material_consumption_standard"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('state','=','draft')]</field>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+
+    </data>
+</openerp>

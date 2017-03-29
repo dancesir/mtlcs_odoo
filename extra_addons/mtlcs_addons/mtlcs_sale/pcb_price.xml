@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--报价单 -->
+        <record model="ir.ui.view" id="pcb_price_tree_view">
+            <field name="name">pcb.price.tree</field>
+            <field name="model">pcb.price</field>
+            <field name="arch" type="xml">
+                <tree string="销售报价">
+                    <field name="name"/>
+                    <field name="receive_id"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="info_id"/>
+                    <field name="sol_id" groups="base.group_system"/>
+                    <field name="so_id"/>
+                    <field name="state" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="pcb_price_form_view">
+            <field name="name">pcb.price.form</field>
+            <field name="model">pcb.price</field>
+            <field name="arch" type="xml">
+                <form string="销售报价">
+                    <header>
+                        <button name="confirm" states="draft" string="确认" class="oe_highlight" type="object"/>
+                        <button name="director_approve" states="w_director" string="审批（主管）" class="oe_highlight" type="object"/>
+                        <button name="manager_approve" states="w_manager" string="审批（经理）" class="oe_highlight" type="object"/>
+                        <button name="general_manager_approve" states="w_general_manager" string="审批（总经办）" class="oe_highlight" type="object"/>
+                        <!--   <button name="customer_approve" states="w_customer" string="客户回签" class="oe_highlight" type="object"/>  -->
+                        <button name="to_cancel" states="draft,w_director,w_manager,w_general_manager,w_customer" string="作废"
+                                class="oe_highlight" type="object"/>
+                        <button name="reset_draft" states="cancel" string="作废" class="oe_highlight" type="object"/>
+                        <button name="to_tochang" states="done" string="更改" class="oe_highlight" type="object"/>
+                        <button name="check_unconventional" string="非常规检测" class="oe_highlight" type="object"/>
+                        <button name="compute_standard_period" string="计算标准交期" class="oe_highlight" type="object"/>
+                        <button name="compute_fee" string="费用计算" class="oe_highlight" type="object"/>
+                        <button name="make_sale_order" string="创建合同" class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+
+                    <sheet>
+
+                        <notebook>
+                            <page string="报价">
+                                <group col="6">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="type"/>
+                                        <field name="partner_id"/>
+                                        <field name="delivery_date"/>
+                                        <field name="delivery_period" readonly="1"/>
+                                        <field name="standard_period"/>
+                                        <field name="min_period"/>
+                                    </group>
+                                    <group>
+                                        <field name="area" invisible="1"/>
+                                        <field name="company_id"/>
+                                        <field name="m2_area"/>
+                                        <field name="sol_id" groups="base.group_system"/>
+                                        <field name="so_id"/>
+                                        <field name="material_price"/>
+                                        <field name="jig_price"/>
+                                        <field name="suite_qty"/>
+                                    </group>
+                                    <group>
+                                        <field name="receive_id"/>
+                                        <field name="info_id"/>
+                                        <field name="product_id"/>
+                                        <field name="detection_pass"/>
+                                        <field name="detection_id"/>
+                                        <field name="btype"/>
+                                    </group>
+                                </group>
+
+                                <group col="6">
+                                    <group>
+                                        <field name="price_unit"/>
+                                        <field name="price_pcs"/>
+                                        <field name="amount_plot_"/>
+                                        <field name="amount_test"/>
+                                        <field name="amount_eng"/>
+                                        <field name="amount_other"/>
+                                        <field name="amount"/>
+                                        <field name="amount_urgent"/>
+                                        <field name="once_fee"/>
+                                        <field name="discount" string="一次性费用折扣"/>
+                                        <field name="surchage"/>
+                                        <field name="amount_once_fee"/>
+                                        <field name="final_amount"/>
+                                    </group>
+
+                                    <group>
+                                        <table align = 'left'>
+                                            <tr height = '200'></tr>
+                                            <tr>
+                                                <td>
+                                                    <button name="compute_surchage" string="折扣计算" class="oe_highlight" type="object"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </group>
+                                    <group>
+                                        <field name="qty_unit"/>
+                                        <field name="qty" string="PCS数量"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="基础报价信息">
+                                <group col="6">
+                                    <group string="标准价格" attrs="{'readonly':[('state','!=','draft')]}">
+                                        <field name='fee1_base'/>
+                                        <field name='fee1_board_thick'/>
+                                        <field name='fee1_cu_thick'/>
+                                        <field name='fee1_special_tech'/>
+                                        <field name='fee1_surface'/>
+                                        <field name='fee1_blind'/>
+                                        <field name='fee1_min_hole'/>
+                                        <field name='fee1_hole_density'/>
+                                        <field name='fee1_line_space'/>
+                                        <field name='fee1_hole_line'/>
+                                        <field name='fee1_routing'/>
+                                        <field name='fee1_usage_rate'/>
+                                        <field name='fee1_core'/>
+                                        <field name='fee1_test'/>
+                                        <field name='fee1_finger'/>
+                                        <field name='fee1_finger2'/>
+                                        <field name='fee1_eng'/>
+                                        <field name='fee1_plot'/>
+                                        <field name='fee1_special_test'/>
+                                        <field name='fee1_common_test'/>
+                                        <field name='fee1_eng_pack'/>
+                                        <field name='fee1_jig'/>
+                                        <field name='fee1_urgent'/>
+                                        <field name='fee1_change'/>
+                                        <field name='fee1_other'/>
+                                        <field name='fee1_sqcm'/>
+                                        <field name='fee1_pcs'/>
+                                        <field name='fee1_all'/>
+                                    </group>
+                                    <group string="客户专用价格">
+                                        <field name='fee2_base'/>
+                                        <field name='fee2_board_thick'/>
+                                        <field name='fee2_cu_thick'/>
+                                        <field name='fee2_special_tech'/>
+                                        <field name='fee2_surface'/>
+                                        <field name='fee2_blind'/>
+                                        <field name='fee2_min_hole'/>
+                                        <field name='fee2_hole_density'/>
+                                        <field name='fee2_line_space'/>
+                                        <field name='fee2_hole_line'/>
+                                        <field name='fee2_routing'/>
+                                        <field name='fee2_usage_rate'/>
+                                        <field name='fee2_core'/>
+                                        <field name='fee2_test'/>
+                                        <field name='fee2_finger'/>
+                                        <field name='fee2_finger2'/>
+                                        <field name='fee2_eng'/>
+                                        <field name='fee2_plot'/>
+                                        <field name='fee2_special_test'/>
+                                        <field name='fee2_common_test'/>
+                                        <field name='fee2_eng_pack'/>
+                                        <field name='fee2_jig'/>
+                                        <field name='fee2_urgent'/>
+                                        <field name='fee2_change'/>
+                                        <field name='fee2_other'/>
+                                        <field name='fee2_sqcm'/>
+                                        <field name='fee2_pcs'/>
+                                        <field name='fee2_all'/>
+                                    </group>
+                                    <group string="实际价格">
+                                        <field name='fee_base'/>
+                                        <field name='fee_board_thick'/>
+                                        <field name='fee_cu_thick'/>
+                                        <field name='fee_special_tech'/>
+                                        <field name='fee_surface'/>
+                                        <field name='fee_blind'/>
+                                        <field name='fee_min_hole'/>
+                                        <field name='fee_hole_density'/>
+                                        <field name='fee_line_space'/>
+                                        <field name='fee_hole_line'/>
+                                        <field name='fee_routing'/>
+                                        <field name='fee_usage_rate'/>
+                                        <field name='fee_core'/>
+                                        <field name='fee_test'/>
+                                        <field name='fee_finger'/>
+                                        <field name='fee_finger2'/>
+                                        <field name='fee_eng'/>
+                                        <field name='fee_plot'/>
+                                        <field name='fee_special_test'/>
+                                        <field name='fee_common_test'/>
+                                        <field name='fee_eng_pack'/>
+                                        <field name='fee_jig'/>
+                                        <field name='fee_urgent'/>
+                                        <field name='fee_change'/>
+                                        <field name='fee_other'/>
+                                        <field name='fee_sqcm'/>
+                                        <field name='fee_pcs'/>
+                                        <field name='fee_all'/>
+                                    </group>
+                                </group>
+
+                            </page>
+                            <page string="报价计算信息">
+                                <field name="log_ids">
+                                    <tree string="计算信息">
+                                        <field name="type"/>
+                                        <field name="arg_id"/>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+
+                        </notebook>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_pcb_price">
+            <field name="name">销售报价</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pcb.price</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_pcb_price" name="报价单" sequence="5"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_pcb_price"/>
+
+    </data>
+</openerp>

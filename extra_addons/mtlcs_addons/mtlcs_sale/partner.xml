@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Menu Customer for not approved -->
+        <record model="ir.actions.act_window" id="action_customer_no_active">
+            <field name="name">待审核客户</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="domain">[('active','=',False),('customer','=',True)]</field>
+            <field name="context">{'default_active':0, 'default_customer':1,'default_supplier':0, 'no_active':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="customer_no_active_menu" name="客户-待审" sequence="1"
+                  parent="mtlcs_base.sub_menu_customer_manager" action="action_customer_no_active"/>
+
+        <!-- Menu Customer for approved -->
+        <menuitem id="base.menu_partner_form" parent="mtlcs_base.sub_menu_customer_manager" action="base.action_partner_form" sequence="2"/>
+
+
+        <!-- Parter Form-->
+        <record id="mtlcs_sale_res_partner_form_view" model="ir.ui.view">
+            <field name="name">mtlcs.res.partner</field>
+            <field name="model">res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_form'/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="客户通用信息" attrs="{'invisible': [('customer','!=',True)]}">
+                        <field name="requirement_template_ids">
+                            <tree nolabel="1">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

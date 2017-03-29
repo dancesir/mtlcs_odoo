@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="user_read_employee" model="ir.rule">
+            <field name="name">Employee User</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field eval="False" name="global"/>
+            <field name="groups" eval="[(6,0,[ref('base.group_user'),])]"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+        </record>
+        <record id="hr_user_employee" model="ir.rule">
+            <field name="name">Employee HR User</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field eval="False" name="global"/>
+            <field name="groups" eval="[(6,0,[ref('base.group_hr_user'),])]"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+
+    </data>
+
+
+
+    <data noupdate="1">
+    </data>
+</openerp>

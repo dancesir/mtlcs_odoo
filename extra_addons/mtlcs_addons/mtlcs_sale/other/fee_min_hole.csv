@@ -1,0 +1,4 @@
+id,type,value,max_hole,min_hole,eval_code
+__export__.pcb_fee_hole_1,最小孔径费,0.02,0.25,0.15,
+__export__.pcb_fee_hole_2,最小孔径费,0,0.15,0,"def fn(pprice): 
+    return pprice.info_id.panel_area and pprice.info_id.hole_count_small /  pprice.info_id.panel_area * 0.01 or 0.0"

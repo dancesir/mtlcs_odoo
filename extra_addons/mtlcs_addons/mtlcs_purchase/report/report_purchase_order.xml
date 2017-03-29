@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_purchase_order_document">
+            <div class="header">
+                <br/>
+                <div align="center">
+                   <h3>
+                       <span t-esc="o.company_id.name"/>
+                   </h3>
+                </div>
+                <div align="left">
+                    地址：
+                    <span t-esc="o.company_id.street"/>
+                </div>
+                <div align="left">
+                    电话：
+                    <span t-esc="o.company_id.phone"/>
+                    传真：
+                    <span t-esc="o.company_id.fax"/>
+                </div>
+                <hr style="height:2px;border-bottom:1px black solid;" />
+            </div>
+
+            <div class="page">
+                <h3 align="center">采购订单</h3>
+                <table style="width:100%;" class="table-bordered">
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">
+                            日期
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="4">
+                            <span t-esc="o.date_order"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            采购单号
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            <span t-esc="o.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">
+                            供应商
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="4">
+                            <span t-field="o.partner_id.name"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            请购部门
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            <span t-esc="o.create_uid.default_department_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">
+                            联络人
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="4">
+                            <span t-field="o.partner_id.contact_name"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            请购单号
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            <span t-esc="po_origin(o)"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">
+                            电话
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="4">
+                            <span t-field="o.partner_id.phone"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            交付方式
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            <span t-field="o.incoterm_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">
+                            传真
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="4">
+                            <span t-field="o.partner_id.fax"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            结算方式
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2">
+                            <span t-field="o.payment_term_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:30px; vertical-align:middle;">项目</td>
+                        <td style="height:30px; vertical-align:middle;" >物品名称</td>
+                        <td style="height:30px; vertical-align:middle;">规格</td>
+                        <td style="height:30px; vertical-align:middle;">单位</td>
+                        <td style="height:30px; vertical-align:middle;">数量</td>
+                        <td style="height:30px; vertical-align:middle;">交付期</td>
+                        <td style="height:30px; vertical-align:middle;">单价</td>
+                        <td style="height:30px; vertical-align:middle;">总价</td>
+                        <td style="height:30px; vertical-align:middle;">税率</td>
+                    </tr>
+                    <t t-set="index" t-value="1"/>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-esc="index"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-field="line.product_id.name"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-field="line.product_id.variants"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-field="line.product_uom.name"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-field="line.product_qty"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-field="line.date_planned"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" align="right">
+                            <span t-field="line.price_unit"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" align="right">
+                            <span t-field="line.price_subtotal"/>
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            <span t-esc="get_tax(line)"/>
+                        </td>
+                        <t t-set="index" t-value="index + 1"/>
+                    </tr>
+                    <tr height="30" >
+                        <td style="height:30px; vertical-align:middle;" colspan="6">
+                            备注
+                        </td>
+                        <td style="height:30px; vertical-align:middle;">
+                            合计
+                        </td>
+                        <td style="height:30px; vertical-align:middle;" colspan="2" align="center">
+                            <span t-field="o.amount_total"/>元
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <span t-field="o.notes"/>
+                        </td>
+                    </tr>
+
+                    <!--<tr>-->
+                        <!--<td colspan="9">-->
+                            <!--<br />-->
+                            <!--<span/>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <tr style="height:60px;" >
+                        <td rowspan="2" style="vertical-align:middle;">
+                            买方
+                        </td>
+                        <td style="vertical-align:middle;" colspan="2" rowspan="2" align="center" >
+                            （盖章）<br />
+                            <span t-esc="o.company_id.name"/>
+                        </td>
+                        <td rowspan="2" style="vertical-align:middle;">
+                            批准
+                        </td>
+                        <td colspan="2" rowspan="2">
+                            <span/>
+                        </td>
+
+                        <td style="vertical-align:middle;">
+                            采购
+                         </td>
+                        <td colspan="2"  style="vertical-align:middle;">
+                            <span t-esc="o.create_uid.name"/>
+                         </td>
+                    </tr>
+                    <tr style="height:60px;">
+                        <td style="vertical-align:middle;">
+                            审核
+                        </td>
+                        <td colspan="2">
+                            <span/>
+                         </td>
+                    </tr>
+
+                    <tr style="height:120px;">
+                        <td style="vertical-align:middle;">
+                            卖方
+                        </td>
+                        <td  style="vertical-align:middle;" colspan="2" align="center">
+                            （盖章）<br />
+                            <span t-esc="o.partner_id.name"/>
+                        </td>
+                        <td style="vertical-align:middle;">
+                            供方确认
+                        </td>
+                        <td colspan="2">
+                            <span/>
+                        </td>
+                        <td style="vertical-align:middle;">
+                            财务签收
+                        </td>
+                        <td colspan="2">
+                            <span/>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="footer">
+                <p style="float:right">管制编号：CMTL-FM-MC-001B</p>
+            </div>
+
+        </template>
+
+        <template id="report_purchase_order">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_purchase.report_purchase_order_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

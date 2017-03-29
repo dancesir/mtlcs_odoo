@@ -1,0 +1,2 @@
+id,type,value,min_hole_density,eval_code
+__export__.pcb_fee_hole_density_1,孔密度费,0,10,def fn(pprice): return pprice.info_id.hole_density > 10 and (pprice.info_id.hole_density - 10 ) * 0.003 or 0.0

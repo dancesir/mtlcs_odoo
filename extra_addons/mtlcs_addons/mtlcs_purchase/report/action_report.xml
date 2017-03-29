@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--采购单-->
+        <report
+            string="Purchase Order"
+            id="purchase.action_report_purchase_order"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="purchase.report_purchaseorder"
+            file="purchase.report_purchaseorder"
+            menu="False"
+        />
+        <!--申购单-->
+        <report
+            string="Request for Quotation"
+            id="purchase.report_purchase_quotation"
+            model="purchase.order"
+            report_type="qweb-pdf"
+            name="purchase.report_purchasequotation"
+            file="purchase.report_purchasequotation"
+            menu="False"
+        />
+        <!--比价单-->
+        <report
+            string="Call for Bids"
+            id="purchase_requisition.action_report_purchase_requisitions"
+            model="purchase.requisition"
+            report_type="qweb-pdf"
+            name="purchase_requisition.report_purchaserequisitions"
+            file="purchase_requisition.report_purchaserequisitions"
+            menu="False"
+         />
+
+        <report
+                string="打印申购单"
+                id="action_report_preparation_order"
+                model="preparation.order"
+                report_type="qweb-pdf"
+                name="mtlcs_purchase.report_preparation_order"
+                file="mtlcs_purchase.report_preparation_order"
+                menu="False"
+                />
+
+        <report
+                string="打印比价单"
+                id="action_report_purchase_requisition"
+                model="purchase.requisition"
+                report_type="qweb-pdf"
+                name="mtlcs_purchase.report_purchase_requisition"
+                file="mtlcs_purchase.report_purchase_requisition"
+                menu="False"
+                />
+
+        <report
+                string="打印采购单"
+                id="action_report_purchase_order"
+                model="purchase.order"
+                report_type="qweb-pdf"
+                name="mtlcs_purchase.report_purchase_order"
+                file="mtlcs_purchase.report_purchase_order"
+                menu="False"
+                />
+
+        <report
+                string="供方报价审批单"
+                id="action_report_price_adjust_order"
+                model="price.adjust.order"
+                report_type="qweb-pdf"
+                name="mtlcs_purchase.report_price_adjust_order"
+                file="mtlcs_purchase.report_price_adjust_order"
+                menu="False"
+                />
+
+        <!--<record id="action_report_preparation_order" model="ir.actions.report.xml">-->
+            <!--<field name="name">打印申购单</field>-->
+            <!--<field name="type">ir.actions.report.xml</field>-->
+            <!--<field name="model">preparation.order</field>-->
+            <!--<field name="report_name">mtlcs_purchase.report_preparation_order</field>-->
+            <!--<field name="report_xml">mtlcs_purchase.report_preparation_order</field>-->
+            <!--<field name="report_type">qweb-pdf</field>-->
+        <!--</record>-->
+
+        <!--<record id="action_report_purchase_requisition" model="ir.actions.report.xml">-->
+            <!--<field name="name">打印比价单</field>-->
+            <!--<field name="type">ir.actions.report.xml</field>-->
+            <!--<field name="model">purchase.requisition</field>-->
+            <!--<field name="report_name">mtlcs_purchase.report_purchase_requisition</field>-->
+            <!--<field name="report_xml">mtlcs_purchase.report_purchase_requisition</field>-->
+            <!--<field name="report_type">qweb-pdf</field>-->
+        <!--</record>-->
+
+    </data>
+</openerp>

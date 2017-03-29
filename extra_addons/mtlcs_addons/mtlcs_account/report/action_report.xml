@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+                string="打印付款申请书"
+                id="action_report_supplier_account_voucher"
+                model="account.voucher"
+                report_type="qweb-pdf"
+                name="mtlcs_account.report_supplier_account_voucher"
+                file="mtlcs_account.report_supplier_account_voucher"
+                />
+
+    </data>
+</openerp>

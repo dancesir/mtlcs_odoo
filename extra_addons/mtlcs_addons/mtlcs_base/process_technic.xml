@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="process_technic_tree_view">
+            <field name="name">process.technic.tree</field>
+            <field name="model">process.technic</field>
+            <field name="arch" type="xml">
+                <tree string="生产工艺">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="process_technic_form_view">
+            <field name="name">process.technic.form</field>
+            <field name="model">process.technic</field>
+            <field name="arch" type="xml">
+                <form string="生产工艺">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_process_technic">
+            <field name="name">生产工艺</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">process.technic</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="process_technic_tree_view"/>
+        </record>
+        <menuitem id="menu_process_technic" action="action_process_technic" name="生产工艺"
+                  parent="mrp.menu_pm_resources_config" sequence="2"/>
+
+
+        <!--Technic Attribute -->
+        <record model="ir.ui.view" id="technic_attribute_tree_view">
+            <field name="name">technic.attribute.tree</field>
+            <field name="model">technic.attribute</field>
+            <field name="arch" type="xml">
+                <tree string="工艺属性">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="is_unconventional"/>
+                    <field name="workcenter_id"/>
+                    <field name="technic_id"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="technic_attribute_form_view">
+            <field name="name">technic.attribute.form</field>
+            <field name="model">technic.attribute</field>
+            <field name="arch" type="xml">
+                <form string="工艺属性">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                             <field name="is_unconventional"/>
+                            <field name="workcenter_id"/>
+                            <field name="technic_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_technic_attribute">
+            <field name="name">工艺属性</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">technic.attribute</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="technic_attribute_tree_view"/>
+        </record>
+        <menuitem id="menu_technic_attribute" action="action_technic_attribute" name="工艺属性"
+                  parent="mrp.menu_pm_resources_config" sequence="2"/>
+
+        <!--Technic Tag -->
+        <record model="ir.ui.view" id="technic_tag_tree_view">
+            <field name="name">technic.tag.tree</field>
+            <field name="model">technic.tag</field>
+            <field name="arch" type="xml">
+                <tree string="工艺标签">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="technic_tag_form_view">
+            <field name="name">technic.tag.form</field>
+            <field name="model">technic.tag</field>
+            <field name="arch" type="xml">
+                <form string="工艺标签">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="attribute_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_technic_tag">
+            <field name="name">工艺标签</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">technic.tag</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="technic_tag_tree_view"/>
+        </record>
+        <menuitem id="menu_technic_tag" action="action_technic_tag" name="工艺标签"
+                  parent="mrp.menu_pm_resources_config" sequence="4"/>
+
+
+        <!-- 特殊工艺 -->
+        <record model="ir.ui.view" id="special_technic_tree_view">
+            <field name="name">special.technic.tree</field>
+            <field name="model">special.technic</field>
+            <field name="arch" type="xml">
+                <tree string="特殊工艺">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="special_technic_form_view">
+            <field name="name">special.technic.form</field>
+            <field name="model">special.technic</field>
+            <field name="arch" type="xml">
+                <form string="特殊工艺">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_special_technic">
+            <field name="name">特殊工艺</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">special.technic</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="special_technic_tree_view"/>
+        </record>
+        <menuitem id="menu_special_technic" action="action_special_technic" name="特殊工艺"
+                  parent="mrp.menu_pm_resources_config" sequence="5"/>
+
+    </data>
+</openerp>

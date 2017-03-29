@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Stock Picking -->
+        <record id="picking_quick_form" model="ir.ui.view">
+            <field name="name">quick.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <form string="Quick Internal move Entry">
+                    <header>
+                        <button name="action_confirm" states="draft" string="Mark as Todo" type="object"
+                                class="oe_highlight" groups="base.group_system"/>
+                        <button name="action_assign" states="confirmed" string="Check Availability" type="object"
+                                class="oe_highlight" groups="base.group_system"/>
+                        <button name="do_enter_transfer_details" states="assigned,partially_available" string="Transfer"
+                                groups="base.group_system" type="object" class="oe_highlight"/>
+                        <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting"
+                                string="Cancel Transfer" groups="base.group_system" type="object"/>
+                        <button name="322" string="Reverse Transfer" states="done" type="action"
+                                groups="base.group_system"/>
+                        <button name="do_unreserve" string="返回等待可用" groups="base.group_system" type="object"
+                                attrs="{'invisible': [('quant_reserved_exist', '=', False)]}"/>
+                        <button name="force_assign" states="confirmed,waiting,partially_available"
+                                string="Force Availability" type="object" groups="base.group_system"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,assigned,done"
+                               statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" class="oe_inline" attrs="{'invisible': [('name','=','/')]}"
+                                   readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="partner_id" groups="base.group_system"/>
+                                <field name="invoice_state" string="Invoice Control"
+                                       groups="account.group_account_invoice" invisible="1"/>
+
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="min_date"/>
+                                <field name="origin" placeholder="e.g. PO0032" class="oe_inline"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="move_lines" attrs="{'readonly':[('state','!=','draft')]}"
+                                       context="{'product_categ':context.get('product_categ',1), 'default_picking_type_id': picking_type_id,'default_picking_id': active_id}">
+                                    <tree editable="bottom">
+                                        <field name="state" invisible="1"/>
+                                        <field name="product_id"
+                                               domain="[('categ_id','child_of',context.get('product_categ',1))]"
+                                               on_change="onchange_product_id(product_id,location_id,location_dest_id, parent.partner_id)"/>
+                                        <field name="product_uom_qty"/>
+                                        <field name="product_uom" groups="base.group_system"/>
+                                        <field name="location_id" groups="base.group_system" widget="selection"/>
+                                        <field name="location_dest_id" groups="base.group_system" widget="selection"/>
+                                        <field name="date_expected" groups="base.group_system"/>
+                                        <field name="product_uos" groups="product.group_uos" invisible="1"/>
+                                        <field name="scrapped" invisible="1"/>
+                                        <field name="lot_ids" groups="stock.group_production_lot" invisible="1"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="picking_type_id" invisible="1"/>
+                                        <field name="picking_id" invisible="1"/>
+                                        <field name="create_date" invisible="1"/>
+                                        <field name="date_expected" invisible="1"/>
+                                        <field name="availability" invisible="1"/>
+                                        <field name="reserved_availability" invisible="1"/>
+                                        <field name="remaining_qty" invisible="1"/>
+                                        <field name="string_availability_info"/>
+                                        <field name="state"/>
+
+                                    </tree>
+                                </field>
+                                <field name="pack_operation_exist" invisible="1"/>
+                                <!--==========1202-->
+                                <field name="note" placeholder="Add an internal note..." class="oe_inline" attrs="{'readonly':[('state','=','done')]}"/>
+                            </page>
+                            <page string="Additional Info">
+                                <group>
+                                    <group>
+                                        <field name="move_type"/>
+                                        <!--==========1202-->
+                                        <field name="invoice_state" attrs="{'readonly':[('state','=','done')]}"/>
+                                        <field name="picking_type_id" groups="base.group_system"/>
+                                        <field name="location_id"/>
+                                        <field name="location_dest_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                        <field name="date_done" groups="base.group_no_one"/>
+                                        <field name="quant_reserved_exist" invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_picking_quick" model="ir.actions.act_window">
+            <field name="name">Quick Internal Move</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'contact_display': 'partner_address'}</field>
+        </record>
+
+        <record id="action_picking_quick_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_quick"/>
+        </record>
+        <record id="action_picking_quick_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_quick"/>
+        </record>
+
+
+        <menuitem name="快速内部调拨" action="action_picking_quick" id="menu_action_picking_quick"
+                  parent="stock.menu_stock_warehouse_mgmt" sequence="2" groups="base.group_system"/>
+
+
+        <!--  
+        <menuitem action="action_picking_tree6" id="menu_action_picking_tree6" parent="menu_stock_warehouse_mgmt" sequence="2" groups="stock.group_locations"/>
+        -->
+
+
+    </data>
+</openerp>

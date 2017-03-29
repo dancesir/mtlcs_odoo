@@ -1,0 +1,2 @@
+"id","type","value","eval_code"
+"__export__.pcb_fee_jig_1","模具费",0,"def fn(pprice): return pprice.jig_price * 1.3"

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--  -->
+        <record model="ir.ui.view" id="mtlcs_res_users_form_view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="default_department_id"/>
+                    <!--<field name="company_ids" widget="many2many_tags"/>-->
+                </field>
+
+                <!--<xpath expr="//page[@string='Access Rights']" position="inside">-->
+                    <!--<field name="company_ids"/>-->
+                <!--</xpath>-->
+
+
+            </field>
+
+        </record>
+
+
+    </data>
+</openerp>

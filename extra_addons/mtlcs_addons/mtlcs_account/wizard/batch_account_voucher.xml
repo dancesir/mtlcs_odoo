@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="batch_account_voucher_form_view">
+            <field name="name">batch.account.voucher.form</field>
+            <field name="model">batch.account.voucher</field>
+            <field name="arch" type="xml">
+                <form string="生成付款单">
+                    <label string="生成付款单"/>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <button name="make_account_voucher" string="创建" type="object" class="oe_highlight"/>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+                multi="True"
+                id="action_batch_account_voucher"
+                name="生成付款单"
+                res_model="batch.account.voucher"
+                src_model="res.partner"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+        <act_window
+                multi="True"
+                id="action_batch_account_voucher_from_invoice"
+                name="生成付款单"
+                res_model="batch.account.voucher"
+                src_model="account.invoice"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+
+    </data>
+</openerp>

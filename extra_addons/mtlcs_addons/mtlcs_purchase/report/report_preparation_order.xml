@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="report_preparation_order_document">
+            <div class="header" style="width:100%;">
+                <br></br>
+                <div align="center">
+                    <h3>
+                        <span t-esc="o.company_id.name"/>
+                    </h3>
+                </div>
+                <div align="left">
+                    地址：
+                    <span t-esc="o.company_id.street"/>
+                </div>
+                <div align="left">
+                    电话：
+                    <span t-esc="o.company_id.phone"/>
+                    传真：
+                    <span t-esc="o.company_id.fax"/>
+                </div>
+                <hr style="height:2px;border-bottom:1px black solid;"></hr>
+            </div>
+
+            <div class="page" style="width:100%;">
+                <h3 align="center">申购单：
+                    <span t-field="o.name"/>
+                </h3>
+
+                <h5 align="left">部门：
+                    <span t-field="o.department_id.name"/>
+                </h5>
+                <h5 align="left">日期：
+                    <span t-field="o.create_date"/>
+                </h5>
+
+                <table style="width:100%;">
+                    <tr style="width:100%; height:1000px; border:1px solid #000000;">
+                        <td>
+
+                            <table class="table-bordered" style="width:100%;">
+                                <tr>
+                                    <td style="height:30px; vertical-align:middle;">编码</td>
+                                    <td style="height:30px; vertical-align:middle;">名称</td>
+                                    <td style="height:30px; vertical-align:middle;">型号</td>
+                                    <td style="height:30px; vertical-align:middle;">数量</td>
+                                    <td style="height:30px; vertical-align:middle;">单位</td>
+                                    <td style="height:30px; vertical-align:middle;">要求日期</td>
+                                    <td style="height:30px; vertical-align:middle;">备注</td>
+                                </tr>
+
+                                <t t-foreach="o.procurement_ids" t-as="p">
+                                    <tr>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.product_id.default_code"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.product_id.name"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.product_id.variants"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.product_qty"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.product_uom.name"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.date_planned"/>
+                                        </td>
+                                        <td style="height:30px; vertical-align:middle;">
+                                            <span t-esc="p.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </template>
+
+        <template id="report_preparation_order">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.partner_id.lang', 'mtlcs_purchase.report_preparation_order_document')"/>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</openerp>

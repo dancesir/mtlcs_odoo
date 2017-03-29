@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report
+                string="打印用户单"
+                id="action_report_pcb_info"
+                model="pcb.info"
+                report_type="qweb-pdf"
+                name="mtlcs_sale.report_pcb_info"
+                file="mtlcs_sale.report_pcb_info"
+                />
+
+        <report
+                string="打印阻抗确认函"
+                id="action_pcb_info_impedance"
+                model="pcb.info"
+                report_type="qweb-pdf"
+                name="mtlcs_sale.report_pcb_info_impedance"
+                file="mtlcs_sale.report_pcb_info_impedance"
+                />
+
+        <report
+                string="打印报价单"
+                id="action_report_pcb_price"
+                model="pcb.price"
+                report_type="qweb-pdf"
+                name="mtlcs_sale.report_pcb_price"
+                file="mtlcs_sale.report_pcb_price"
+                />
+
+        <report
+                string="打印销售合同"
+                id="action_report_sale_order"
+                model="sale.order"
+                report_type="qweb-pdf"
+                name="mtlcs_sale.report_sale_order"
+                file="mtlcs_sale.report_sale_order"
+                />
+
+    </data>
+</openerp>

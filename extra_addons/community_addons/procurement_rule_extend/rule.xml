@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- why the inherit view can not display?
+        <record id="view_procurement_rule_form_inherit" model="ir.ui.view">
+            <field name="name">procurement.rule.form.inherit</field>
+            <field name="model">procurement.rule</field>
+            <field name="inherit_id" ref="stock.view_procurement_rule_form_stock_inherit"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="before">
+                    <filed name="code"/>
+                </field>
+            </field>
+        </record>
+-->
+
+    </data>
+</openerp>
+

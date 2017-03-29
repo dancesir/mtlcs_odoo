@@ -1,0 +1,131 @@
+<openerp>
+    <data noupdate="0">
+
+        <record id="seq_type_picking_out" model="ir.sequence.type">
+            <field name="name">Picking OUT</field>
+            <field name="code">stock.picking.out.cs</field>
+        </record>
+        <record id="seq_picking_outgoing" model="ir.sequence">
+            <field name="name">长沙牧泰莱 出库序列</field>
+            <field name="code">stock.picking.out.cs</field>
+            <field name="prefix">WH\OUT\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_picking_in" model="ir.sequence.type">
+            <field name="name">Picking IN</field>
+            <field name="code">stock.picking.in.cs</field>
+        </record>
+        <record id="seq_picking_in" model="ir.sequence">
+            <field name="name">长沙牧泰莱 入库序列</field>
+            <field name="code">stock.picking.in.cs</field>
+            <field name="prefix">WH\IN\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_picking_internal" model="ir.sequence.type">
+            <field name="name">Picking INT</field>
+            <field name="code">stock.picking.cs</field>
+        </record>
+        <record id="seq_picking_internal" model="ir.sequence">
+            <field name="name">长沙牧泰莱 内部序列</field>
+            <field name="code">stock.picking.cs</field>
+            <field name="prefix">INT/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="seq_type_finish_picking_out" model="ir.sequence.type">
+            <field name="name">Finish Picking OUT</field>
+            <field name="code">finish.stock.picking.out.cs</field>
+        </record>
+        <record id="seq_finish_picking_outgoing" model="ir.sequence">
+            <field name="name">长沙成品仓 出库序列</field>
+            <field name="code">finish.stock.picking.out.cs</field>
+            <field name="prefix">ST\OUT\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_finish_picking_in" model="ir.sequence.type">
+            <field name="name">Finish Picking IN</field>
+            <field name="code">finish.stock.picking.in.cs</field>
+        </record>
+        <record id="seq_finish_picking_in" model="ir.sequence">
+            <field name="name">长沙成品仓 入库序列</field>
+            <field name="code">finish.stock.picking.in.cs</field>
+            <field name="prefix">ST\IN\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="seq_type_picking_out_sz" model="ir.sequence.type">
+            <field name="name">Picking OUT</field>
+            <field name="code">stock.picking.out.sz</field>
+        </record>
+        <record id="seq_picking_outgoing_sz" model="ir.sequence">
+            <field name="name">深圳牧泰莱 出库序列</field>
+            <field name="code">stock.picking.out.sz</field>
+            <field name="prefix">WHSZ\OUT\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_picking_in_sz" model="ir.sequence.type">
+            <field name="name">Picking IN</field>
+            <field name="code">stock.picking.in.sz</field>
+        </record>
+        <record id="seq_picking_in_sz" model="ir.sequence">
+            <field name="name">深圳牧泰莱 入库序列</field>
+            <field name="code">stock.picking.in.sz</field>
+            <field name="prefix">WHSZ\IN\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_picking_internal_sz" model="ir.sequence.type">
+            <field name="name">Picking INT</field>
+            <field name="code">stock.picking.sz</field>
+        </record>
+        <record id="seq_picking_internal_sz" model="ir.sequence">
+            <field name="name">深圳牧泰莱 内部序列</field>
+            <field name="code">stock.picking.sz</field>
+            <field name="prefix">INT/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+
+
+        <record id="seq_type_finish_picking_out_sz" model="ir.sequence.type">
+            <field name="name">Finish Picking OUT</field>
+            <field name="code">finish.stock.picking.out.sz</field>
+        </record>
+        <record id="seq_finish_picking_outgoing_sz" model="ir.sequence">
+            <field name="name">深圳牧泰莱 出库序列</field>
+            <field name="code">finish.stock.picking.out.sz</field>
+            <field name="prefix">STSZ\OUT\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_type_finish_picking_in_sz" model="ir.sequence.type">
+            <field name="name">Finish Picking IN</field>
+            <field name="code">finish.stock.picking.in.sz</field>
+        </record>
+        <record id="seq_finish_picking_in_sz" model="ir.sequence">
+            <field name="name">深圳牧泰莱 入库序列</field>
+            <field name="code">finish.stock.picking.in.sz</field>
+            <field name="prefix">STSZ\IN\</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+    </data>
+</openerp>

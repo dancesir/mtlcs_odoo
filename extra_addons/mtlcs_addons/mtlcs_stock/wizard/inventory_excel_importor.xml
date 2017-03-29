@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <act_window
+            multi="False"
+            id="stock_inventory_excel_importor_action"
+            name="盘点表格导入"
+            res_model="excel.importor"
+            src_model="stock.inventory"
+            view_mode="form"
+            target="new"
+            context="{}"
+            view_type="form"/>
+    </data>
+</openerp>

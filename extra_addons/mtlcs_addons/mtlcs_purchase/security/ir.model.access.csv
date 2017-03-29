@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_preparation_order_user,access_preparation_order_user,mtlcs_purchase.model_preparation_order,base.group_user,1,1,1,1
+access_procurement_report_user,access_procurement_report_user,mtlcs_purchase.model_procurement_report,base.group_user,1,1,1,1
+,,,,,,,
+access_purchase_order_account,access_purchase_order_account,purchase.model_purchase_order,account.group_account_invoice,1,1,0,0
+access_purchase_order_line_account,access_purchase_order_line_account,purchase.model_purchase_order_line,account.group_account_invoice,1,1,0,0
+,,,,,,,
+access_purchase_order_user,access_purchase_order_user,purchase.model_purchase_order,purchase.group_purchase_user,1,1,1,1
+purchase_requisition_account,purchase_requisition_account,purchase_requisition.model_purchase_requisition,base.group_user,1,1,0,0
+stock_picking_account,stock_picking_account,stock.model_stock_picking,base.group_user,1,1,0,0
+access_purchase_order_line_user,access_purchase_order_line_user,purchase.model_purchase_order_line,purchase.group_purchase_user,1,1,1,1
+access_report_purchase_history_price,access_report_purchase_history_price,mtlcs_purchase.model_report_purchase_history_price,purchase.group_purchase_user,1,1,1,0
+,,,,,,,

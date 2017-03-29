@@ -1,0 +1,11 @@
+"id","type","min_layer_qty","max_layer_qty","lead_days","eval_code","value"
+"__export__.pcb_fee_urgent_1","加急费",0,2,1,,0.5
+"__export__.pcb_fee_urgent_2","加急费",0,2,2,,1
+"__export__.pcb_fee_urgent_3","加急费",2,6,1,,0.15
+"__export__.pcb_fee_urgent_4","加急费",2,6,2,,0.45
+"__export__.pcb_fee_urgent_5","加急费",2,6,3,,1
+"__export__.pcb_fee_urgent_6","加急费",6,50,1,,0.1
+"__export__.pcb_fee_urgent_7","加急费",6,50,2,,0.3
+"__export__.pcb_fee_urgent_8","加急费",6,50,3,,0.7
+"__export__.pcb_fee_urgent_9","加急费",6,50,4,,1
+"__export__.pcb_fee_urgent_10","加急费",6,50,5,,1.25

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<template>
+    <t t-name="NumberSpinnerWidget" t-extend="FieldChar">
+        <t t-jquery="t:last" t-operation="after">
+        </t>
+    </t>
+</template>
+

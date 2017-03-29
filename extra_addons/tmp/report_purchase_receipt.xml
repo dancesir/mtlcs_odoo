@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_purchase_receipt_document">
+
+            <div class="page">
+                <br/>
+
+                <h5 align="center">
+                    <span t-field="user.company_id.name"/>
+                </h5>
+                <h5 align="center">收料单：
+                    <span t-field="o.name"/>
+                </h5>
+                <h5 align="left">
+                    采购单号：
+                    <span t-field="o.po_id.name"/>
+                    日期:
+                    <span t-field="o.create_date"/>
+                </h5>
+
+
+                <table width="860" class="table-bordered" style="float:left;">
+                    <tr>
+                        <td colspan="3">
+                            供应商：
+                            <span t-field="o.partner_id.name"/>
+
+                        </td>
+                        <td colspan="2">送货单号：
+                            <span t-field="o.partner_ref"/>
+                        </td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>序号</td>
+                        <td>物料编码</td>
+                        <td>材料名称</td>
+                        <td>规格型号</td>
+                        <td>实收数量</td>
+                        <td>单位</td>
+                        <!--
+                        <td>单价</td>
+                        <td>金额</td>
+                        -->
+                    </tr>
+                    <t t-set="total" t-value="0"/>
+                    <tr t-foreach="o.line_ids" t-as="ready_line">
+                        <td>
+                            <span t-esc="ready_line_index + 1"/>
+                        </td>
+                        <td>
+                            <span t-field="ready_line.product_id.default_code"/>
+                        </td>
+                        <td>
+                            <span t-field="ready_line.product_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="ready_line.product_id.variants"/>
+                        </td>
+                        <td>
+                            <span t-field="ready_line.move_qty"/>
+                        </td>
+                        <td>
+                            <span t-field="ready_line.uom_id.name"/>
+                        </td>
+                        <!--
+                        <td>
+                            <span t-field="ready_line.pol_id.price_unit"/>
+                        </td>
+                        <td><span t-esc="ready_line.pol_id.price_unit * ready_line.move_qty"/></td>
+                        <t  t-set="total"  t-value="total + ready_line.pol_id.price_unit * ready_line.move_qty"/>
+                        -->
+                    </tr>
+                    <!--
+                    <tr>
+                        <td colspan="6">
+                            <span/>
+                        </td>
+                        <td>合计</td>
+                        <td>
+                            <span t-esc="total"/>
+                        </td>
+
+                    </tr>
+                    -->
+
+                </table>
+
+                <div style="font-size:15px;float:left;margin:0 auto;width:15px;line-height:18px;border:0px solid #333"><br/>白联存根
+                    <br/>
+                    <br/>红联发票、暂估
+                </div>
+                <div style="font-size:15px;float:left;margin:0 auto;width:20px;line-height:18px;border:0px solid #333">蓝联付款
+                    <br/>
+                    <br/>
+                    绿联采购
+                    <br/>
+                    <br/>
+                    黄联供方
+                </div>
+            </div>
+
+        </template>
+
+        <template id="report_purchase_receipt">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'mtlcs_stock.report_purchase_receipt_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+

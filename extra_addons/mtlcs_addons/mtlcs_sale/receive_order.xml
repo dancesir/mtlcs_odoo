@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- 接单-->
+        <record model="ir.ui.view" id="receive_order_tree_view">
+            <field name="name">receive.order.tree</field>
+            <field name="model">receive.order</field>
+            <field name="arch" type="xml">
+                <tree string="接单">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="email_code"/>
+                    <field name="ref"/>
+                    <field name="file_name"/>
+                    <field name="type"/>
+                    <field name="info_id"/>
+                    <field name="product_id"/>
+                    <field name="price_id"/>
+                    <field name="so_id"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <field name="approve_uid"/>
+                    <field name="approve_date"/>
+                    <field name="priority"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="receive_order_form_view">
+            <field name="name">receive.order.form</field>
+            <field name="model">receive.order</field>
+            <field name="arch" type="xml">
+                <form string="接单">
+                    <header>
+                        <div invisible="context.get('show_b_state')">
+                            <button name="to_next" states='w_info,w_price,w_so' string="下一步" type="object"/>
+                            <button name="confirm" attrs="{'invisible':[('state','!=','draft')]}" string="确认" class="oe_highlight"
+                                    type="object"/>
+                            <button name="action_approve" attrs="{'invisible':[('state','!=','confirmed')]}" string="批准（）" class="oe_highlight"
+                                    type="object"/>
+                            <button name="to_sale_order" states="w_price" string="生成合同" class="oe_highlight" type="object"/>
+                            <button name="to_sale_order"  string="生成合同(admin)" class="oe_highlight" type="object"/>
+
+                            <button name="to_cancel" attrs="{'invisible':[('state','in',['done','cancel'])] }" string="作废" class="oe_highlight"
+                                    type="object"/>
+                            <button name="to_draft" attrs="{'invisible':[('state','!=','cancel')] }" string="重置草稿" class="oe_highlight"
+                                    type="object"/>
+
+                            <field name="state" widget="statusbar" readonly="1"/>
+                        </div>
+
+                        <div invisible="not context.get('show_b_state')">
+                            <button name="confirm_b" attrs="{'invisible':[('b_state','!=','draft')]}" string="确认" class="oe_highlight"
+                                    type="object"/>
+                            <field name="b_state" widget="statusbar" readonly="1"/>
+                        </div>
+
+                    </header>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="partner_id" on_change="on_change_partner(partner_id)" domain="[('customer','=',True)]"/>
+                            <field name="type"/>
+                            <field name="qty" attrs="{'readonly':[('b_state','=','done')] }"/>
+                            <field name="delivery_period" attrs="{'readonly':[('b_state','=','done')] }"/>
+                            <field name="ref" attrs="{'required':[('type','=','new')] }"/>
+                            <field name="attachment" filename='file_name' invisible="1"/>
+                            <field name="file_name"/>
+                            <field name="file_path" invisible="1"/>
+                            <field name="file_url" widget="url" invisible="1"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="info_id" attrs="{'required':[('type','!=','new')], 'readonly':[('type','=','new')]  }"/>
+                            <field name="product_id"/>
+                            <field name="price_id"/>
+                            <field name="so_id"/>
+                            <field name="change_order_id"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="create_uid"/>
+                            <field name="create_date"/>
+                            <field name="approve_uid"/>
+                            <field name="approve_date"/>
+                            <field name="priority"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note_special" string="特殊说明"/>
+                        <field name="note" string="说明"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_receive_order">
+            <field name="name">接单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">receive.order</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="action_receive_order_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">99</field>
+            <field name="view_id" ref="receive_order_tree_view"/>
+            <field name="act_window_id" ref="action_receive_order"/>
+        </record>
+        <record id="action_receive_order_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">99</field>
+            <field name="view_id" ref="receive_order_form_view"/>
+            <field name="act_window_id" ref="action_receive_order"/>
+        </record>
+
+        <menuitem id="menu_receive_order" name="接单" sequence="1"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_receive_order"/>
+
+
+        <!-- 商务信息
+        <record model="ir.ui.view" id="receive_order_tree_view2">
+            <field name="name">receive.order.tree</field>
+            <field name="model">receive.order</field>
+            <field name="arch" type="xml">
+                <tree string="接单">
+                    <field name="name"/>
+                    <field name="qty"/>
+                    <field name="delivery_lead_hours"/>
+                    <field name="b_state"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="receive_order_form_view2">
+            <field name="name">receive.order.form</field>
+            <field name="model">receive.order</field>
+            <field name="arch" type="xml">
+                <form string="接单">
+                    <header>
+
+
+                        <field name="b_state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="qty"/>
+                        <field name="delivery_lead_hours"/>
+                        <field name="state" invisible="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        -->
+
+        <record model="ir.actions.act_window" id="action_receive_order_2">
+            <field name="name">商务信息</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">receive.order</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1, 'no_create':1, 'show_b_state':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_receive_order_2" name="商务信息" sequence="2"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_receive_order_2"/>
+
+
+    </data>
+
+</openerp>

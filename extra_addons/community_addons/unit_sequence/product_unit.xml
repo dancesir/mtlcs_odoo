@@ -1,0 +1,25 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="product_uom_seq_tree_view">
+            <field name="name">product.uom.tree</field>
+                <field name="model">product.uom</field>
+                <field name='inherit_id' ref='product.product_uom_tree_view'/>
+                <field name="arch" type="xml">
+                    <field name="category_id" position="after">
+                        <field name="sequence"/>
+                    </field>
+                </field>
+        </record>
+        <record model="ir.ui.view" id="product_uom_seq_form_view">
+            <field name="name">product.uom.form</field>
+                <field name="model">product.uom</field>
+                <field name='inherit_id' ref='product.product_uom_form_view'/>
+                <field name="arch" type="xml">
+                    <field name="rounding" position="after">
+                        <field name="sequence"/>
+                    </field>
+                </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,25 @@
+"id","btype","type","value","layer_count","min_order_area","max_order_area","eval_code"
+"__export__.pcb_fee_base_rogers_001","罗杰斯板","基板费",0,1,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_002","罗杰斯板","基板费",0,1,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_003","罗杰斯板","基板费",0,1,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_004","罗杰斯板","基板费",0,2,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_005","罗杰斯板","基板费",0,2,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_006","罗杰斯板","基板费",0,2,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.12"
+"__export__.pcb_fee_base_rogers_007","罗杰斯板","基板费",0,4,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.32"
+"__export__.pcb_fee_base_rogers_008","罗杰斯板","基板费",0,4,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.32"
+"__export__.pcb_fee_base_rogers_009","罗杰斯板","基板费",0,4,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.32"
+"__export__.pcb_fee_base_rogers_010","罗杰斯板","基板费",0,6,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.56"
+"__export__.pcb_fee_base_rogers_011","罗杰斯板","基板费",0,6,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.56"
+"__export__.pcb_fee_base_rogers_012","罗杰斯板","基板费",0,6,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.56"

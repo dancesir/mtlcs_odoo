@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="iqc_report_document">
+
+            <div class="header">
+                <h5 align="center">
+                    <span t-field="user.company_id.name"/>
+                </h5>
+                <h5 align="center">收货及验收报告：
+                    <span t-field="o.name"/>
+                </h5>
+            </div>
+
+
+            <div class="page">
+                <h5 align="center">供方名称：
+                    <span t-field="o.partner_id.name"/>
+                <td colspan="1">送货号码：</td>
+                </h5>
+                <table width="933" class="table-bordered">
+                    <tr align="center">
+                        <td>货物名称</td>
+                        <td>规格型号</td>
+                        <td>包装</td>
+                        <td>货物数量</td>
+                        <td>验收记录</td>
+                    </tr>
+                    <tr t-foreach="o.line_ids" t-as="l">
+                        <td>
+                            <span t-field="l.product_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="l.product_id.variants"/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                        <td>
+                            <span t-field="l.qty"/>
+                        </td>
+                        <td>
+                            <span/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="footer">
+                <div  style="vertical-align:bottom;align:right">CMTL-FM-QA-0.30A</div>
+            </div>
+
+        </template>
+
+        <template id="iqc_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.partner_id.lang', 'mtlcs_quality.iqc_report_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+

@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- order point view  -->
+        <record id="inherit_view_warehouse_orderpoint_tree1" model="ir.ui.view">
+            <field name="name">inherit.stock.warehouse.orderpoint.tree1</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="colors">red:qty_available-product_min_qty&lt;0;blue:qty_available-product_min_qty&gt;0</attribute>
+                </tree>
+                <field name="product_max_qty" position="after">
+                    <field name="qty_available"/>
+                </field>
+            </field>
+        </record>
+        <record id="inherit_view_warehouse_orderpoint_form1" model="ir.ui.view">
+            <field name="name">inherit.stock.warehouse.orderpoint.form1</field>
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name='inherit_id' ref='stock.view_warehouse_orderpoint_form'/>
+            <field name="arch" type="xml">
+                <field name="product_max_qty" position="after">
+                    <field name="qty_available"/>
+                </field>
+            </field>
+        </record>
+        <menuitem action="stock.action_orderpoint_form" name="安全库存" id="menu_stock_order_points_for_material_control"
+                  parent="mtlcs_base.sub_menu_preparation_management" sequence="10"/>
+
+
+
+        <!-- Picking Search  View -->
+        <record id="inherit_view_picking_search" model="ir.ui.view">
+            <field name="name">inherit.stock..search</field>
+            <field name="model">stock.picking</field>
+            <field name='inherit_id' ref='stock.view_picking_internal_search'/>
+            <field name="arch" type="xml">
+                <filter name="backorder" position="after">
+                    <filter name="uncompleted" string="未完成" domain="[('state','not in',['done','cancel'])]"/>
+                </filter>
+            </field>
+        </record>
+        <!-- Picking Tree View -->
+        <record id="inherit_vpicktree" model="ir.ui.view">
+            <field name="name">inherit.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name='inherit_id' ref='stock.vpicktree'/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="location_id" string="源库位"/>
+                </field>
+                <field name="state" position="after">
+                    <field name="account_touched"/>
+                </field>
+            </field>
+        </record>
+        <!-- Picking Form View -->
+        <record id="inherit_view_move_picking_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name='inherit_id' ref='stock.view_move_picking_tree'/>
+            <field name="arch" type="xml">
+                <field name="location_id" groups="stock.group_locations" invisible="1" position="replace"/>
+                <field name="location_dest_id" position="before">
+                    <field name="location_id" groups="stock.group_locations"/>
+                </field>
+            </field>
+        </record>
+        <record id="inherit_view_picking_form" model="ir.ui.view">
+            <field name="name">inherit.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name='inherit_id' ref='stock.view_picking_form'/>
+            <field name="arch" type="xml">
+                <button name="action_assign" position="attributes">
+                    <attribute name="groups">stock.group_stock_user</attribute>
+                </button>
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">stock.group_stock_user</attribute>
+                </button>
+                <button string="Reverse Transfer" position="attributes">
+                    <attribute name="groups">base.group_system</attribute>
+                </button>
+
+                <button string="Reverse Transfer" position="after">
+                    <button name="%(stock.act_stock_return_picking)d" string="退货" states="done" type="action"
+                            groups="purchase.group_purchase_user,mtlcs_base.group_material_control_user"/>
+                    <button name="account_touch" string="财务签收" attrs="{'invisible':[('account_touched','=',True)]}" type="object"
+                            groups="account.group_account_user"/>
+                </button>
+                <field name="partner_id" position="after">
+                    <field name="department_id" attrs="{'invisible':[('picking_type_code','!=','internal')]}"/>
+                    <field name="create_uid" readonly="1"/>
+                    <field name="account_touched"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- Quick picking form view  extend -->
+        <record id="picking_quick_form_extend" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name='inherit_id' ref='stock_quick_entry.picking_quick_form'/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <div attrs="{'invisible': [('picking_type_id','!=',%(mtlcs_stock.picking_type_material_production)d)]}" note="领料">
+                        <button name="action_confirm_slip" string="申请领料" states="draft" type="object" class="oe_highlight"
+                                groups="base.group_user"/>
+                        <button name="action_assign" string="审批（物控）" states="confirmed" type="object" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="do_enter_transfer_details" states="assigned,partially_available" string="出库"
+                                groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                        <button name="create_return_picking" string="创建退料" states="done" type="object"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="print_by_usage" string="打印领料单" context="{'usage':'slip'}" states="assigned,done" type="object"
+                                groups="mtlcs_base.group_material_control_user"/>
+                    </div>
+
+                    <div attrs="{'invisible': [('picking_type_id','!=',%(mtlcs_stock.picking_type_material_production_return)d)]}" note="退领料">
+                        <button name="action_confirm_slip" string="申请退料" states="draft" type="object" class="oe_highlight"
+                                groups="base.group_user"/>
+                        <button name="action_assign" string="审批（物控）" states="confirmed" type="object" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="do_enter_transfer_all_once" states="assigned,partially_available" string="退料"
+                                groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                        <button name="print_by_usage" string="打印退料单" context="{'usage':'slip'}" states="assigned,done" type="object"
+                                groups="mtlcs_base.group_material_control_user"/>
+                    </div>
+                    <div attrs="{'invisible': [('picking_type_id','not in',[%(mtlcs_stock.picking_type_purchase_receive)d,%(stock.picking_type_in)d])]}"
+                         note="采购收货,一步入库">
+                        <button name="action_confirm" string="准备收货" states="draft" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <button name="action_assign" string="检查可用" states="confirmed" type="object" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="rereserve_pick" string="再次检查可用" type="object" class="oe_highlight" groups="base.group_user"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'partially_available')), ('pack_operation_exist','=',True)]}"/>
+                        <button name="check_number" string="点数" context="{'display_save_button':1}" states="assigned,partially_available"
+                                type="object"
+                                class="oe_highlight" groups="base.group_user"/>
+                        <button name="open_enter_transfer_details" states="assigned,partially_available" string="收货" context="{}"
+                                groups="stock.group_stock_user" type="object" class="oe_highlight"/>
+                        <button name="create_return_picking" string="创建退货" states="done" type="object" groups="base.group_user"/>
+                        <button name="print_by_usage" string="打印收货单" context="{'usage':'receive'}" states="done" type="object"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="account_touch" string="财务签收" states="done" type="object" groups="account.group_account_user"
+                                invisible="1"/>
+                    </div>
+                    <div attrs="{'invisible': [('picking_type_id','!=',%(mtlcs_stock.picking_type_purchase_input)d)]}" note="质检入库">
+                        <button name="action_confirm" string="准备入库" states="draft" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <button name="action_assign" string="检查可用" states="confirmed" type="object" class="oe_highlight"
+                                groups="mtlcs_base.group_material_control_user"/>
+                        <button name="rereserve_pick" string="再次检查可用" type="object" class="oe_highlight" groups="base.group_user"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('waiting', 'partially_available')), ('pack_operation_exist','=',True)]}"/>
+                        <button name="check_number" string="质检合格数（IQC）" context="{'display_save_button':1,'to_mtl_state':'grant'}" type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible':['|',('state','not in',['assigned','partially_available']),('mtl_state','=','grant')]}"
+                                groups="quality_control.group_quality_control_user"/>
+                        <button name="open_enter_transfer_details" string="入库" context="{'no_edit':1}" type="object" class="oe_highlight"
+                                groups="stock.group_stock_user" attrs="{'invisible':['|',('state','=','done'),('mtl_state','!=','grant')]}"/>
+                    </div>
+                    <div attrs="{'invisible': [('picking_type_id','!=',%(mtlcs_stock.picking_type_receive_return)d)]}" note="收货退货">
+                        <button name="action_confirm_return" string="确认退货" attrs="{'invisible':[('mtl_state','!=',False)]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="purchase_approve" string="审核（采购）" attrs="{'invisible':[('mtl_state','!=','w_purchase')]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="account_approve" string="审核（财务）" attrs="{'invisible':[('mtl_state','!=','w_account')]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="action_assign" states="confirmed" string="检查可用" type="object" class="oe_highlight"
+                                groups="base.group_user"/>
+                        <button name="do_enter_transfer_all_once" string="出库"
+                                attrs="{'invisible':['|',('mtl_state','!=','grant'),('state','!=','assigned')]}"
+                                type="object" groups="base.group_user" context="{'no_edit':1}"/>
+                        <button name="create_return_picking" string="供应商重新发货" states="done" type="object" groups="base.group_user"/>
+                    </div>
+                    <div attrs="{'invisible': [('picking_type_id','!=',%(mtlcs_stock.picking_type_purchase_input_return)d)]}" note="入库退货">
+                        <button name="action_confirm_return" string="确认退货" attrs="{'invisible':[('mtl_state','!=',False)]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="purchase_approve" string="审核（采购）" attrs="{'invisible':[('mtl_state','!=','w_purchase')]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="account_approve" string="审核（财务）" attrs="{'invisible':[('mtl_state','!=','w_account')]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="action_assign" states="confirmed" string="检查可用" type="object" class="oe_highlight"
+                                groups="base.group_user"/>
+                        <button name="do_enter_transfer_all_once" string="出库"
+                                attrs="{'invisible':['|',('mtl_state','!=','grant'),('state','!=','assigned')]}" type="object"
+                                groups="base.group_user"/>
+                        <button name="create_return_picking" string="供应商重新发货" states="done" type="object" groups="base.group_user"/>
+                    </div>
+                    <field name="mtl_state"/>
+                </field>
+
+
+                <field name="partner_id" position="after">
+                    <field name="mtl_type"/>
+                    <field name="department_id"
+                           attrs="{'required':[('picking_type_id','in',[%(mtlcs_stock.picking_type_material_production)d,%(mtlcs_stock.picking_type_material_production_return)d])],'invisible': [('picking_type_id','not in',[%(mtlcs_stock.picking_type_material_production)d,%(mtlcs_stock.picking_type_material_production_return)d,])]}"/>
+                </field>
+
+
+                <xpath expr="//field[@name='move_lines']/tree" position="inside">
+                    <button string="有边料" name="have_offcut" attrs="{'invisible': ['|',('state','=','done'),('mtl_type','!=','slip_board')]}"
+                            type='object'
+                            groups="stock.group_stock_user"/>
+                    <button string="无边料" name="no_offcut" attrs="{'invisible': ['|',('state','=','done'),('mtl_type','!=','slip_board')]}"
+                            type='object'
+                            groups="stock.group_stock_user"/>
+                    <button string="原数量" name="regain_plan_qty" attrs="{'invisible': ['|',('state','=','done'),('mtl_type','!=','slip_board')]}"
+                            type='object'
+                            groups="stock.group_stock_user"/>
+                    <field name="mtl_type" invisible="1"/>
+                    <field name="plan_qty" invisible="1"/>
+                </xpath>
+
+                <field name="move_lines" position="before">
+                    <button name="batch_select_product" states="draft" string="选择多个物料" groups="base.group_user"
+                            type="object" invisible="context.get('no_create')"/>
+                </field>
+
+            </field>
+        </record>
+
+        <!-- 领料 no create-->
+        <record id="action_picking_production_slip_nocreate" model="ir.actions.act_window">
+            <field name="name">领料单</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_material_production'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1, 'default_picking_type_id': ref('mtlcs_stock.picking_type_material_production'),'need_department':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_slip_nocreate_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_production_slip_nocreate"/>
+        </record>
+        <record id="action_picking_slip_nocreate_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_production_slip_nocreate"/>
+        </record>
+
+        <!-- 领料  allow create-->
+        <record id="action_picking_production_application_slip" model="ir.actions.act_window">
+            <field name="name">领料单</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_material_production'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'default_move_type':'one','default_picking_type_id': ref('mtlcs_stock.picking_type_material_production'),'need_department':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_quick_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_production_application_slip"/>
+        </record>
+        <record id="action_picking_quick_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_production_application_slip"/>
+        </record>
+        <menuitem name="领料单" id="menu_material_acquire" action="action_picking_production_slip_nocreate"
+                  parent="mtlcs_base.menu_stock_material_production_management" sequence="6"/>
+        <menuitem name="领料单" id="menu_material_acquire_for_plan" action="action_picking_production_application_slip"
+                  groups="mtlcs_base.group_plan_user"
+                  parent="mtlcs_base.menu_plan_material_acquire" sequence="1"/>
+        <menuitem name="领料单" id="menu_material_acquire_for_mc" action="action_picking_production_application_slip"
+                  groups="mtlcs_base.group_material_control_user"
+                  parent="mtlcs_base.sub_menu_preparation_management" sequence="9"/>
+        <menuitem name="领料单" id="menu_material_acquire_for_mrp" action="action_picking_production_application_slip" groups="mrp.group_mrp_user"
+                  parent="mtlcs_base.sub_menu_mrp_material_material_acquire" sequence="9"/>
+
+        <!-- 退领料 -->
+        <record id="action_picking_production_application_slip_return" model="ir.actions.act_window">
+            <field name="name">退领料</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_material_production_return'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'default_move_type':'one','no_create':1,'default_picking_type_id': ref('mtlcs_stock.picking_type_material_production_return'),'need_department':1,'search_default_uncompleted':1, }"/>
+        </record>
+        <record id="action_picking_production_application_slip_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_production_application_slip_return"/>
+        </record>
+        <record id="action_picking_production_application_slip_return_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_production_application_slip_return"/>
+        </record>
+        <menuitem name="退领料" id="menu_application_slip_return" action="action_picking_production_application_slip_return"
+                  parent="mtlcs_base.menu_stock_material_production_management" sequence="7"/>
+
+
+        <!-- 采购收货,一步入库 -->
+        <record id="action_picking_purchase_receive" model="ir.actions.act_window">
+            <field name="name">采购收货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','in',[ref('stock.picking_type_in'),ref('mtlcs_stock.picking_type_purchase_receive')])]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'default_picking_type_id': ref('mtlcs_stock.picking_type_purchase_receive'),'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_purchase_receive_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_purchase_receive"/>
+        </record>
+        <record id="action_picking_purchase_receive_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_purchase_receive"/>
+        </record>
+        <menuitem name="采购收货" id="menu_picking_purchase_receive" action="action_picking_purchase_receive"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="1"/>
+
+        <!-- 收货入库  -->
+        <record id="action_picking_purchase_input" model="ir.actions.act_window">
+            <field name="name">收货入库</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_purchase_input'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'default_picking_type_id': ref('mtlcs_stock.picking_type_purchase_input'),'search_default_uncompleted':1, }"/>
+        </record>
+        <record id="action_picking_purchase_input_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_purchase_input"/>
+        </record>
+        <record id="action_picking_purchase_input_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_purchase_input"/>
+        </record>
+        <menuitem name="质检入库" id="menu_picking_purchase_input" action="action_picking_purchase_input"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="2"/>
+
+
+        <record id="action_picking_income_return" model="ir.actions.act_window">
+            <field name="name">采购退货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','in',[ref('mtlcs_stock.picking_type_receive_return'),ref('mtlcs_stock.picking_type_purchase_input_return') ])]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_income_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_income_return"/>
+        </record>
+        <record id="action_picking_income_return_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_income_return"/>
+        </record>
+        <menuitem name="采购退货" id="menu_picking_receive_return" action="action_picking_income_return"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="3"/>
+        <menuitem name="采购退货" id="menu_picking_receive_return_for_account" action="action_picking_income_return"
+                  parent="mtlcs_base.sub_menu_finance_purchase" sequence="4"/>
+
+
+
+        <!-- finish picking operation -->
+        <record id="action_picking_finish_pick" model="ir.actions.act_window">
+            <field name="name">拣货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_finish_pick'))]"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_finish_pick_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_finish_pick"/>
+        </record>
+        <record id="action_picking_finish_pick_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_finish_pick"/>
+        </record>
+        <menuitem name="拣货" id="menu_picking_finish_pic" action="action_picking_finish_pick"
+                  parent="mtlcs_base.menu_finish_stock_sub" sequence="1"/>
+
+        <!-- finish picking operation -->
+        <record id="action_picking_finish_ship" model="ir.actions.act_window">
+            <field name="name">发货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('stock.picking_type_out'))]"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_finish_ship_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_finish_ship"/>
+        </record>
+        <record id="action_picking_finish_ship_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_finish_ship"/>
+        </record>
+        <menuitem name="发货" id="menu_picking_finish_ship" action="action_picking_finish_ship"
+                  parent="mtlcs_base.menu_finish_stock_sub" sequence="2"/>
+
+
+        <record id="action_picking_finish_out_return" model="ir.actions.act_window">
+            <field name="name">客户退货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_finish_out_return'))]"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_finish_out_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_finish_out_return"/>
+        </record>
+        <record id="action_picking_finish_out_return_from" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_finish_out_return"/>
+        </record>
+        <menuitem name="客户退货" id="menu_picking_finish_out_return" action="action_picking_finish_out_return"
+                  parent="mtlcs_base.menu_finish_stock_sub" sequence="3"/>
+
+        <record id="action_picking_finish_pick_return" model="ir.actions.act_window">
+            <field name="name">返拣货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_finish_pick_return'))]"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_finish_pick_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_finish_pick_return"/>
+        </record>
+        <record id="action_picking_finish_pick_return_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_finish_pick_return"/>
+        </record>
+        <menuitem name="返拣货" id="menu_picking_finish_pick_return" action="action_picking_finish_pick_return"
+                  parent="mtlcs_base.menu_finish_stock_sub" sequence="4"/>
+
+        <!-- 收货退货
+        <record id="action_picking_receive_return" model="ir.actions.act_window">
+            <field name="name">收货退货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_receive_return'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'default_picking_type_id': ref('mtlcs_stock.picking_type_receive_return'),'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_receive_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_receive_return"/>
+        </record>
+        <record id="action_picking_receive_return_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_receive_return"/>
+        </record>
+        <menuitem name="收货退货" id="menu_picking_receive_return" action="action_picking_receive_return"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="3"/>
+        -->
+
+        <!--入库退货
+        <record id="action_picking_input_return" model="ir.actions.act_window">
+            <field name="name">入库退货</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"
+                   eval="[('picking_type_id','=',ref('mtlcs_stock.picking_type_purchase_input_return'))]"/>
+            <field name="filter" eval="True"/>
+            <field name="context"
+                   eval="{'no_create':1,'no_edit':1,'default_picking_type_id': ref('mtlcs_stock.picking_type_purchase_input_return'),'search_default_uncompleted':1}"/>
+        </record>
+        <record id="action_picking_input_return_tree" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="sequence">1</field>
+            <field name="view_id" ref="stock.vpicktree"/>
+            <field name="act_window_id" ref="action_picking_input_return"/>
+        </record>
+        <record id="action_picking_input_return_form" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="sequence">2</field>
+            <field name="view_id" ref="stock_quick_entry.picking_quick_form"/>
+            <field name="act_window_id" ref="action_picking_input_return"/>
+        </record>
+        <menuitem name="入库退货" id="menu_picking_input_return" action="action_picking_input_return"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="4"/>
+
+        -->
+
+        <!-- 库存查询-->
+        <menuitem name="库位" id="menu_picking_delivery" action="stock.action_location_form"
+                  parent="mtlcs_base.menu_stock_stock" groups="base.group_user" sequence="1"/>
+
+        <record id="product_action_material" model="ir.actions.act_window">
+            <field name="name">原材料</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="product.product_search_form_view"/>
+            <field name="view_id" eval="False"/>
+            <!-- Force empty -->
+            <field name="domain">[('purchase_ok','=',True)]</field>
+        </record>
+
+        <menuitem name="原材料" id="menu_product_material" action="product_action_material"
+                  parent="mtlcs_base.menu_stock_stock" groups="base.group_user" sequence="2"/>
+
+        <record id="product_action_finish" model="ir.actions.act_window">
+            <field name="name">成品</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="product.product_search_form_view"/>
+            <field name="view_id" eval="False"/>
+            <!-- Force empty -->
+            <field name="domain">[('sale_ok','=',True)]</field>
+        </record>
+
+        <menuitem name="成品" id="menu_product_finish" action="product_action_finish"
+                  parent="mtlcs_base.menu_stock_stock" groups="base.group_user" sequence="2"/>
+
+
+        <!-- Stock Move Search View -->
+        <record id="inherit_iew_move_search" model="ir.ui.view">
+            <field name="name">inherit.stock.move.search</field>
+            <field name="model">stock.move</field>
+            <field name='inherit_id' ref='stock.view_move_search'/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="date" string="开始时间" filter_domain="[('date','&gt;',self)]"/>
+                    <field name="date" string="结束时间" filter_domain="[('date','&lt;',self)]"/>
+                </field>
+                <filter name="ready" position="after">
+                    <filter string="领料" name="slip"
+                            domain="[('state','=','done'),('picking_type_id','=', %(mtlcs_stock.picking_type_material_production)d )]"/>
+                    <filter string="退料" name="slip_return"
+                            domain="[('state','=','done'),('picking_type_id','=', %(mtlcs_stock.picking_type_material_production_return)d )]"/>
+                    <filter string="收货" name="purchase"
+                            domain="[('state','=','done'),('picking_type_id','in', [%(mtlcs_stock.picking_type_purchase_receive)d, %(stock.picking_type_in)d])]"/>
+                    <filter string="退货" name="purchase_return"
+                            domain="[('state','=','done'),('picking_type_id','in', [%(mtlcs_stock.picking_type_receive_return)d, %(mtlcs_stock.picking_type_purchase_input_return)d])]"/>
+                </filter>
+                <group string="Group By" position="inside">
+                    <filter string="部门" name="groupby_department" icon="terp-gtk-jump-to-rtl" domain="[]"
+                            context="{'group_by':'department_id'}"/>
+                </group>
+            </field>
+        </record>
+
+        <!-- Stock Move Tree View -->
+        <record id="inherit_view_move_tree" model="ir.ui.view">
+            <field name="name">inherit.stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name='inherit_id' ref='stock.view_move_tree'/>
+            <field name="arch" type="xml">
+                <field name="location_dest_id" position="after">
+                    <field name="department_id" position="department_id"/>
+                </field>
+                <field name="name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!-- 领料/退料记录 -->
+        <record id="action_move_slip" model="ir.actions.act_window">
+            <field name="name">领退料记录</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="stock.view_move_tree"/>
+            <field name="search_view_id" ref="stock.view_move_search"/>
+            <field name="domain"
+                   eval="[('state','=','done'),('picking_type_id','in', [ref('mtlcs_stock.picking_type_material_production'),ref('mtlcs_stock.picking_type_material_production_return')])]"/>
+            <field name="context">{'no_create':1}</field>
+        </record>
+        <menuitem name="领料/退料记录" id="menu_stock_move_slip" action="action_move_slip"
+                  parent="mtlcs_base.menu_stock_material_production_management" sequence="7"/>
+
+
+        <!-- 收货/退货记录 -->
+        <record id="action_move_purchase" model="ir.actions.act_window">
+            <field name="name">收货/退货记录</field>
+            <field name="res_model">stock.move</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="stock.view_move_tree"/>
+            <field name="search_view_id" ref="stock.view_move_search"/>
+            <field name="domain"
+                   eval="[('state','=','done'),('picking_type_id','in', [ref('stock.picking_type_in'),ref('mtlcs_stock.picking_type_purchase_input_return'),ref('mtlcs_stock.picking_type_purchase_receive'),ref('mtlcs_stock.picking_type_receive_return')])]"/>
+            <field name="context">{'no_create':1}</field>
+        </record>
+        <menuitem name="收货/退货记录" id="menu_stock_move_purchase" action="action_move_purchase"
+                  parent="mtlcs_base.menu_stock_purcase_management" sequence="7"/>
+
+        <!--Only account user can create the invoice-->
+        <record id="inherit_view_picking_inherit_form2" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Create Invoice']" position="replace">
+                    <button name="%(stock_account.action_stock_invoice_onshipping)d" string="Create Invoice"
+                            attrs="{'invisible': ['|',('state','!=','done'),('invoice_state','!=','2binvoiced')]}"
+                            type="action" class="oe_highlight" groups="account.group_account_user,purchase.group_purchase_user"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_view_picking_inherit_tree2" model="ir.ui.view">
+            <field name="name">stock.picking.tree.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_account.view_picking_inherit_tree2"/>
+            <field name="arch" type="xml">
+                <field name="invoice_state" position="replace">
+                    <field name="invoice_state" groups="account.group_account_invoice,purchase.group_purchase_user"/>
+                </field>
+            </field>
+        </record>
+        <act_window id="stock_account.action_stock_invoice_onshipping"
+                    name="Create Draft Invoices"
+                    res_model="stock.invoice.onshipping"
+                    src_model="stock.picking"
+                    key2="client_action_multi"
+                    multi="True"
+                    view_mode="form"
+                    view_type="form"
+                    target="new"
+                    groups="account.group_account_invoice"/>
+        <record id="purchase.action_picking_tree_picking_to_invoice" model="ir.actions.act_window">
+            <field name="name">On Incoming Shipments</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="context">{"no_edit":1,"no_create":1, "default_type": "in", "contact_display": "partner_address", "search_default_done":
+                1, "search_default_reception_to_invoice": 1}
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <menuitem name="收到的供货单" id="picking_income_to_invoice" action="purchase.action_picking_tree_picking_to_invoice"
+                  parent="mtlcs_base.sub_menu_finance_purchase" sequence="4"/>
+
+
+    </data>
+</openerp>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="incoterm_SSM" model="stock.incoterms">
+            <field name="code">SSM</field>
+            <field name="name">送货上门</field>
+        </record>
+    </data>
+
+
+    <data>
+        <act_window
+                multi="True"
+                id="purchase_order_info_share"
+                name="共享基础资料"
+                res_model="share.to.server"
+                src_model="purchase.order"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+
+
+
+
+    </data>
+
+
+</openerp>

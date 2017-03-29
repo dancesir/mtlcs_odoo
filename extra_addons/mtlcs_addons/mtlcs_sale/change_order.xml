@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- 更改单-->
+        <record model="ir.ui.view" id="change_order_tree_view">
+            <field name="name">change.order.tree</field>
+            <field name="model">change.order</field>
+            <field name="arch" type="xml">
+                <tree string="更改单">
+                    <field name="name"/>
+                    <field name="receive_id"/>
+                    <field name="partner_id"/>
+                    <field name="type"/>
+                    <field name="info_id"/>
+                    <field name="finish_qty"/>
+                    <field name="company_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="change_order_form_view">
+            <field name="name">change.order.form</field>
+            <field name="model">change.order</field>
+            <field name="arch" type="xml">
+                <form string="更改单">
+                    <header>
+                        <button name="action_next" string="确认" states="draft" type="object"/>
+                        <button name="action_next" string="审批（工程）"  states="w_eng"  type="object"/>
+                        <button name="action_next" string="审批（各部门）" states="w_dpt"  type="object"/>
+                        <button name="action_next" string="审批（总经办）" states="w_gm" type="object"/>
+                        <button name="action_next" string="审批（订单中心）" states="w_oc" type="object"/>
+                        <button name="action_next" string="发通知" states="w_send" type="object"/>
+                        <button name="reset_pcb_info_done" string="恢复用户单为可用" states="done" type="object"/>
+                        <button name="rest_draft" string="重置草稿" states="cancel" type="object"/>
+                        <button name="action_cancel" string="取消"  states="w_eng,w_dpt,w_gm,w_oc,w_send" type="object"/>
+                        <field name="state" widget="statusbar" readonly="0"/>
+                    </header>
+                    <group col="6">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="receive_id"/>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="type" readonly="1"/>
+                            <field name="prescription"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="info_id" readonly="1"/>
+                            <field name="finish_qty"/>
+                            <field name="so_id"/>
+                            <field name="sol_id"/>
+                            <field name="change_info"/>
+                            <field name="change_so"/>
+                        </group>
+
+                        <group colspan="2"  string="生产批次">
+                            <field name="production_ids" readonly="0" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook>
+                        <page string="评审信息">
+                            <field name="comment_lines">
+                                <tree editable="bottom">
+                                    <field name="department_id"/>
+                                    <field name="name"/>
+                                    <field name="ok"/>
+                                    <field name="loss_amount"/>
+                                    <field name="user_id"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name="gm_comment"/>
+                                    <field name="gm_ok"/>
+                                </group>
+                                <group>
+                                    <field name="loss_total"/>
+                                    <field name="customer_accept_amount"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_change_order">
+            <field name="name">更改单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">change.order</field>
+            <field name="domain">[]</field>
+            <field name="context">{'show_customer_code':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_change_order" name="更改单" sequence="1"
+                  parent="mtlcs_base.sub_menu_order_center" action="action_change_order"/>
+
+
+
+
+
+
+    </data>
+
+</openerp>

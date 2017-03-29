@@ -1,0 +1,29 @@
+<openerp>
+    <data>
+        <record id="dummy_pcb_product" model="product.product">
+            <field name="name">虚拟档案号</field>
+            <field name="default_code">00000</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="uom_id" ref="pcb_uom_unit"/>
+            <field name="uom_po_id" ref="pcb_uom_unit"/>
+            <field name="uos_id" ref="pcb_uom_unit"/>
+            <field name="type">product</field>
+        </record>
+        <record id="pcb_fee_once" model="product.product">
+            <field name="name">一次性费用</field>
+            <field name="default_code">fee_pcb_once</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="type">service</field>
+        </record>
+        <record id="pcb_fee_outsource" model="product.product">
+            <field name="name">外发加工费</field>
+            <field name="default_code">fee_outsource</field>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="True"/>
+            <field name="type">service</field>
+        </record>
+
+    </data>
+</openerp>

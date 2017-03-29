@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="inherit_account_voucher" model="ir.ui.view">
+            <field name="name">account.voucher</field>
+            <field name="model">account.voucher</field>
+            <field name='inherit_id' ref='account_voucher.view_vendor_payment_form'/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="date_due" string="最小到期日期"/>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="on_change">onchange_partner_id(partner_id, journal_id, amount, currency_id, type, date, context,
+                        date_due)
+                    </attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_report_purchase_history_price_search" model="ir.ui.view">
+            <field name="name">view report purchase history price search</field>
+            <field name="model">report.purchase.history.price</field>
+            <field name="arch" type="xml">
+                <search string="历史采购价格检索">
+                    <filter string="订单" name="orders" domain="[('state','in',['confirmed','done'])]"/>
+                    <field name="product_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_report_purchase_history_price" model="ir.ui.view">
+            <field name="name">report purchase history price graph</field>
+            <field name="model">report.purchase.history.price</field>
+            <field name="arch" type="xml">
+                <graph string="历史采购价格" type="line">
+                    <field name="product_id" type="col"/>
+
+                    <field name="price_unit" type="measure"/>
+                    <field name="row_n" interval="day" type="row"/>
+                    <!--<field name="create_date"  type="row"/>-->
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_report_purchase_history_price" model="ir.actions.act_window">
+            <field name="name">采购价格走势</field>
+            <field name="res_model">report.purchase.history.price</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_report_purchase_history_price"/>
+            <field name="search_view_id" ref="view_report_purchase_history_price_search"/>
+            <field name="context">{'search_default_orders': 1, 'group_by_no_leaf':1,'group_by':[]}</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_report_purchase_history_price" action="action_report_purchase_history_price"
+                  name="采购历史价"  parent="base.next_id_73" sequence="6"
+                  groups="purchase.group_purchase_user,mtlcs_base.group_material_control_user"/>
+
+    </data>
+</openerp>

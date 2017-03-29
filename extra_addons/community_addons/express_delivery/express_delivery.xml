@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="express_delivery_tree_view" model="ir.ui.view">
+            <field name="name">express.delivery.tree</field>
+            <field name="model">express.delivery</field>
+            <field name="arch" type="xml">
+                <tree string="快递单号">
+                    <field name="name"/>
+                    <field name="carrier_id"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="express_delivery_form_view" model="ir.ui.view">
+            <field name="name">express.delivery.form</field>
+            <field name="model">express.delivery</field>
+            <field name="arch" type="xml">
+                <form string="快递单号">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="1,2,3,4,5,6,7,8,9" readonly="1"/>
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="carrier_id"/>
+                            </group>
+                            <group>
+                                <field name="create_uid"/>
+                                <field name="create_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_express_delivery">
+            <field name="name">快递单号</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">express.delivery</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_express_delivery" name="快递单号" sequence="50"
+                  parent="stock.menu_stock_warehouse_mgmt" action="action_express_delivery"/>
+
+
+    </data>
+</openerp>

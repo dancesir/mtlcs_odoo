@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="product_category_code_tree_view">
+            <field name="name">product.category.code.tree</field>
+            <field name="model">product.category.code</field>
+            <field name="arch" type="xml">
+                <tree string="物料编码规则">
+                    <field name="complete_name"/>
+                    <field name="complete_code"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="parent_id"/>
+
+                    <field name="level"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_category_code_form_view">
+            <field name="name">product.category.code.form</field>
+            <field name="model">product.category.code</field>
+            <field name="arch" type="xml">
+                <form string="物料编码规则">
+                    <group>
+                        <group>
+                            <field name="complete_name"/>
+                            <field name="complete_code"/>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="level"/>
+                            <field name="parent_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_product_category_code">
+            <field name="name">物料编码规则</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.category.code</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_product_category_code" action="action_product_category_code"
+                  name="物料编码规则" parent="purchase.menu_procurement_management_product" sequence="0"
+                  groups="base.group_user"/>
+
+
+    </data>
+
+</openerp>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <!-- Parter tree-->
+        <record id="mtlcs_res_partner_tree_view" model="ir.ui.view">
+            <field name="name">mtlcs.res.partner</field>
+            <field name="model">res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_tree'/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="dongshuo_id" groups="base.group_system"/>
+                    <field name="dongshuo_code" groups="base.group_system"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- Parter Form-->
+        <record id="mtlcs_res_partner_form_view" model="ir.ui.view">
+            <field name="name">mtlcs.res.partner</field>
+            <field name="model">res.partner</field>
+            <field name='inherit_id' ref='base.view_partner_form'/>
+            <field name="arch" type="xml">
+
+                <field name="phone" position="before">
+                    <field name="contact_name"/>
+                </field>
+
+                <field name="name" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|',('state','!=','draft'),('cus_state','!=','draft')]}
+                    </attribute>
+
+                </field>
+
+                <sheet position="before">
+                    <header>
+                        <div attrs="{'invisible':[('supplier','!=',True)] }">
+                            <button name="confirm" states="draft" string="确认" type="object" class="oe_highlight"
+                                    groups="purchase.group_purchase_user"/>
+                            <button name="account_approve" states="w_account" string="审批（财务）" type="object"
+                                    class="oe_highlight" groups="account.group_account_user"/>
+                            <button name="technical_approve" states="w_technical" string="审批（工艺）" type="object"
+                                    class="oe_highlight"
+                                    groups="mtlcs_base.group_technical_manager"/>
+                            <button name="general_manager_approve" states="w_general_manager" string="审批（总经理）"
+                                    type="object"
+                                    class="oe_highlight" groups="mtlcs_base.group_general_manager"/>
+                            <button name="action_draft" states="w_chief_inspector,w_account,w_general_manager"
+                                    string="重置草稿" type="object"
+                                    class="oe_highlight"/>
+                            <field name="state" widget="statusbar"
+                                   statusbar_visible="draft,w_account,w_technical,w_general_manager,done"
+                                   readonly="1"/>
+                        </div>
+
+                        <div attrs="{'invisible':[('customer','!=',True)] }">
+                            <button name="cus_confirm" attrs="{'invisible':[('cus_state','!=','draft')] }" string="确认"
+                                    type="object"
+                                    class="oe_highlight"/>
+                            <button name="cus_director_approve" attrs="{'invisible':[('cus_state','!=','w_director')] }"
+                                    string="审批（主管）"
+                                    type="object" class="oe_highlight"/>
+                            <button name="cus_chief_inspector_approve"
+                                    attrs="{'invisible':[('cus_state','!=','w_chief_inspector')] }"
+                                    string="审批（总监）" type="object" class="oe_highlight"/>
+                            <button name="cus_action_draft" attrs="{'invisible':[('cus_state','in',['draft','done'])] }"
+                                    string="置草稿"
+                                    type="object" class="oe_highlight"/>
+                            <field name="cus_state" widget="statusbar" readonly="1"/>
+                        </div>
+
+                    </header>
+                </sheet>
+                <field name="active" position="attributes">
+                    <attribute name="groups">base.group_system</attribute>
+                </field>
+                <field name="active" position="attributes">
+                    <field name="dongshuo_id" groups="base.group_system"/>
+                </field>
+                <xpath expr="/form/sheet/notebook" position="before">
+                    <group attrs="{'invisible': ['|', ('supplier', '!=', True), ('is_company', '!=', True)]}"
+                           string="供应商信息">
+                        <group>
+                            <field name="supplier_type" attrs="{'required': [('supplier', '=', True)]}"/>
+                            <field name="strict_supplier"/>
+                            <field name="is_tax_varify"/>
+                            <field name="is_business_license"/>
+                        </group>
+                        <group>
+                            <field name="is_cooperation"/>
+                            <field name="is_environment"/>
+                            <field name="is_quality"/>
+                            <field name="need_trial"/>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible': ['|',('customer', '!=', True), ('is_company', '!=', True)]}"
+                           string="客户信息">
+
+                        <group>
+                            <field name="registered_capital"/>
+                            <field name="credit_code"/>
+                            <field name="turnover"/>
+                            <field name="year_purchase_amount"/>
+
+                        </group>
+                        <group>
+                            <field name="employee_count"/>
+                            <field name="payment_type"/>
+                            <field name="production_company_id"/>
+                            <field name="need_trial"/>
+                            <field name="need_trial"/>
+                        </group>
+
+                    </group>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

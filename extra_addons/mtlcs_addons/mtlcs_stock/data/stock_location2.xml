@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <!--<record id="stock_location_finish" model="stock.location">-->
+            <!--<field name="name">成品</field>-->
+            <!--&lt;!&ndash;<field name="location_id"  search="[('name','=','ST')]" />&ndash;&gt;-->
+            <!--<field name="location_id" ref="mtlcs_stock.stock_location_st"/>-->
+            <!--<field name="usage">internal</field>-->
+            <!--<field name="active" eval="True"/>-->
+        <!--</record>-->
+
+        <record id="stock_location_pending" model="stock.location">
+            <field name="name">待处理</field>
+            <!--<field name="location_id" search="[('name','=','ST')]"/>-->
+            <field name="location_id" ref="mtlcs_stock.stock_location_st"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!--==========成品仓库=========-->
+        <!-- stock.picking.type 成品仓 生产到成品 -->
+        <record id="picking_type_production_finish" model="stock.picking.type">
+            <field name="name">生产到成品</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_stock"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">production2finish</field>
+        </record>
+
+        <!-- stock.picking.type 成品仓 成品到生产 -->
+        <record id="picking_type_finish_production" model="stock.picking.type">
+            <field name="name">成品到生产</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="stock.location_production"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">finish2production</field>
+        </record>
+
+         <!-- stock.picking.type 成品仓 生产到待处理 -->
+        <record id="picking_type_production_pending" model="stock.picking.type">
+            <field name="name">生产到待处理</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_pending"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">production2pending</field>
+        </record>
+
+        <!-- stock.picking.type   成品仓 待处理到生产 -->
+        <record id="picking_type_pending_production" model="stock.picking.type">
+            <field name="name">待处理到生产</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending"/>
+            <field name="default_location_dest_id" ref="stock.location_production"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">pending2production</field>
+        </record>
+
+        <!-- stock.picking.type 成品仓 成品到客户 -->
+        <record id="picking_type_finish_customers" model="stock.picking.type">
+            <field name="name">成品到客户</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_outgoing"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_customers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">outgoing</field>
+            <field name="ref">finish2customers</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  客户到待处理 -->
+        <record id="picking_type_customers_pending" model="stock.picking.type">
+            <field name="name">客户到待处理</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_in"/>
+            <field name="default_location_src_id" ref="stock.stock_location_customers"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_pending"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">outgoing</field>
+            <field name="ref">customers2pending</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  待处理到客户 -->
+        <record id="picking_type_pending_customers" model="stock.picking.type">
+            <field name="name">待处理到客户</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_outgoing"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending"/>
+            <field name="default_location_dest_id" ref="stock.stock_location_customers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">outgoing</field>
+            <field name="ref">pending2customers</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  成品到报废 -->
+        <record id="picking_type_finish_ng" model="stock.picking.type">
+            <field name="name">成品到报废</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_in"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_ng_material"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">finish2ng</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  待处理到报废 -->
+        <record id="picking_type_pending_ng" model="stock.picking.type">
+            <field name="name">待处理到报废</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_in"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_ng_material"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock"/>
+            <field name="code">internal</field>
+            <field name="ref">pending2ng</field>
+        </record>
+
+        <!--定义各成品 返回类型-->
+        <!--成品仓 生产到成品 入库-->
+        <record id="picking_type_production_finish" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_production"/>
+        </record>
+        <!--成品仓 成品到生产 出库-->
+        <record id="picking_type_finish_production" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_production_finish"/>
+        </record>
+
+        <!--待处理 生产到待处理 入库-->
+        <record id="picking_type_production_pending" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_pending_production"/>
+        </record>
+        <!--待处理 待处理到生产 出库-->
+        <record id="picking_type_pending_production" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_production_pending"/>
+        </record>
+
+        <!--成品仓 成品到客户 出库-->
+        <record id="picking_type_finish_customers" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_customers_pending"/>
+        </record>
+        <!--成品仓 客户到成品 入库-->
+        <!--<record id="picking_type_customers_finish" model="stock.picking.type">-->
+            <!--<field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_customers"/>-->
+        <!--</record>-->
+
+        <!--成品仓 待处理到客户 出库-->
+        <record id="picking_type_pending_customers" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_customers_pending"/>
+        </record>
+        <!--成品仓 客户到待处理 入库-->
+        <record id="picking_type_customers_pending" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_pending_customers"/>
+        </record>
+
+
+    </data>
+</openerp>
+

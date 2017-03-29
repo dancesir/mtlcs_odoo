@@ -1,0 +1,79 @@
+id,type,value,max_layer_qty,min_layer_qty,max_order_area,min_order_area,max_point_count,min_point_count,eval_code,btype
+__export__.pcb_fly_tes_1,飞针测试费,0,100,0,3,0,10,0,"def fn(pprice):
+    return 0.0",普通板
+__export__.pcb_fly_tes_2,飞针测试费,0,100,0,3,0,9999,10,"def fn(pprice):
+     return pprice.qty-10>0 and (pprice.qty-10) * 0.004  * pprice.qty or 0.0",普通板
+__export__.pcb_fly_tes_3,飞针测试费,0,100,0,9999,3,100,0,"def fn(pprice):
+     return pprice.info_id.panel_area and  ( pprice.info_id.tp_count * 0.004 ) / pprice.info_id.panel_area  * pprice.qty or 0.0",普通板
+__export__.pcb_fly_tes_4,飞针测试费,0,100,0,0.1,0,100,0,"def fn(pprice):
+   return 200 * pprice.qty",铝基板
+__export__.pcb_fly_tes_5,飞针测试费,0,100,0,0.2,0.1,100,0,"def fn(pprice):
+   return 400 * pprice.qty",铝基板
+__export__.pcb_fly_tes_6,飞针测试费,0,100,0,0.3,0.2,100,0,"def fn(pprice):
+   return 600 * pprice.qty",铝基板
+__export__.pcb_fly_tes_7,飞针测试费,0,100,0,9999,0.3,100,0,"def fn(pprice):
+   return 800 * pprice.qty",铝基板
+__export__.pcb_fly_tes_8,飞针测试费,0,100,0,0.1,0,100,0,"def fn(pprice):
+   return 200 * pprice.qty",铜基板
+__export__.pcb_fly_tes_9,飞针测试费,0,100,0,0.2,0.1,100,0,"def fn(pprice):
+   return 400 * pprice.qty",铜基板
+__export__.pcb_fly_tes_10,飞针测试费,0,100,0,0.3,0.2,100,0,"def fn(pprice):
+   return 600 * pprice.qty",铜基板
+__export__.pcb_fly_tes_11,飞针测试费,0,100,0,9999,0.3,100,0,"def fn(pprice):
+   return 800 * pprice.qty",铜基板
+__export__.pcb_fly_tes_12,飞针测试费,0,2,0,0.1,0,100,0,"def fn(pprice):
+   return 200 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_13,飞针测试费,0,2,0,0.2,0.1,100,0,"def fn(pprice):
+   return 400 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_14,飞针测试费,0,2,0,0.3,0.2,100,0,"def fn(pprice):
+   return 600 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_15,飞针测试费,0,2,0,9999,0.3,100,0,"def fn(pprice):
+   return 800 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_16,飞针测试费,0,4,3,0.1,0,100,0,"def fn(pprice):
+   return 300 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_17,飞针测试费,0,4,3,0.2,0.1,100,0,"def fn(pprice):
+   return 500 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_18,飞针测试费,0,4,3,0.3,0.2,100,0,"def fn(pprice):
+   return 700 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_19,飞针测试费,0,4,3,9999,0.3,100,0,"def fn(pprice):
+   return 1000 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_20,飞针测试费,0,100,5,0.1,0,100,0,"def fn(pprice):
+   return 300 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_21,飞针测试费,0,100,5,0.2,0.1,100,0,"def fn(pprice):
+   return 600 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_22,飞针测试费,0,100,5,0.3,0.2,100,0,"def fn(pprice):
+   return 900 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_23,飞针测试费,0,100,5,9999,0.3,100,0,"def fn(pprice):
+   return 1200 * pprice.qty",罗杰斯板
+__export__.pcb_fly_tes_24,飞针测试费,0,100,0,0.1,0,100,0,"def fn(pprice):
+   return 200 * pprice.qty",PTFE板
+__export__.pcb_fly_tes_25,飞针测试费,0,100,0,0.2,0.1,100,0,"def fn(pprice):
+   return 400 * pprice.qty",PTFE板
+__export__.pcb_fly_tes_26,飞针测试费,0,100,0,0.3,0.2,100,0,"def fn(pprice):
+   return 600 * pprice.qty",PTFE板
+__export__.pcb_fly_tes_27,飞针测试费,0,100,0,9999,0.3,100,0,"def fn(pprice):
+   return 800 * pprice.qty",PTFE板
+__export__.pcb_fly_tes_28,飞针测试费,0,4,0,9999,0,100,0,"def fn(pprice):
+   return 500 * pprice.qty",HDI
+__export__.pcb_fly_tes_29,飞针测试费,0,6,5,9999,0,100,0,"def fn(pprice):
+   return 800 * pprice.qty",HDI
+__export__.pcb_fly_tes_30,飞针测试费,0,8,7,9999,0,100,0,"def fn(pprice):
+   return 1100 * pprice.qty",HDI
+__export__.pcb_fly_tes_31,飞针测试费,0,10,9,9999,0,100,0,"def fn(pprice):
+   return 1400 * pprice.qty",HDI
+__export__.pcb_fly_tes_32,飞针测试费,0,12,11,9999,0,100,0,"def fn(pprice):
+   return 1700 * pprice.qty",HDI
+__export__.pcb_fly_tes_33,飞针测试费,0,100,13,9999,0,100,0,"def fn(pprice):
+   return 2000 * pprice.qty",HDI
+__export__.pcb_fly_tes_34,飞针测试费,0,4,0,9999,0,100,0,"def fn(pprice):
+   return 400 * pprice.qty",刚柔结合板
+__export__.pcb_fly_tes_35,飞针测试费,0,6,5,9999,0,100,0,"def fn(pprice):
+   return 600 * pprice.qty",刚柔结合板
+__export__.pcb_fly_tes_36,飞针测试费,0,8,7,9999,0,100,0,"def fn(pprice):
+   return 800 * pprice.qty",刚柔结合板
+__export__.pcb_fly_tes_37,飞针测试费,0,10,9,9999,0,100,0,"def fn(pprice):
+   return 1000 * pprice.qty",刚柔结合板
+__export__.pcb_fly_tes_38,飞针测试费,0,12,11,9999,0,100,0,"def fn(pprice):
+   return 1200 * pprice.qty",刚柔结合板
+__export__.pcb_fly_tes_39,飞针测试费,0,100,13,9999,0,100,0,"def fn(pprice):
+   return 1400 * pprice.qty",刚柔结合板

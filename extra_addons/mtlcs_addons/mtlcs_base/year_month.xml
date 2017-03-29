@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Year Month view -->
+        <record model="ir.ui.view" id="year_month_tree_view">
+            <field name="name">year.month.tree</field>
+            <field name="model">year.month</field>
+            <field name="arch" type="xml">
+                <tree string="年月设置">
+                    <field name="name"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="year_month_form_view">
+            <field name="name">year.month.form</field>
+            <field name="model">year.month</field>
+            <field name="arch" type="xml">
+                <form string="Year Month">
+                    <header>
+                    </header>
+                    <sheet>
+                        <grop>
+                            <group>
+                                <field name="name"/>
+                                <field name="year"/>
+                                <field name="month"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                            </group>
+                        </grop>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_year_month">
+            <field name="name">年月</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">year.month</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="year_month_tree_view"/>
+        </record>
+        <menuitem id="menu_year_month" action="action_year_month" name="年月" parent="purchase.menu_purchase_partner_cat"
+                  sequence="50"/>
+
+
+    </data>
+</openerp>

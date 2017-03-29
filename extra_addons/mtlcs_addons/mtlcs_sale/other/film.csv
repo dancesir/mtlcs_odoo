@@ -1,0 +1,46 @@
+id,type,value,btype,min_layer_qty,max_layer_qty,min_order_area,max_order_area,eval_code
+__export__.pcb_fee_plot_1,菲林费,300,普通板,1,1,0,100,
+__export__.pcb_fee_plot_2,菲林费,300,普通板,1,1,100,200,
+__export__.pcb_fee_plot_3,菲林费,350,普通板,1,1,200,300,
+__export__.pcb_fee_plot_4,菲林费,350,普通板,1,1,300,400,
+__export__.pcb_fee_plot_5,菲林费,0,普通板,1,1,400,999999,def fn(pprice):     return 350 + ( pprice.info_id.panel_area - 400 )
+__export__.pcb_fee_plot_6,菲林费,300,普通板,2,2,0,100,
+__export__.pcb_fee_plot_7,菲林费,300,普通板,2,2,100,200,
+__export__.pcb_fee_plot_8,菲林费,350,普通板,2,2,200,300,
+__export__.pcb_fee_plot_9,菲林费,350,普通板,2,2,300,400,
+__export__.pcb_fee_plot_10,菲林费,0,普通板,2,2,400,999999,def fn(pprice):     return 350 + ( pprice.info_id.panel_area - 400 )
+__export__.pcb_fee_plot_11,菲林费,0,普通板,2,999999,0,100,def fn(pprice):     return 12 * pprice.info_id.plot_count
+__export__.pcb_fee_plot_12,菲林费,0,普通板,2,999999,100,200,def fn(pprice):     return  0.12 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_13,菲林费,0,普通板,2,999999,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_14,菲林费,0,普通板,2,999999,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_15,菲林费,0,普通板,2,999999,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_16,菲林费,200,HDI,0,4,0,100,
+__export__.pcb_fee_plot_17,菲林费,200,HDI,0,4,100,200,
+__export__.pcb_fee_plot_18,菲林费,0,HDI,0,4,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_19,菲林费,0,HDI,0,4,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_20,菲林费,0,HDI,0,4,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_21,菲林费,250,HDI,5,6,0,100,
+__export__.pcb_fee_plot_22,菲林费,250,HDI,5,6,100,200,
+__export__.pcb_fee_plot_23,菲林费,0,HDI,5,6,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_24,菲林费,0,HDI,5,6,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_25,菲林费,0,HDI,5,6,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_26,菲林费,300,HDI,7,8,0,100,
+__export__.pcb_fee_plot_27,菲林费,300,HDI,7,8,100,200,
+__export__.pcb_fee_plot_28,菲林费,0,HDI,7,8,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_29,菲林费,0,HDI,7,8,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_30,菲林费,0,HDI,7,8,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_31,菲林费,350,HDI,9,10,0,100,
+__export__.pcb_fee_plot_32,菲林费,350,HDI,9,10,100,200,
+__export__.pcb_fee_plot_33,菲林费,0,HDI,9,10,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_34,菲林费,0,HDI,9,10,300,400,def fn(pprice):     return  0.10 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_35,菲林费,0,HDI,9,10,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_36,菲林费,400,HDI,11,12,0,100,
+__export__.pcb_fee_plot_37,菲林费,400,HDI,11,12,100,200,
+__export__.pcb_fee_plot_38,菲林费,0,HDI,11,12,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_39,菲林费,0,HDI,11,12,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_40,菲林费,0,HDI,11,12,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_41,菲林费,450,HDI,13,14,0,100,
+__export__.pcb_fee_plot_42,菲林费,450,HDI,13,14,100,200,
+__export__.pcb_fee_plot_43,菲林费,0,HDI,13,14,200,300,def fn(pprice):     return  0.11 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_44,菲林费,0,HDI,13,14,300,400,def fn(pprice):     return  0.1 * pprice.info_id.plot_count * pprice.info_id.panel_area
+__export__.pcb_fee_plot_45,菲林费,0,HDI,13,14,400,999999,def fn(pprice):     return  0.09 * pprice.info_id.plot_count * pprice.info_id.panel_area

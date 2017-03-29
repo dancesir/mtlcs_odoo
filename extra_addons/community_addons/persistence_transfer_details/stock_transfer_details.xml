@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="inherit_view_picking_form" model="ir.ui.view">
+            <field name="name">persistence.transfer_details</field>
+            <field name="model">stock.transfer_details</field>
+            <field name="inherit_id" ref="stock.view_stock_enter_transfer_details"/>
+            <field name="arch" type="xml">
+                <button name="do_detailed_transfer" position="after">
+                    <button name="action_save" string="保存数量" type="object" class="oe_highlight" invisible="not context.get('display_save_button')"/>
+                </button>
+                <button name="do_detailed_transfer" position="attributes">
+                    <attribute name="invisible">context.get('display_save_button') or context.get('display_split_button')</attribute>
+                </button>
+
+            </field>
+        </record>
+    </data>
+</openerp>

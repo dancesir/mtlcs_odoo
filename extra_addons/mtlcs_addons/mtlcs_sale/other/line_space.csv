@@ -1,0 +1,8 @@
+"id","type","value","min_line_width","min_line_space","eval_code"
+"__export__.pcb_fee_line_value_1","线间距费",0,4,4,"def fn(pprice,feedic):
+    info = pprice.info_id
+    min_value = (info.min_line_space  and info.min_line_width) and min([info.min_line_space, info.min_line_width]) or max([info.min_line_space, info.min_line_width])
+    if  min_value < 4:
+        return (4 - min_value )  *  0.3  *  feedic['fee_base']
+    else:
+        return 0.0"

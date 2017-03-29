@@ -1,0 +1,157 @@
+id,type,value,min_order_area,max_order_area,max_one_finger_area,min_one_finger_area,min_ni_thick,max_ni_thick,min_au_thick,max_au_thick,eval_code
+__export__.pcb_fee_finger_2_1,金手指超常规费,0,0,1,1,0,0,150,0,20,"def fn(pprice,feedic):
+     a = 1.25 * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_3,金手指超常规费,0,0,1,1,0,0,150,20,51,"def fn(pprice,feedic):
+     a = 1.25 * feedic['fee_finger']  * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 200:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_5,金手指超常规费,0,0,1,1,0,151,200,0,20,"def fn(pprice,feedic):
+     a = 1.35 * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_7,金手指超常规费,0,0,1,1,0,151,200,20,51,"def fn(pprice,feedic):
+     a = 1.35 * feedic['fee_finger']  * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_9,金手指超常规费,0,0,1,1,0,201,250,0,20,"def fn(pprice,feedic):
+     a = 1.4 * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_11,金手指超常规费,0,0,1,1,0,201,250,20,51,"def fn(pprice,feedic):
+     a = 1.4 * feedic['fee_finger']   * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_13,金手指超常规费,0,0,1,1,0,250,9999,0,20,"def fn(pprice,feedic):
+     a = 1.45 * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_15,金手指超常规费,0,0,1,1,0,250,9999,20,51,"def fn(pprice,feedic):
+     a = 1.45 * feedic['fee_finger']  * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_17,金手指超常规费,0,0,1,9999,1,0,150,0,20,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.25 + f ) * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0  "
+__export__.pcb_fee_finger_2_19,金手指超常规费,0,0,1,9999,1,0,150,20,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.25 + f ) * feedic['fee_finger']  * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_21,金手指超常规费,0,0,1,9999,1,151,200,0,20,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.35 + f ) * feedic['fee_finger'] * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0"
+__export__.pcb_fee_finger_2_23,金手指超常规费,0,0,1,9999,1,151,200,20,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.35 + f ) * feedic['fee_finger']* pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_25,金手指超常规费,0,0,1,9999,1,201,250,0,20,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.4 + f ) * feedic['fee_finger']  * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_27,金手指超常规费,0,0,1,9999,1,201,250,20,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.4 + f ) * feedic['fee_finger']   * pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_29,金手指超常规费,0,0,1,9999,1,250,9999,0,20,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.45 + f ) * feedic['fee_finger']   * pprice.qty
+     if a <= 200:
+         return 200
+     elif a > 200:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_31,金手指超常规费,0,0,1,9999,1,250,9999,20,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     a = ( 1.45 + f ) * feedic['fee_finger']* pprice.qty
+     if a <= 300:
+         return 300
+     elif a > 300:
+         return a
+     else:
+         return 0.0 "
+__export__.pcb_fee_finger_2_33,金手指超常规费,0,1,999999999,1,0,0,150,0,51,"def fn(pprice,feedic):
+     return 1.25  * feedic['fee_finger'] * pprice.qty"
+__export__.pcb_fee_finger_2_34,金手指超常规费,0,1,999999999,1,0,151,200,0,51,"def fn(pprice,feedic):
+     return 1.35  * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_35,金手指超常规费,0,1,999999999,1,0,201,250,0,51,"def fn(pprice,feedic):
+     return 1.4  * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_36,金手指超常规费,0,1,999999999,1,0,250,9999,0,51,"def fn(pprice,feedic):
+     return 1.45  * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_37,金手指超常规费,0,1,999999999,9999,1,0,150,0,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     return ( 1.25 + f ) * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_38,金手指超常规费,0,1,999999999,9999,1,151,200,0,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     return ( 1.35 + f ) * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_39,金手指超常规费,0,1,999999999,9999,1,201,250,0,51,"def fn(pprice,feedic):
+     f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+     return ( 1.4 + f ) * feedic['fee_finger']* pprice.qty"
+__export__.pcb_fee_finger_2_40,金手指超常规费,0,1,999999999,9999,1,250,9999,0,51,"def fn(pprice,feedic):
+    f = pprice.info_id.finger_length * pprice.info_id.finger_width / 0.07
+    return ( 1.45 + f ) * feedic['fee_finger']* pprice.qty"

@@ -1,0 +1,31 @@
+"id","btype","type","value","layer_count","min_cu_thick","max_cu_thick","min_order_area","max_order_area","eval_code"
+"__export__.pcb_fee_arg_base_al_base_001","铝基板","基板费",0,1,0,1,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.08"
+"__export__.pcb_fee_arg_base_al_base_002","铝基板","基板费",0,1,0,1,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.08"
+"__export__.pcb_fee_arg_base_al_base_003","铝基板","基板费",0,1,0,1,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.08"
+"__export__.pcb_fee_arg_base_al_base_004","铝基板","基板费",0,1,1,2,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.1"
+"__export__.pcb_fee_arg_base_al_base_005","铝基板","基板费",0,1,1,2,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.1"
+"__export__.pcb_fee_arg_base_al_base_006","铝基板","基板费",0,1,1,2,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.1"
+"__export__.pcb_fee_arg_base_al_base_007","铝基板","基板费",0,1,2,3,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_arg_base_al_base_008","铝基板","基板费",0,1,2,3,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_arg_base_al_base_009","铝基板","基板费",0,1,2,3,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.11"
+"__export__.pcb_fee_arg_base_al_base_010","铝基板","基板费",0,1,3,4,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_arg_base_al_base_011","铝基板","基板费",0,1,3,4,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_arg_base_al_base_012","铝基板","基板费",0,1,3,4,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.13"
+"__export__.pcb_fee_arg_base_al_base_013","铝基板","基板费",0,2,0,4,0,1,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.3) / x.info_id.board_usage_rate +  0.32"
+"__export__.pcb_fee_arg_base_al_base_014","铝基板","基板费",0,2,0,4,1,5,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1.15) / x.info_id.board_usage_rate +  0.32"
+"__export__.pcb_fee_arg_base_al_base_015","铝基板","基板费",0,2,0,4,5,9999,"def  fn(x):
+    return (x.material_price * x.info_id.panel_area *1..10) / x.info_id.board_usage_rate +  0.32"

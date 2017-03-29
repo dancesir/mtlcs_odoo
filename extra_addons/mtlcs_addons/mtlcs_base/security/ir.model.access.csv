@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_year_month_user,access_year_month_user,mtlcs_base.model_year_month,base.group_user,1,0,0,0
+access_production_plan_month_user,access_production_plan_month_user,mtlcs_base.model_production_plan_month,base.group_user,1,1,1,1
+access_material_consumption_standard_user,access_material_consumption_standard_user,mtlcs_base.model_material_consumption_standard,base.group_user,1,1,1,1
+
+access_mark_mark_user,access_mark_mark_user,mtlcs_base.model_mark_mark,base.group_user,1,1,1,0
+access_special_technic_user,access_special_technic_user,mtlcs_base.model_special_technic,base.group_user,1,1,1,0
+access_process_technic_user,access_process_technic_user,mtlcs_base.model_process_technic,base.group_user,1,1,1,0
+access_technic_attribute_user,access_technic_attribute_user,mtlcs_base.model_technic_attribute,base.group_user,1,1,1,0
+access_technic_tag_user,access_technic_tag_user,mtlcs_base.model_technic_tag,base.group_user,1,1,1,0
+
+
+
+

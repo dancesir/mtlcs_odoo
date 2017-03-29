@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="wizard_sale_order_form_view">
+            <field name="name">wizard.sale.order.form</field>
+            <field name="model">wizard.sale.order</field>
+            <field name="arch" type="xml">
+                <form string="部分投产">
+                    <group>
+                        <group string="设置投产数量">
+                            <field name="qty"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

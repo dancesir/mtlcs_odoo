@@ -1,0 +1,38 @@
+<openerp>
+    <data>
+
+        <record id="view_approve_log_tree" model="ir.ui.view">
+            <field name="name">approve.log.tree</field>
+            <field name="model">approve.log</field>
+            <field name="arch" type="xml">
+                <tree string="Aprove log">
+                    <field name="name"/>
+                    <field name="model"/>
+                    <field name="res_id"/>
+                    <field name="record_id"/>
+                    <field name="time"/>
+                    <field name="user_id"/>
+                    <field name="state_from" invisible="1" />
+                    <field name="state_to" invisible="1"/>
+                    <field name="from"/>
+                    <field name="to"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_open_approve_log_view">
+            <field name="name">审批记录</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approve.log</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_approve_log" name="审批记录"  parent="base.menu_reporting_config"
+                  sequence="20" action="act_open_approve_log_view" groups="base.group_user"/>
+
+    </data>
+</openerp>

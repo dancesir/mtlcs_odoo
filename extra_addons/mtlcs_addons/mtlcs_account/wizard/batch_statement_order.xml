@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="batch_statement_order_form_view">
+            <field name="name">batch.statement.order.form</field>
+            <field name="model">batch.statement.order</field>
+            <field name="arch" type="xml">
+                <form string="生成对账单">
+                    <label string="为所有有未付款的供应商创建对账单"/>
+                    <group>
+                        <group>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <button name="make_statement_order" string="创建" type="object" class="oe_highlight"/>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+                multi="True"
+                id="action_batch_statement_order"
+                name="生成对账单"
+                res_model="batch.statement.order"
+                src_model="res.partner"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+        <!--
+
+        <record id="action_batch_statement_order" model="ir.actions.act_window">
+            <field name="name">生成对账单</field>
+            <field name="res_model">batch.statement.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field ref="batch_statement_order_form_view" name="view_id"/>
+        </record>
+
+        <menuitem id="menu_batch_statement_order" action="action_batch_statement_order" name="生成对账单"
+                  parent="purchase.menu_procurement_management_invoice" sequence="900"
+                  groups="purchase.group_purchase_user"/>
+
+         -->
+
+    </data>
+</openerp>

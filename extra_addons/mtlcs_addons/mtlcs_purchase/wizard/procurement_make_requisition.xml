@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="procurement_make_requisitionform_view">
+            <field name="name">procurement.make.requisition.form</field>
+            <field name="model">procurement.make.requisition</field>
+            <field name="arch" type="xml">
+                <form string="创建比价单" version="7.0">
+                    <label string="选中的需求将会创建于同一张比价单中"/>
+                    <group>
+                        <group>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="apply" string="确认" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <act_window
+                multi="True"
+                id="action_procurement_make_requisition"
+                name="多个需求统一比价"
+                res_model="procurement.make.requisition"
+                src_model="procurement.order"
+                view_mode="form"
+                target="new"
+                context="{}"
+                view_type="form"/>
+
+
+    </data>
+</openerp>

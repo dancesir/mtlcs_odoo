@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data noupdate="0">
+        <!--深圳各种仓位-->
+
+        <record id="stock_location_ng_material_sz" model="stock.location">
+            <field name="name">不合格物料_深圳</field>
+            <field name="usage">internal</field>
+            <field name="company_id" ref="res_company_1"/>
+            <field name="location_id" ref="mtlcs_stock.stock_location_st_sz"/>
+            <field name="active" eval="1"/>
+        </record>
+
+        <!-- stock.picking.type 领料 -->
+        <record id="picking_type_material_production_sz" model="stock.picking.type">
+            <field name="name">物料仓到生产_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.location_production"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">stock2production_sz</field>
+        </record>
+
+        <!-- stock.picking.type 退领料 -->
+        <record id="picking_type_material_production_return_sz" model="stock.picking.type">
+            <field name="name">生产到物料仓_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">production2stock_sz</field>
+        </record>
+
+        <!-- stock.picking.type 一步入库 -->
+        <record id="picking_type_in_sz" model="stock.picking.type">
+            <field name="name">供应商到物料仓_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_in_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_suppliers"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">incoming</field>
+            <field name="ref">supplier2stock_sz</field>
+        </record>
+
+        <!-- stock.picking.type 入库退货 -->
+        <record id="picking_type_purchase_input_return_sz" model="stock.picking.type">
+            <field name="name">物料仓到供应商_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_suppliers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">outgoing</field>
+            <field name="ref">stock2supplier_sz</field>
+        </record>
+
+        <!-- stock.picking.type 物料到不合格 -->
+        <record id="picking_type_material_ng_sz" model="stock.picking.type">
+            <field name="name">物料到不合格_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="default_location_dest_id" ref="stock_location_ng_material_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">stock2ng_sz</field>
+        </record>
+
+        <!-- stock.picking.type  生产到不合格 -->
+        <record id="picking_type_production_ng_sz" model="stock.picking.type">
+            <field name="name">生产到不合格_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_stock_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">production2ng_sz</field>
+        </record>
+
+        <!-- stock.picking.type 不合格到供应商 -->
+        <record id="picking_type_ng_supplier_sz" model="stock.picking.type">
+            <field name="name">不合格到供应商_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing_sz"/>
+            <field name="default_location_src_id" ref="stock_location_ng_material_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_suppliers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">outgoing</field>
+            <field name="ref">ng2supplier_sz</field>
+        </record>
+
+        <!-- 定义各类型的 返回类型 -->
+        <!--不合格到供应商   入库 -->
+        <record id="picking_type_ng_supplier_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_in_sz"/>
+        </record>
+        <!-- 领料  退领料 -->
+        <record id="picking_type_material_production_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_material_production_return_sz"/>
+        </record>
+        <!-- 退领料 领料 -->
+        <record id="picking_type_material_production_return_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_material_production_sz"/>
+        </record>
+        <!-- 一步入库  入库退货-->
+        <record id="picking_type_in_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="picking_type_purchase_input_return_sz"/>
+        </record>
+        <!-- 入库退货  一步入库 -->
+        <record id="picking_type_purchase_input_return_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_in_sz"/>
+        </record>
+
+
+        <!-- 成品 出库 -->
+        <record id="picking_type_finish_pick_sz" model="stock.picking.type">
+            <field name="name">拣货_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <!--<field name="default_location_src_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_output_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+        </record>
+        <record id="stock.picking_type_out_sz" model="stock.picking.type">
+            <field name="name">发货_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_outgoing_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_output_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_customers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">outgoing</field>
+        </record>
+        <record id="picking_type_finish_pick_return_sz" model="stock.picking.type">
+            <field name="name">返拣货_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_output_sz"/>
+            <!--<field name="default_location_dest_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">internal</field>
+        </record>
+        <record id="picking_type_finish_out_return_sz" model="stock.picking.type">
+            <field name="name">客户退货_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_in_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_customers"/>
+            <!--<field name="default_location_dest_id" ref="mtlcs_stock.stock_location_finish"/>-->
+            <field name="warehouse_id" ref="mtlcs_stock.warehouse_sz"/>
+            <field name="code">incoming</field>
+        </record>
+        <!--定义各成品 返回类型-->
+        <record id="picking_type_finish_pick_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_pick_return_sz"/>
+        </record>
+        <record id="stock.picking_type_out_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_out_return_sz"/>
+        </record>
+        <record id="picking_type_finish_pick_return_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_pick_sz"/>
+        </record>
+        <record id="picking_type_finish_out_return_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_out_sz"/>
+        </record>
+
+    </data>
+
+
+
+
+
+
+    <!--深圳成品仓-->
+    <data noupdate="0">
+
+        <!--已定义库位设置公司-->
+        <record id="stock_location_stock_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+        <record id="stock_location_company_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+        <record id="stock_location_output_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+        <record id="location_pack_zone_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+        <record id="stock_location_st_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+        <record id="stock_location_qc_stsz" model="stock.location">
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+
+        <record id="stock_location_pending_sz" model="stock.location">
+            <field name="name">待处理_深圳</field>
+            <field name="location_id" ref="mtlcs_stock.stock_location_st_stsz"/>
+            <field name="usage">internal</field>
+            <field name="active" eval="True"/>
+            <field name="company_id" ref="res_company_1"/>
+        </record>
+
+        <!--==========成品仓库=========-->
+        <!-- stock.picking.type 成品仓 生产到成品 -->
+        <record id="picking_type_production_finish_sz" model="stock.picking.type">
+            <field name="name">生产到成品_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_stock_stsz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">production2finish_sz</field>
+        </record>
+
+        <!-- stock.picking.type 成品仓 成品到生产 -->
+        <record id="picking_type_finish_production_sz" model="stock.picking.type">
+            <field name="name">成品到生产_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_stsz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.location_production"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">finish2production_sz</field>
+        </record>
+
+         <!-- stock.picking.type 成品仓 生产到待处理 -->
+        <record id="picking_type_production_pending_sz" model="stock.picking.type">
+            <field name="name">生产到待处理_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.location_production"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_pending_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">production2pending_sz</field>
+        </record>
+
+        <!-- stock.picking.type   成品仓 待处理到生产 -->
+        <record id="picking_type_pending_production_sz" model="stock.picking.type">
+            <field name="name">待处理到生产_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.location_production"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">pending2production_sz</field>
+        </record>
+
+        <!-- stock.picking.type 成品仓 成品到客户 -->
+        <record id="picking_type_finish_customers_sz" model="stock.picking.type">
+            <field name="name">成品到客户_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_outgoing_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_stsz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_customers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">outgoing</field>
+            <field name="ref">finish2customers_sz</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  客户到待处理 -->
+        <record id="picking_type_customers_pending_sz" model="stock.picking.type">
+            <field name="name">客户到待处理_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.in')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_in_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_customers"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_pending_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">outgoing</field>
+            <field name="ref">customers2pending_sz</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  待处理到客户 -->
+        <record id="picking_type_pending_customers_sz" model="stock.picking.type">
+            <field name="name">待处理到客户_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'finish.stock.picking.out')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_finish_picking_outgoing_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_customers"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">outgoing</field>
+            <field name="ref">pending2customers_sz</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  成品到报废 -->
+        <record id="picking_type_finish_ng_sz" model="stock.picking.type">
+            <field name="name">成品到报废_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_stock_stsz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_ng_material_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">finish2ng_sz</field>
+        </record>
+
+        <!-- stock.picking.type  成品仓  待处理到报废 -->
+        <record id="picking_type_pending_ng_sz" model="stock.picking.type">
+            <field name="name">待处理到报废_深圳</field>
+            <!--<field name="sequence_id" search="[('code','=', 'stock.picking')]"/>-->
+            <field name="sequence_id" ref="mtlcs_stock.seq_picking_internal_sz"/>
+            <field name="default_location_src_id" ref="mtlcs_stock.stock_location_pending_sz"/>
+            <field name="default_location_dest_id" ref="mtlcs_stock.stock_location_ng_material_sz"/>
+            <field name="warehouse_id" ref="mtlcs_stock.stock_warehouse_stock_sz"/>
+            <field name="code">internal</field>
+            <field name="ref">pending2ng_sz</field>
+        </record>
+
+        <!--定义各成品 返回类型-->
+        <!--成品仓 生产到成品 入库-->
+        <record id="picking_type_production_finish_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_production_sz"/>
+        </record>
+        <!--成品仓 成品到生产 出库-->
+        <record id="picking_type_finish_production_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_production_finish_sz"/>
+        </record>
+
+        <!--待处理 生产到待处理 入库-->
+        <record id="picking_type_production_pending_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_pending_production_sz"/>
+        </record>
+        <!--待处理 待处理到生产 出库-->
+        <record id="picking_type_pending_production_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_production_pending_sz"/>
+        </record>
+
+        <!--成品仓 成品到客户 出库-->
+        <record id="picking_type_finish_customers_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_customers_pending_sz"/>
+        </record>
+        <!--成品仓 客户到成品 入库-->
+        <!--<record id="picking_type_customers_finish" model="stock.picking.type">-->
+            <!--<field name="return_picking_type_id" ref="mtlcs_stock.picking_type_finish_customers"/>-->
+        <!--</record>-->
+
+        <!--成品仓 待处理到客户 出库-->
+        <record id="picking_type_pending_customers_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_customers_pending_sz"/>
+        </record>
+        <!--成品仓 客户到待处理 入库-->
+        <record id="picking_type_customers_pending_sz" model="stock.picking.type">
+            <field name="return_picking_type_id" ref="mtlcs_stock.picking_type_pending_customers_sz"/>
+        </record>
+
+
+    </data>
+</openerp>
+

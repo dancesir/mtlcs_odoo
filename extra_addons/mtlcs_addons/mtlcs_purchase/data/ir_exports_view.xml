@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="mtlcs_ir_export_form_view">
+            <field name="name">Export With Domain</field>
+            <field name="model">ir.exports</field>
+            <field name="inherit_id" ref="ir_export_extended_ept.ir_exports_view_ept"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <button name="export_and_send" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mtlcs_view_ir_export_kanban_ept">
+            <field name="name">Ir.Exports.kanban</field>
+            <field name="model">ir.exports</field>
+            <field name="inherit_id" ref="ir_export_extended_ept.view_ir_export_kanban_ept"/>
+            <field name="arch" type="xml">
+                <a name="export_and_send" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </a>
+            </field>
+        </record>
+
+    </data>
+</openerp>

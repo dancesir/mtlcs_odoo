@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- tree_web_shortcut View -->
+        <record id="tree_web_shortcut" model="ir.ui.view">
+            <field name="name">web.shortcut.tree</field>
+            <field name="model">web.shortcut</field>
+            <field name="arch" type="xml">
+                <tree string="快捷方式">
+                <field name="name"/>
+                <field name="menu_id"/>
+                <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_web_shortcut" model="ir.actions.act_window">
+            <field name="name">快捷方式</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">web.shortcut</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem name="快捷方式" id="menu_web_shortcut" action="action_web_shortcut"
+                  parent="base.menu_administration_shortcut" sequence="6"/>
+
+
+    </data>
+</openerp>
+
+
+

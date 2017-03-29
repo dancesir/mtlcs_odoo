@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- 工程主菜单  -->
+        <menuitem id="menu_eng_sub" name="工程" sequence="5"  parent="mtlcs_base.menu_eng_root"/>
+        <menuitem id="menu_eng_conf" name="设置" sequence="5"  parent="mtlcs_base.menu_eng_root"/>
+
+        <menuitem id="menu_eng_routing_template" name="标准卡模版" sequence="5"  parent="menu_eng_sub"
+                  action="mrp.mrp_routing_action"/>
+
+        <menuitem id="menu_eng_routing" name="标准卡" sequence="5"  parent="menu_eng_sub"
+                  action="mrp.mrp_routing_action"/>
+
+        <menuitem id="menu_eng_production" name="生产卡" sequence="5"  parent="menu_eng_sub"
+                  action="mrp.mrp_production_action"/>
+
+        <menuitem id="menu_eng_workcenter" name="工作中心" sequence="5"  parent="menu_eng_conf"
+                  action="mrp.mrp_workcenter_action"/>
+
+    </data>
+</openerp>

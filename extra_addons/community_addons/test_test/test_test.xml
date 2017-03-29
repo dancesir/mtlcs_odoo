@@ -1,0 +1,52 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="test_test_tree_view">
+            <field name="name">test.test.tree</field>
+            <field name="model">test.test</field>
+            <field name="arch" type="xml">
+                <tree string="testtest">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="test_test_form_view">
+            <field name="name">test.test.tree</field>
+            <field name="model">test.test</field>
+            <field name="arch" type="xml">
+                <form string="testtest">
+                    <field name="name"/>
+                    <button name="test" type="object" string="test"/>
+                    <button name="set_product_category" type="object" string="关联产品和产品分类"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_test_test">
+            <field name="name">Test</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">test.test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+        </record>
+        <menuitem id="menu_material_control" action="action_test_test" name="Test"
+                  parent="mail.mail_feeds" sequence="1"/>
+
+
+        <!--
+        <record id="res_users_form_view" model="ir.ui.view">
+            <field name="name">user.form.state</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="signup_token"/>
+                    <field name="signup_valid"/>
+                    <button name="signup_prepare" string="signup_prepare" type="object"/>
+                </field>
+            </field>
+        </record>
+        -->
+
+
+    </data>
+</openerp>

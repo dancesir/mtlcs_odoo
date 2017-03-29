@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_statement_order,access_account_statement_order,mtlcs_account.model_account_statement_order,purchase.group_purchase_user,1,1,1,1
+access_account_voucher,access_account_voucher,account_voucher.model_account_voucher,purchase.group_purchase_user,1,1,1,1
+access_account_voucher_line,access_account_voucher_line,account_voucher.model_account_voucher_line,purchase.group_purchase_user,1,1,1,1

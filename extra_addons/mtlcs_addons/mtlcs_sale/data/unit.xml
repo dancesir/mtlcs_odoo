@@ -1,0 +1,16 @@
+<openerp>
+    <data>
+        <record id="uom_categ_pcb" model="product.uom.categ">
+            <field name="name">PCB</field>
+        </record>
+        <record id="pcb_uom_unit" model="product.uom">
+            <field name="name">Unit</field>
+            <field eval="uom_categ_pcb" name="category_id"/>
+            <field name="factor" eval="1.0"/>
+            <field name="uom_type">reference</field>
+            <field name="active" eval="True"/>
+            <field name="roundng" eval="0.001"/>
+            <field name="sequence" eval="1"/>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="picking_purchase_receive_document">
+
+            <div class="page">
+                <br/>
+                <h5 align="center">
+                    <span t-field="o.company_id.name"/>
+                </h5>
+                <h5 align="center">收料单：
+                    <span t-field="o.name"/>
+                </h5>
+                <h5 align="left">
+                    采购单号：
+                    <span t-field="o.origin"/>
+                    日期:
+                    <span t-field="o.create_date"/>
+                </h5>
+
+                <table width="860" class="table-bordered" style="float:left;">
+                    <tr>
+                        <td colspan="3">
+                            供应商：
+                            <span t-field="o.partner_id.name"/>
+                        </td>
+                        <td colspan="2">送货单号：
+                            <span t-field="o.note"/>
+                        </td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td>序号</td>
+                        <td>物料编码</td>
+                        <td>材料名称</td>
+                        <td>规格型号</td>
+                        <td>实收数量</td>
+                        <td>单位</td>
+                        <td>单价</td>
+                        <td>金额</td>
+                    </tr>
+                    <t t-set="total" t-value="0"/>
+                    <tr t-foreach="o.move_lines" t-as="move">
+                        <td>
+                            <span t-esc="move_index + 1"/>
+                        </td>
+                        <td>
+                            <span t-field="move.product_id.default_code"/>
+                        </td>
+                        <td>
+                            <span t-field="move.product_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="move.product_id.variants"/>
+                        </td>
+                        <td>
+                            <span t-field="move.product_qty"/>
+                        </td>
+                        <td>
+                            <span t-field="move.product_uom.name"/>
+                        </td>
+                        <td>
+                            <span t-field="move.price_unit"/>
+                        </td>
+                        <td><span t-esc="move.price_unit * move.product_qty"/></td>
+                        <t  t-set="total"  t-value="total + move.price_unit * move.product_qty"/>
+                        <!--
+                        <t  t-set="total"  t-value="total + line.pol_id.price_unit * line.move_qty"/>
+                        -->
+                    </tr>
+
+                    <tr>
+                        <td>合计</td>
+                        <td colspan="6">
+                            <span t-esc="get_cncurrency(total)"/>
+                        </td>
+                        <td colspan="1">
+                            <span t-esc="total"/>
+                            <!--<span t-esc="get_info(move.price_unit)"/>-->
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="8">备注：</td>
+                    </tr>
+
+                </table>
+                <!--<div style="font-size:15px;float:left;margin:0 auto;width:15px;line-height:18px;border:0px solid #333"><br/>白联存根
+                    <br/>
+                    <br/>红联发票、暂估
+                </div>
+                <div style="font-size:15px;float:left;margin:0 auto;width:20px;line-height:18px;border:0px solid #333">蓝联付款
+                    <br/>
+                    <br/>
+                    绿联采购
+                    <br/>
+                    <br/>
+                    黄联供方
+                </div>-->
+            </div>
+            <div class="footer">
+                <p style="font-size:15px;float:left">制单：____________收料：____________ 仓库主管：____________ 财务：____________供方：____________</p>
+            </div>
+            <div class="footer">
+                <!--<stalye type="text/css">
+                    .onestalye{
+                        border:0px;
+                    }
+                </stalye>-->
+                <table width="860" border="0">
+                    <tr>
+                        <td style="font-size:15px;float:left;border:0px">2014/10/30  REV:C</td>
+                        <td style="font-size:15px;float:right;border:0px">管制编号：CMTL FM MC 006A</td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+        <template id="picking_purchase_receive">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'company_id.partner_id.lang', 'mtlcs_stock.picking_purchase_receive_document')"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>
+
