@@ -17,10 +17,4 @@
 2017-03-24 17:44:44,200 29464 WARNING DB03 openerp.fields: Field receive.order.sol_id with unknown comodel_name None
 2017-03-24 17:44:44,240 29464 WARNING DB03 openerp.fields: Field pcb.remind.partner_id with unknown comodel_name 'res.partners'
 2017-03-24 17:44:44,426 29464 INFO DB03 openerp.modules.loading: Modules loaded.
-2017-03-24 17:44:44,430 29464 INFO DB03 openerp.addons.base.ir.ir_http: Generating routing map
-2017-03-24 17:44:56,247 23604 INFO ? openerp: OpenERP version 8.0
-2017-03-24 17:44:56,249 23604 INFO ? openerp: addons paths: [u'C:\\Users\\sys05\\AppData\\Local\\OpenERP S.A.\\Odoo\\addons\\8.0', u'D:\\dzz\\mtlcs_odoo\\odoo\\openerp\\addons', u'D:\\dzz\\mtlcs_odoo\\odoo\\addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\community_addons', u'D:\\dzz\\mtlcs_odoo\\extra_addons\\mtlcs_addons']
-2017-03-24 17:44:56,249 23604 INFO ? openerp: database hostname: 192.168.10.156
-2017-03-24 17:44:56,249 23604 INFO ? openerp: database port: 5432
-2017-03-24 17:44:56,249 23604 INFO ? openerp: database user: openerp
-2017-03-24 17:44:56,431 23604 INFO ? openerp.service.server: HTTP service (werkzeug) running on 0.0.0.0:8669
+
